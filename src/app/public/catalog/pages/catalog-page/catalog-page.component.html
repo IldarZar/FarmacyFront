@@ -1,1 +1,17 @@
-<p>catalog-page works!</p>
+<mat-toolbar color="primary">
+  <span>My Application</span>
+</mat-toolbar>
+
+<div class="container">
+  <mat-card class="card" *ngFor="let product of products$ | async">
+    <mat-card-header>{{ product.name }}</mat-card-header>
+    <img src="http://rx.ua/img/drugs/spazmalgon-n10x2/0.jpg" alt="Photo of a Shiba Inu">
+    <mat-card-content>
+      Цена: {{ product.price }} рублев
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>Купить</button>
+      <button mat-button>Продать</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

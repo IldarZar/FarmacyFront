@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {SharedModule} from "./shared/shared.module";
+import {BaseUrlInterceptor} from "@app/core/interceptors/base-url.interceptor";
 
 @NgModule({
   declarations: [
@@ -20,8 +20,16 @@ import {SharedModule} from "./shared/shared.module";
     HttpClientModule,
     MatSlideToggleModule,
     MatToolbarModule,
-    SharedModule,
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BaseUrlInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+}

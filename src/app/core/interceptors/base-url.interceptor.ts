@@ -6,17 +6,13 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {AuthService} from "../services/auth.service";
+import {Product} from "@app/public/catalog/models/catalog";
 
 @Injectable()
 export class BaseUrlInterceptor implements HttpInterceptor {
 
-  constructor(public auth: AuthService) {
-  }
-
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log(request);
-
-    return next.handle(request);
+    const newReq = request.clone({ url: 'http://localhost:8888' + request.url });
+    return next.handle(newReq);
   }
 }

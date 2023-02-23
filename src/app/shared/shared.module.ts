@@ -1,22 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import { BaseUrlInterceptor } from "./interceptors/base-url.interceptor";
+import { HttpClientModule } from "@angular/common/http";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import {MatCardModule} from "@angular/material/card";
+import {MatButtonModule} from "@angular/material/button";
 
+const materialModules = [
+  MatSlideToggleModule,
+  MatToolbarModule,
+  MatCardModule,
+  MatButtonModule
+];
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    ...materialModules
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: BaseUrlInterceptor,
-      multi: true,
-    },
-  ],
+  exports: materialModules,
 })
 export class SharedModule { }

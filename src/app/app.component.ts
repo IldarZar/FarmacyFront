@@ -1,5 +1,4 @@
 import {Component, Inject, InjectionToken, OnInit} from '@angular/core';
-import {AuthService} from "./shared/services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -9,14 +8,5 @@ import {AuthService} from "./shared/services/auth.service";
 export class AppComponent implements OnInit {
   title = 'farmacy';
 
-  constructor(
-    private authService: AuthService,
-  ) {
-  }
-
-  ngOnInit() {
-    // setInterval(() => {
-    //   this.authService.get();
-    // }, 2000)
-  }
+  ngOnInit() {}
 }
