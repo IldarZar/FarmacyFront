@@ -10,6 +10,10 @@ const routes: Routes = [
   {
     path: 'catalog',
     loadChildren: () => import('./public/catalog/catalog.module').then(m => m.CatalogModule),
+  },
+  {
+    path: 'categories',
+    loadChildren: () => import('./admin/categories/categories.module').then(m => m.CategoriesModule),
   }
 ];
 

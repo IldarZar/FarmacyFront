@@ -6,21 +6,38 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
+import { HeaderComponent } from './components/header/header.component';
+import {MatTableModule} from "@angular/material/table";
+import { ModalWindowComponent } from './components/modal-window/modal-window.component';
+import {MatSortModule} from "@angular/material/sort";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatIconModule} from "@angular/material/icon";
 
 const materialModules = [
   MatSlideToggleModule,
   MatToolbarModule,
   MatCardModule,
-  MatButtonModule
+  MatButtonModule,
+  MatTableModule,
+  MatSortModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatIconModule
 ];
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    HeaderComponent,
+    ModalWindowComponent
+  ],
   imports: [
     CommonModule,
-    HttpClientModule,
     ...materialModules
   ],
-  exports: materialModules,
+  exports: [
+    HeaderComponent,
+    ...materialModules
+  ],
 })
 export class SharedModule { }

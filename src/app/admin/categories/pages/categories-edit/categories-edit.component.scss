@@ -1,0 +1,20 @@
+.categories-edit {
+  padding: 24px;
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 11;
+  border-radius: 12px;
+}
+
+.shadow {
+  position: absolute;
+  background-color: black;
+  opacity: .3;
+  width: 100%;
+  top: 0;
+  height: 100vh;
+  z-index: 10;
+}

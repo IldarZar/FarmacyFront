@@ -14,6 +14,6 @@ export class CatalogService {
 
   getCatalog(): Observable<Product[]> {
     // @ts-ignore
-    return this.http.get('/apteka-api/products').pipe(map((products) => products.content));
+    return this.http.get('/products').pipe(map((products) => products.content));
   }
 }
