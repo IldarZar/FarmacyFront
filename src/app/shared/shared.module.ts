@@ -13,6 +13,7 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
+import { FooterComponent } from './components/footer/footer.component';
 
 const materialModules = [
   MatSlideToggleModule,
@@ -29,7 +30,8 @@ const materialModules = [
 @NgModule({
   declarations: [
     HeaderComponent,
-    ModalWindowComponent
+    ModalWindowComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +39,7 @@ const materialModules = [
   ],
   exports: [
     HeaderComponent,
+    FooterComponent,
     ...materialModules
   ],
 })
