@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+.button {
+  border-radius: 8px;
+  padding: 6px 24px;
+  background-color: var(--theme-blue);
+  max-width: 130px;
+  height: 100%;
+  width: 100%;
+  color: var(--theme-main);
+  border: none;
+}

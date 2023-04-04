@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CatalogService} from "@app/public/catalog/services/catalog.service";
 import {Observable} from "rxjs";
-import {Product} from "@app/public/catalog/models/catalog";
+import {Product} from "@app/public/catalog/models/product";
 
 @Component({
   selector: 'app-catalog-page',
