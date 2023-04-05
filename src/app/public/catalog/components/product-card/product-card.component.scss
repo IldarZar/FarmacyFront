@@ -1,0 +1,26 @@
+:host {
+  display: block;
+  padding: 17px;
+  background-color: #F5F9FF;
+  max-width: 276px;
+  max-height: 271px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  color: var( --theme-black);
+}
+
+.img {
+  max-width: 240px;
+  border-radius: 20px;
+}
+
+.name {
+  margin-top: 14px;
+}
+
+.bottom-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

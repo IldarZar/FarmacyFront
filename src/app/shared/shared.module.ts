@@ -14,6 +14,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import { FooterComponent } from './components/footer/footer.component';
+import { ButtonComponent } from './components/button/button.component';
 
 const materialModules = [
   MatSlideToggleModule,
@@ -31,16 +32,18 @@ const materialModules = [
   declarations: [
     HeaderComponent,
     ModalWindowComponent,
-    FooterComponent
+    FooterComponent,
+    ButtonComponent
   ],
   imports: [
     CommonModule,
     ...materialModules
   ],
-  exports: [
-    HeaderComponent,
-    FooterComponent,
-    ...materialModules
-  ],
+    exports: [
+        HeaderComponent,
+        FooterComponent,
+        ...materialModules,
+        ButtonComponent
+    ],
 })
 export class SharedModule { }
