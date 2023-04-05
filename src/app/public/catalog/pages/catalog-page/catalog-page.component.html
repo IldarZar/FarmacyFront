@@ -1,16 +1,24 @@
 <app-header></app-header>
 
+<main class="content">
+  <!-- categories -->
+  <app-categories
+    (categorySelected)="categorySelected($event)"
+  ></app-categories>
+  <!-- subcategories -->
+  <div class="container">
+    <app-product-card
+      class="catalog"
+      *ngFor="let product of products$ | async"
+      [price]="product.price"
+      [name]="product.name"
+      [imgUrl]="product.imgUrl"
+    >
 
-<div class="container">
-  <app-product-card
-    class="catalog"
-    *ngFor="let product of products$ | async"
-    [price]="product.price"
-    [name]="product.name"
-    [imgUrl]="product.imgUrl"
-  >
+    </app-product-card>
+  </div>
+</main>
 
-  </app-product-card>
-</div>
+
 
 <app-footer></app-footer>

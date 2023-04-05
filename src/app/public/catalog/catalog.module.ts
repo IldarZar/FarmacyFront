@@ -6,11 +6,13 @@ import { CatalogPageComponent } from './pages/catalog-page/catalog-page.componen
 import { SharedModule } from "../../shared/shared.module";
 import { HttpClientModule } from "@angular/common/http";
 import { ProductCardComponent } from './components/product-card/product-card.component';
+import { CategoriesComponent } from './components/filter/categories.component';
 
 @NgModule({
   declarations: [
     CatalogPageComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    CategoriesComponent
   ],
   imports: [
     CommonModule,

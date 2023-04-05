@@ -1,3 +1,14 @@
+:host {
+  width: 100%;
+}
+
+.content {
+  max-width: 1248px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+
+}
 
 .card {
   max-width: 400px;

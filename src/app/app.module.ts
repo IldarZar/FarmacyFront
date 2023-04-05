@@ -7,18 +7,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatToolbarModule } from "@angular/material/toolbar";
-// import { BaseUrlInterceptor } from "@app/core/interceptors/base-url.interceptor";
+import { BaseUrlInterceptor } from "@app/core/interceptors/base-url.interceptor";
 
 @NgModule({
     declarations: [
         AppComponent
     ],
     providers: [
-        // {
-        //     provide: HTTP_INTERCEPTORS,
-        //     useClass: BaseUrlInterceptor,
-        //     multi: true,
-        // },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: BaseUrlInterceptor,
+            multi: true,
+        },
     ],
     bootstrap: [AppComponent],
     imports: [

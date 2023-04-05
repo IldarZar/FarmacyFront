@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
-import {map, Observable, of} from "rxjs";
+import {map, Observable, of, tap} from "rxjs";
 import { Product } from "@app/public/catalog/models/product";
+import {Category} from "@app/public/catalog/models/category";
 
 @Injectable({
   providedIn: 'root'
@@ -12,44 +13,19 @@ export class CatalogService {
     private http: HttpClient
   ) { }
 
+  private getContent(body: any) {
+    return body.content;
+  }
+
   getCatalog(): Observable<Product[]> {
+    return this.http.get('/products').pipe(map(this.getContent));
+  }
 
-    const data = of([
-      {
-        name: '123',
-        price: 233,
-        controlled: false,
-        imgUrl: "https://athletic-store.ru/wp-content/uploads/2019/05/ppinkryr.jpg",
-        category: {
-          id: 2,
-          name: 'Category1'
-        }
-      }  as Product,
-      {
-        name: '123',
-        price: 233,
-        controlled: false,
-        imgUrl: "https://athletic-store.ru/wp-content/uploads/2019/05/ppinkryr.jpg",
-        category: {
-          id: 2,
-          name: 'Category1'
-        }
-      }  as Product,
-      {
-        name: '123',
-        price: 233,
-        controlled: false,
-        imgUrl: "https://athletic-store.ru/wp-content/uploads/2019/05/ppinkryr.jpg",
-        category: {
-          id: 2,
-          name: 'Category1'
-        }
-      }  as Product,
-      ]);
+  getCategories(): Observable<Category[]> {
+    return this.http.get('/categories').pipe(map(this.getContent));
+  }
 
-    return data;
-
-    // @ts-ignore
-    // return this.http.get('http://localhost:8888/apteka-api/products?name=test').pipe(map((products) => products.content));
+  getCatalogByCategoryId(categoryId: number): Observable<Product[]> {
+    return this.http.get(`/products/category/${categoryId}`).pipe(map(this.getContent));
   }
 }
