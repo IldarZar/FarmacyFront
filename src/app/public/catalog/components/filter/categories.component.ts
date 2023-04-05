@@ -13,6 +13,10 @@ export class CategoriesComponent implements OnInit {
 
   categories$!: Observable<Category[]>;
 
+  categoryStatus: any = {};
+
+  selectedCategoryId: null | number = null;
+
   @Output()
   categorySelected = new EventEmitter();
 
@@ -25,6 +29,8 @@ export class CategoriesComponent implements OnInit {
   }
 
   selectCategory(categoryId: number): void {
-    this.categorySelected.emit(categoryId);
+    this.selectedCategoryId = this.selectedCategoryId === categoryId ? null : categoryId;
+
+    this.categorySelected.emit(this.selectedCategoryId);
   }
 }

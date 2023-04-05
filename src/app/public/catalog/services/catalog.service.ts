@@ -26,6 +26,8 @@ export class CatalogService {
   }
 
   getCatalogByCategoryId(categoryId: number): Observable<Product[]> {
-    return this.http.get(`/products/category/${categoryId}`).pipe(map(this.getContent));
+      return categoryId
+        ? this.http.get(`/products/category/${categoryId}`).pipe(map(this.getContent))
+        : this.getCatalog();
   }
 }

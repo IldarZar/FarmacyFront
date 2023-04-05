@@ -1,7 +1,8 @@
-<h4>
-  Категории товаров
-</h4>
-
-<span *ngFor="let category of categories$ | async" (click)="selectCategory(category.id)">
+<span
+  *ngFor="let category of categories$ | async"
+  (click)="selectCategory(category.id)"
+  [class.category_selected]="category.id === selectedCategoryId"
+  class="category"
+>
   {{ category.name }}
 </span>
