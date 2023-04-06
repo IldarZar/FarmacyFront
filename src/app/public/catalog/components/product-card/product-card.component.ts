@@ -19,6 +19,6 @@ export class ProductCardComponent implements OnInit {
   ngOnInit(): void {}
 
   addProductToCart() {
-    this.productSelected.emit(this.product.id);
+    this.productSelected.emit(this.product);
   }
 }

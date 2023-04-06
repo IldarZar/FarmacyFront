@@ -1,22 +1,26 @@
 import { Injectable } from '@angular/core';
-import { State, Action, StateContext } from '@ngxs/store';
-import { Product } from "@app/public/catalog/models/product";
+import {State, Action, StateContext, Selector} from '@ngxs/store';
 import {AddProductToCart} from "@app/app.actions";
 
 export class ProductStateModel {
-  productsId: number[];
+  products: { product: { id: number }, countProduct: number }[];
 }
 
 @State<ProductStateModel>({
-  name: 'Add',
+  name: 'app',
   defaults: {
-    productsId: [],
+    products: [],
   }
 })
 @Injectable()
 export class CartState {
   @Action(AddProductToCart)
-  addProduct(ctx: StateContext<ProductStateModel>, { id }: AddProductToCart) {
-    ctx.patchState({ productsId: [ ...ctx.getState().productsId, id ] });
+  addProduct(ctx: StateContext<ProductStateModel>, { payload }: AddProductToCart) {
+    ctx.patchState({ products: [ ...ctx.getState().products, { countProduct: payload.count, product: payload.product } ] });
+  }
+
+  @Selector([CartState])
+  static getCartProducts(state: ProductStateModel) {
+    return state.products;
   }
 }

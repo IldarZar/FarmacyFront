@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CatalogService} from "@app/public/catalog/services/catalog.service";
-import {Observable, Subscription} from "rxjs";
+import {Observable, Subscription, tap} from "rxjs";
 import {Product} from "@app/public/catalog/models/product";
 import {Store} from "@ngxs/store";
 import {AddProductToCart} from "@app/app.actions";
@@ -21,13 +21,15 @@ export class CatalogPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.products$ = this.catalogService.getCatalog();
+
+    this.store.subscribe(console.log)
   }
 
   categorySelected(categoryId: number): void {
     this.products$ = this.catalogService.getCatalogByCategoryId(categoryId);
   }
 
-  addProductToCart(id: number) {
-    this.store.dispatch(new AddProductToCart(id)).subscribe();
+  addProductToCart(product: Product) {
+    this.store.dispatch(new AddProductToCart({ product, count: 1 })).pipe(tap(console.log)).subscribe();
   }
 }

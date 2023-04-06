@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: () => import('@app/dashboard/dashboard.module').then(m => m.DashboardModule),
+  },
+  {
+    path: 'cart',
+    loadChildren: () => import('@app/public/cart/cart.module').then(m => m.CartModule),
   }
 ];
 

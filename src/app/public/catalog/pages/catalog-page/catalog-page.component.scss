@@ -18,6 +18,10 @@
   &__info {
     color: black;
   }
+  &__content {
+    display: flex;
+    gap: 16px;
+  }
 }
 
 .subcategories {

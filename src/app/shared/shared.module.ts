@@ -15,6 +15,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import { FooterComponent } from './components/footer/footer.component';
 import { ButtonComponent } from './components/button/button.component';
+import {RouterLinkWithHref} from "@angular/router";
 
 const materialModules = [
   MatSlideToggleModule,
@@ -35,10 +36,11 @@ const materialModules = [
     FooterComponent,
     ButtonComponent
   ],
-  imports: [
-    CommonModule,
-    ...materialModules
-  ],
+    imports: [
+        CommonModule,
+        ...materialModules,
+        RouterLinkWithHref
+    ],
     exports: [
         HeaderComponent,
         FooterComponent,
