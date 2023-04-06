@@ -8,9 +8,9 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { BaseUrlInterceptor } from "@app/core/interceptors/base-url.interceptor";
-import {NgxsModule} from "@ngxs/store";
-import {CartState} from "@app/app.state";
-import {environment} from "@env/environment";
+import { NgxsModule } from "@ngxs/store";
+import { AppState } from "@app/app.state";
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 
 @NgModule({
     declarations: [
@@ -31,9 +31,8 @@ import {environment} from "@env/environment";
         HttpClientModule,
         MatSlideToggleModule,
         MatToolbarModule,
-        NgxsModule.forRoot([CartState], {
-          developmentMode: !environment.production
-        })
+        NgxsModule.forRoot([AppState]),
+        NgxsLoggerPluginModule.forRoot()
     ]
 })
 export class AppModule {

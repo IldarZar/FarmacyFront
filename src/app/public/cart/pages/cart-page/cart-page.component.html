@@ -2,6 +2,10 @@
 
 <div>
   <h3>Список товаров</h3>
+
+  <div *ngFor="let product of cartProducts$ | async" class="product-row">
+    {{ product | json }}
+  </div>
 </div>
 
 <app-footer></app-footer>
