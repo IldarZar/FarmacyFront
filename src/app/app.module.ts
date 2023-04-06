@@ -8,6 +8,9 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { BaseUrlInterceptor } from "@app/core/interceptors/base-url.interceptor";
+import {NgxsModule} from "@ngxs/store";
+import {CartState} from "@app/app.state";
+import {environment} from "@env/environment";
 
 @NgModule({
     declarations: [
@@ -27,7 +30,10 @@ import { BaseUrlInterceptor } from "@app/core/interceptors/base-url.interceptor"
         BrowserAnimationsModule,
         HttpClientModule,
         MatSlideToggleModule,
-        MatToolbarModule
+        MatToolbarModule,
+        NgxsModule.forRoot([CartState], {
+          developmentMode: !environment.production
+        })
     ]
 })
 export class AppModule {

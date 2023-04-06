@@ -15,9 +15,8 @@
         <app-product-card
           class="card"
           *ngFor="let product of products$ | async"
-          [price]="product.price"
-          [name]="product.name"
-          [imgUrl]="product.imgUrl"
+          [product]="product"
+          (productSelected)="addProductToCart($event)"
         >
         </app-product-card>
       </div>

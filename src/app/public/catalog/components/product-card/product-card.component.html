@@ -1,12 +1,12 @@
-<img src="{{ imgUrl }}" alt="" class="img">
+<img src="{{ product.imgUrl }}" alt="" class="img">
 <div class="name">
-  {{ name }}
+  {{ product.name }}
 </div>
 <div class="bottom-group">
   <div class="price">
-    {{ price }} ₽
+    {{ product.price }} ₽
   </div>
-  <app-button>
+  <app-button (click)="addProductToCart()">
     В корзину
   </app-button>
 </div>
