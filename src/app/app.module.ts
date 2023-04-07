@@ -11,6 +11,7 @@ import { BaseUrlInterceptor } from "@app/core/interceptors/base-url.interceptor"
 import { NgxsModule } from "@ngxs/store";
 import { AppState } from "@app/app.state";
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import {SharedModule} from "@app/shared/shared.module";
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
         MatSlideToggleModule,
         MatToolbarModule,
         NgxsModule.forRoot([AppState]),
-        NgxsLoggerPluginModule.forRoot()
+        NgxsLoggerPluginModule.forRoot(),
+        SharedModule
     ]
 })
 export class AppModule {

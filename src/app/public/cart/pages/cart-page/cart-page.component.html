@@ -1,10 +1,8 @@
-<app-header></app-header>
-
 <div>
   <h3>Список товаров</h3>
 
-  <div *ngFor="let product of cartProducts$ | async" class="product-row">
-    {{ product | json }}
+  <div *ngFor="let cartProduct of cartProducts$ | async" class="product-row" (click)="deleteProductFromCart(cartProduct)">
+    {{ cartProduct | json }}
   </div>
 </div>
 

@@ -18,6 +18,9 @@
             <div><svg width="20" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-cart"></use></svg></div>
             <span>Корзина</span>
           </a>
+          <span style="color: red;">
+            {{ productCount | async }}
+          </span>
         </li>
         <li>
           <a href="#">
