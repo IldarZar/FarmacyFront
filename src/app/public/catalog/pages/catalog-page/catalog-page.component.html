@@ -1,10 +1,14 @@
 <main class="main">
-  <app-categories
-    class="categories"
-    (categorySelected)="categorySelected($event)"
-  ></app-categories>
+  <app-subcategories
+    (subcategorySelected)="subcategorySelected($event)"
+  >
+  </app-subcategories>
+
   <div class="container">
-    <div class="subcategories"></div>
+    <app-categories
+      class="categories"
+      (categorySelected)="categorySelected($event)"
+    ></app-categories>
     <div class="catalog">
       <div class="catalog__info">
         <h2>Каталог</h2>
@@ -23,4 +27,3 @@
   </div>
 </main>
 
-<app-footer></app-footer>

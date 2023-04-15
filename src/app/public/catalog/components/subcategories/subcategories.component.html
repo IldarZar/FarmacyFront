@@ -1,0 +1,3 @@
+<span class="category" *ngFor="let subcategory of subcategories$ | async" (click)="selectSubcategory(subcategory.id)">
+  {{ subcategory.name }}
+</span>

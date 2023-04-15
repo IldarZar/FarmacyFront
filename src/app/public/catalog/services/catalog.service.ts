@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { map, Observable, of, tap } from 'rxjs';
 import { Product } from '../models/product';
 import { Category } from '../models/category';
+import {Subcategory} from "../models/Subcategory";
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,10 @@ export class CatalogService {
     return this.http.get('/categories').pipe(map(this.getContent));
   }
 
+  getSubcategories(): Observable<Subcategory[]> {
+    return this.http.get<Subcategory[]>('/subcategories').pipe(map(this.getContent));
+  }
+
   getCatalogByCategoryId(categoryId: number): Observable<Product[]> {
     return categoryId
       ? this.http
@@ -36,5 +41,13 @@ export class CatalogService {
     this.http.get<Product>(`/products/${productId}`).subscribe(res => console.log(res));
 
     return this.http.get<Product>(`/products/${productId}`);
+  }
+
+  getCatalogBySubcategoryId(subcategoryId: number): Observable<Product[]> {
+    return subcategoryId
+      ? this.http
+        .get(`/products/category/${subcategoryId}`)
+        .pipe(map(this.getContent))
+      : this.getCatalog();
   }
 }

@@ -4,6 +4,7 @@
 
 .categories {
   padding: 12px 36px;
+  max-width: 200px;
 }
 
 .main {
@@ -11,10 +12,13 @@
   margin: 0 auto;
 }
 
-.card {
+.container {
+  display: flex;
+  gap: 16px;
 }
 
 .catalog {
+  width: 100%;
   &__info {
     color: black;
   }

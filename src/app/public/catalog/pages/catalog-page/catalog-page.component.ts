@@ -36,4 +36,8 @@ export class CatalogPageComponent implements OnInit {
   openProductDetails(productId: number): void {
     this.router.navigate([productId], { relativeTo: this.activatedRoute });
   }
+
+  subcategorySelected(subcategoryId: number): void {
+    this.products$ = this.catalogService.getCatalogBySubcategoryId(subcategoryId);
+  }
 }
