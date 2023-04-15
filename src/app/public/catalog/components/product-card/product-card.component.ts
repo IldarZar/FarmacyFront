@@ -1,24 +1,25 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Product} from "@app/public/catalog/models/product";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
-  styleUrls: ['./product-card.component.scss']
+  styleUrls: ['./product-card.component.scss'],
 })
 export class ProductCardComponent implements OnInit {
 
-  constructor() { }
-
   @Input()
-  product: Product;
+  product!: Product;
 
   @Output()
   productSelected = new EventEmitter();
 
+  constructor() {}
+
   ngOnInit(): void {}
 
-  addProductToCart() {
+  addProductToCart(e: Event) {
+    e.stopPropagation();
     this.productSelected.emit(this.product);
   }
 }

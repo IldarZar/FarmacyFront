@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AppState } from "@app/app.state";
 import {Select, Store} from "@ngxs/store";
 import { Observable } from "rxjs";
-import { CartProduct } from "@app/public/catalog/models/cart-product";
-import {DeleteCartProduct} from "@app/app.actions";
+import {CartProduct} from "../../../catalog/models/cart-product";
+import {AppState} from "../../../../app.state";
+import {DeleteCartProduct} from "../../../../app.actions";
 
 @Component({
   selector: 'app-cart-page',

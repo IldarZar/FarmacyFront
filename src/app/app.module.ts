@@ -1,42 +1,35 @@
-import { InjectionToken, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent} from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
-import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { BaseUrlInterceptor } from "@app/core/interceptors/base-url.interceptor";
-import { NgxsModule } from "@ngxs/store";
-import { AppState } from "@app/app.state";
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
-import {SharedModule} from "@app/shared/shared.module";
+import { AppComponent } from './app.component';
+import {SharedModule} from "./shared/shared.module";
+import {CatalogModule} from "./public/catalog/catalog.module";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {BaseUrlInterceptor} from "./base-url.interceptor";
+import {NgxsModule} from "@ngxs/store";
+import {AppState} from "./app.state";
+import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
 
 @NgModule({
-    declarations: [
-        AppComponent
-    ],
-    providers: [
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: BaseUrlInterceptor,
-            multi: true,
-        },
-    ],
-    bootstrap: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
     imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatSlideToggleModule,
-        MatToolbarModule,
-        NgxsModule.forRoot([AppState]),
-        NgxsLoggerPluginModule.forRoot(),
-        SharedModule
-    ]
+      BrowserModule,
+      AppRoutingModule,
+      SharedModule,
+      CatalogModule,
+      NgxsModule.forRoot([AppState]),
+      NgxsLoggerPluginModule.forRoot(),
+    ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BaseUrlInterceptor,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {
-
-}
+export class AppModule { }

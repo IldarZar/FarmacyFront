@@ -15,6 +15,7 @@
           *ngFor="let product of products$ | async"
           [product]="product"
           (productSelected)="addProductToCart($event)"
+          (click)="openProductDetails(product.id)"
         >
         </app-product-card>
       </div>

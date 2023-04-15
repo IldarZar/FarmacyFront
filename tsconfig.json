@@ -5,7 +5,6 @@
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "strictPropertyInitialization": false,
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -22,12 +21,7 @@
     "lib": [
       "es2020",
       "dom"
-    ],
-    "paths": {
-      "@app/*": ["src/app/*"],
-      "@env/*": ["src/environments/*"],
-      "jszip": ["node_modules/jszip/dist/jszip.min.js"]
-    }
+    ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

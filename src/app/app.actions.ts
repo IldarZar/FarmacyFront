@@ -1,4 +1,4 @@
-import { CartProduct } from "@app/public/catalog/models/cart-product";
+import {CartProduct} from "./public/catalog/models/cart-product";
 
 export class AddCartProduct {
   static readonly type = '[Add] Product To Cart';
@@ -13,5 +13,4 @@ export class UpdateCartProduct {
 export class DeleteCartProduct {
   static readonly type = '[Delete] Product from Cart';
   constructor(public payload: CartProduct) {}
-
 }

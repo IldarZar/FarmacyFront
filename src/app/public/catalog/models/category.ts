@@ -1,5 +1,4 @@
-import { Identifiable } from "@app/shared/models/identifable";
 
-export interface Category extends Identifiable {
+export interface Category {
   name: string;
 }

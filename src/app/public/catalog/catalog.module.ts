@@ -3,22 +3,20 @@ import { CommonModule } from '@angular/common';
 
 import { CatalogRoutingModule } from './catalog-routing.module';
 import { CatalogPageComponent } from './pages/catalog-page/catalog-page.component';
-import { SharedModule } from "../../shared/shared.module";
-import { HttpClientModule } from "@angular/common/http";
+import { SharedModule } from '../../shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { ProductDetailsPageComponent } from './pages/product-details-page/product-details-page.component';
 
 @NgModule({
   declarations: [
     CatalogPageComponent,
     ProductCardComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    ProductDetailsPageComponent,
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    HttpClientModule,
-    CatalogRoutingModule,
-  ],
+  imports: [CommonModule, SharedModule, HttpClientModule, CatalogRoutingModule],
 })
-export class CatalogModule { }
+
+export class CatalogModule {}

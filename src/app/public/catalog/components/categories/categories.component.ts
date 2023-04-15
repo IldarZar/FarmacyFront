@@ -1,19 +1,19 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {CatalogService} from "@app/public/catalog/services/catalog.service";
+import {CatalogService} from "../../services/catalog.service";
 import {Observable} from "rxjs";
-import {Category} from "@app/public/catalog/models/category";
+import {Category} from "../../models/category";
 
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss']
 })
-export class CategoriesComponent implements OnInit {
+export class CategoriesComponent {
 
   categories$!: Observable<Category[]>;
 
-  selectedCategoryId: null | number;
+  selectedCategoryId!: null | number;
 
   @Output()
   categorySelected = new EventEmitter();

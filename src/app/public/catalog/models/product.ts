@@ -1,5 +1,5 @@
-import { Identifiable } from "@app/shared/models/identifable";
-import { Category } from "@app/public/catalog/models/category";
+import { Category } from './category';
+import {Identifiable} from "../../../shared/models/identifable";
 
 export interface Product extends Identifiable {
   name: string;
