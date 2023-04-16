@@ -1,33 +1,36 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CatalogService} from "../../services/catalog.service";
 import {Observable} from "rxjs";
 import {Subcategory} from "../../models/Subcategory";
+import {Category} from "../../models/category";
 
 @Component({
   selector: 'app-subcategories',
   templateUrl: './subcategories.component.html',
   styleUrls: ['./subcategories.component.scss']
 })
-export class SubcategoriesComponent implements OnInit {
+export class SubcategoriesComponent {
 
+  @Input('subcategories')
   subcategories$!: Observable<Subcategory[]>;
 
-  selectedSubcategoryId!: null | number;
+  @Input()
+  activeSubcategoryId: number | null;
 
   @Output()
   subcategorySelected = new EventEmitter();
 
-  constructor(
-    private catalogService: CatalogService,
-  ) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    this.subcategories$ = this.catalogService.getSubcategories();
-  }
+  selectSubcategory(subcategoryId: number): void {
 
-  selectSubcategory(categoryId: number): void {
-    this.selectedSubcategoryId = this.selectedSubcategoryId === categoryId ? null : categoryId;
+    if (subcategoryId === this.activeSubcategoryId) {
+      this.activeSubcategoryId = null;
+      this.subcategorySelected.emit(this.activeSubcategoryId);
+      return;
+    }
 
-    this.subcategorySelected.emit(this.selectedSubcategoryId);
+    this.activeSubcategoryId = subcategoryId;
+    this.subcategorySelected.emit(subcategoryId);
   }
 }

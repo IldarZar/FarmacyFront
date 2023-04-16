@@ -1,14 +1,18 @@
 <main class="main">
-  <app-subcategories
-    (subcategorySelected)="subcategorySelected($event)"
-  >
-  </app-subcategories>
 
+  <app-categories
+    class="categories"
+    [categories]="categories$"
+    [activeCategoryId]="activeCategoryId"
+    (categorySelected)="categorySelected($event)"
+  ></app-categories>
   <div class="container">
-    <app-categories
-      class="categories"
-      (categorySelected)="categorySelected($event)"
-    ></app-categories>
+    <app-subcategories
+      [subcategories]="subcategories$"
+      [activeSubcategoryId]="activeSubcategoryId"
+      (subcategorySelected)="subcategorySelected($event)"
+    >
+    </app-subcategories>
     <div class="catalog">
       <div class="catalog__info">
         <h2>Каталог</h2>

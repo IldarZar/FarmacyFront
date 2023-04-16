@@ -1,3 +1,8 @@
-<span class="category" *ngFor="let subcategory of subcategories$ | async" (click)="selectSubcategory(subcategory.id)">
+<span
+  *ngFor="let subcategory of subcategories$ | async"
+  (click)="selectSubcategory(subcategory.id)"
+  [class.subcategory_selected]="subcategory.id === activeSubcategoryId"
+  class="subcategory"
+>
   {{ subcategory.name }}
 </span>

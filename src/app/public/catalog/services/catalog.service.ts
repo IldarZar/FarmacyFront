@@ -29,11 +29,9 @@ export class CatalogService {
   }
 
   getCatalogByCategoryId(categoryId: number): Observable<Product[]> {
-    return categoryId
-      ? this.http
+    return this.http
           .get(`/products/category/${categoryId}`)
-          .pipe(map(this.getContent))
-      : this.getCatalog();
+          .pipe(map(this.getContent));
   }
 
   getProductById(productId: number): Observable<Product> {
@@ -44,10 +42,8 @@ export class CatalogService {
   }
 
   getCatalogBySubcategoryId(subcategoryId: number): Observable<Product[]> {
-    return subcategoryId
-      ? this.http
-        .get(`/products/category/${subcategoryId}`)
-        .pipe(map(this.getContent))
-      : this.getCatalog();
+    return this.http
+        .get(`/products/subcategories/${subcategoryId}`)
+        .pipe(map(this.getContent));
   }
 }

@@ -1,14 +1,15 @@
+
 :host {
   border-radius: 20px;
   padding: 16px;
-  margin-right: auto;
+  background-color: var(--theme-light-blue);
   color: black;
-  width: 100%;
   display: flex;
+  flex-direction: column;
   gap: 8px;
 }
 
-.category {
+.subcategory {
   border-radius: 8px;
   padding: 4px;
   transition: .2s;
@@ -22,3 +23,5 @@
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   }
 }
+
+
