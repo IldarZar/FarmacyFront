@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CatalogService} from "../../services/catalog.service";
 import {Observable} from "rxjs";
-import {Subcategory} from "../../models/Subcategory";
-import {Category} from "../../models/category";
+import {Subcategory} from "../../../../shared/models/product/subcategory";
+import {Category} from "../../../../shared/models/product/category";
 
 @Component({
   selector: 'app-subcategories',

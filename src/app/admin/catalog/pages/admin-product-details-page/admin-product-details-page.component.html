@@ -1,0 +1,27 @@
+123213123
+<div style="color: black;">
+  {{ product | json }}
+</div>
+
+<form [formGroup]="formGroup" (ngSubmit)="updateProduct()">
+  <div class="form-group">
+    <label>Id</label>
+    <input name="id" formControlName="id" />
+  </div>
+  <div class="form-group">
+    <label>Имя</label>
+    <input name="name" formControlName="name" />
+  </div>
+  <div class="form-group">
+    <label>Цена</label>
+    <input name="price" formControlName="price" />
+  </div>
+  <div class="form-group">
+    <label>Адрес картинки</label>
+    <input name="imgUrl" formControlName="imgUrl" />
+  </div>
+
+  <button>
+    Отправить
+  </button>
+</form>

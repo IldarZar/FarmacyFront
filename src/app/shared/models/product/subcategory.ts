@@ -1,5 +1,5 @@
 import {Category} from "./category";
-import {Identifiable} from "../../../shared/models/identifable";
+import {Identifiable} from "../identifable";
 
 export interface Subcategory extends Identifiable {
   name: string;

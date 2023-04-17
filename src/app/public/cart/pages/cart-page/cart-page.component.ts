@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Select, Store} from "@ngxs/store";
 import { Observable } from "rxjs";
-import {CartProduct} from "../../../catalog/models/cart-product";
+import {CartProduct} from "../../../../shared/models/product/cart-product";
 import {AppState} from "../../../../app.state";
 import {DeleteCartProduct} from "../../../../app.actions";
 import {CartService} from "../../services/cart.service";

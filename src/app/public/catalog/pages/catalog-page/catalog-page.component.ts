@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CatalogService } from '../../services/catalog.service';
 import {Observable, of, Subscription, switchMap, tap} from 'rxjs';
-import { Product } from '../../models/product';
+import { Product } from '../../../../shared/models/product/product';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Store} from "@ngxs/store";
 import {AddCartProduct} from "../../../../app.actions";
-import {Category} from "../../models/category";
-import {Subcategory} from "../../models/Subcategory";
+import {Category} from "../../../../shared/models/product/category";
+import {Subcategory} from "../../../../shared/models/product/subcategory";
+import {UserService} from "../../../../shared/services/user.service";
+import {User} from "../../../../shared/models/user/user";
 
 @Component({
   selector: 'app-catalog-page',
@@ -15,6 +17,7 @@ import {Subcategory} from "../../models/Subcategory";
 })
 export class CatalogPageComponent implements OnInit {
   constructor(
+    private userService: UserService,
     private catalogService: CatalogService,
     private store: Store,
     private router: Router,
@@ -24,7 +27,6 @@ export class CatalogPageComponent implements OnInit {
   products$?: Observable<Product[]>;
   categories$: Observable<Category[]>;
   subcategories$: Observable<Subcategory[]>;
-
   activeCategoryId: number;
   activeSubcategoryId: number;
 
@@ -57,7 +59,15 @@ export class CatalogPageComponent implements OnInit {
   }
 
   openProductDetails(productId: number): void {
-    this.router.navigate([productId], { relativeTo: this.activatedRoute });
+
+    // @ts-ignore
+    this.userService.login<User>('testt', 'testt').subscribe((user) => {
+      if (user.roles.find(role => role.name === 'admin')) {
+        this.router.navigate(['/catalog/admin', productId]);
+      } else {
+        this.router.navigate([productId], { relativeTo: this.activatedRoute });
+      }
+    })
   }
 
   subcategorySelected(subcategoryId: number): void {

@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {CatalogService} from "../../services/catalog.service";
 import {Observable} from "rxjs";
-import {Category} from "../../models/category";
+import {Category} from "../../../../shared/models/product/category";
 
 @Component({
   selector: 'app-categories',

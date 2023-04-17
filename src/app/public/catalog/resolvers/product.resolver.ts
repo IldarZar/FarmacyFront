@@ -7,7 +7,7 @@ import {
   ActivatedRoute,
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { Product } from '../models/product';
+import { Product } from '../../../shared/models/product/product';
 import { HttpClient } from '@angular/common/http';
 import { CatalogService } from '../services/catalog.service';
 

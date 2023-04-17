@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { map, Observable, of, tap } from 'rxjs';
-import { Product } from '../models/product';
-import { Category } from '../models/category';
-import {Subcategory} from "../models/Subcategory";
+import { Product } from '../../../shared/models/product/product';
+import { Category } from '../../../shared/models/product/category';
+import {Subcategory} from "../../../shared/models/product/subcategory";
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,6 @@ export class CatalogService {
   constructor(private http: HttpClient) {}
 
   private getContent(body: any) {
-    console.log(body.content);
     return body.content;
   }
 
@@ -35,10 +34,7 @@ export class CatalogService {
   }
 
   getProductById(productId: number): Observable<Product> {
-
-    this.http.get<Product>(`/products/${productId}`).subscribe(res => console.log(res));
-
-    return this.http.get<Product>(`/products/${productId}`);
+    return this.http.get<Product>(`/products/${productId}`).pipe(tap(console.log));
   }
 
   getCatalogBySubcategoryId(subcategoryId: number): Observable<Product[]> {

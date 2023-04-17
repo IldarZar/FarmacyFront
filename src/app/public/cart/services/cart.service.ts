@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {CartProduct} from "../../catalog/models/cart-product";
+import {CartProduct} from "../../../shared/models/product/cart-product";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -17,7 +17,7 @@ export class CartService {
       productOrder: [
         {
           product: cartProduct.product,
-          count: cartProduct.count
+          countProduct: cartProduct.count
         },
       ],
     })

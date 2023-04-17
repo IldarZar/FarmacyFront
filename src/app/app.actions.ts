@@ -1,4 +1,4 @@
-import {CartProduct} from "./public/catalog/models/cart-product";
+import {CartProduct} from "./shared/models/product/cart-product";
 
 export class AddCartProduct {
   static readonly type = '[Add] Product To Cart';

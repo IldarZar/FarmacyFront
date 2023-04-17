@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {Observable, switchAll, switchMap} from "rxjs";
-import {Product} from "../../models/product";
+import {Product} from "../../../../shared/models/product/product";
 
 @Component({
   selector: 'app-product-details-page',

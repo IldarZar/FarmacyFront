@@ -9,6 +9,7 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { CategoriesComponent } from './components/categories/categories.component';
 import { ProductDetailsPageComponent } from './pages/product-details-page/product-details-page.component';
 import { SubcategoriesComponent } from './components/subcategories/subcategories.component';
+import {AdminCatalogModule} from "../../admin/catalog/admin-catalog.module";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { SubcategoriesComponent } from './components/subcategories/subcategories
     ProductDetailsPageComponent,
     SubcategoriesComponent,
   ],
-  imports: [CommonModule, SharedModule, HttpClientModule, CatalogRoutingModule],
+  imports: [CommonModule, SharedModule, HttpClientModule, CatalogRoutingModule, AdminCatalogModule],
 })
 
 export class CatalogModule {}

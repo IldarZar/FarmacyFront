@@ -14,7 +14,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import {CartProduct} from "../../../public/catalog/models/cart-product";
+import {CartProduct} from "../../models/product/cart-product";
 
 @Component({
   selector: 'app-header',

@@ -3,8 +3,8 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 
 import { Observable } from 'rxjs';
 import {AddCartProduct, DeleteCartProduct, UpdateCartProduct} from "./app.actions";
-import {Product} from "./public/catalog/models/product";
-import {CartProduct} from "./public/catalog/models/cart-product";
+import {Product} from "./shared/models/product/product";
+import {CartProduct} from "./shared/models/product/cart-product";
 
 export class AppStateModel {
   products!: CartProduct[];
