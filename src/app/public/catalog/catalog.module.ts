@@ -8,7 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { ProductDetailsPageComponent } from './pages/product-details-page/product-details-page.component';
-import { SubcategoriesComponent } from './components/subcategories/subcategories.component';
 import {AdminCatalogModule} from "../../admin/catalog/admin-catalog.module";
 
 @NgModule({
@@ -17,7 +16,6 @@ import {AdminCatalogModule} from "../../admin/catalog/admin-catalog.module";
     ProductCardComponent,
     CategoriesComponent,
     ProductDetailsPageComponent,
-    SubcategoriesComponent,
   ],
   imports: [CommonModule, SharedModule, HttpClientModule, CatalogRoutingModule, AdminCatalogModule],
 })

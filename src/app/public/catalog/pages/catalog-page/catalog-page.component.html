@@ -7,12 +7,12 @@
     (categorySelected)="categorySelected($event)"
   ></app-categories>
   <div class="container">
-    <app-subcategories
-      [subcategories]="subcategories$"
-      [activeSubcategoryId]="activeSubcategoryId"
-      (subcategorySelected)="subcategorySelected($event)"
+    <app-side-menu
+      [items]="subcategories$"
+      [activeItemId]="activeSubcategoryId"
+      (itemSelected)="subcategorySelected($event)"
     >
-    </app-subcategories>
+    </app-side-menu>
     <div class="catalog">
       <div class="catalog__info">
         <h2>Каталог</h2>

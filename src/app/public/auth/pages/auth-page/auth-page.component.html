@@ -1,0 +1,14 @@
+<form [formGroup]="formGroup" (ngSubmit)="authorize()">
+  <div class="form-group__field">
+    <label>Логин</label>
+    <input name="login" formControlName="login" />
+  </div>
+  <div class="form-group__field">
+    <label>Пароль</label>
+    <input name="password" formControlName="password" />
+  </div>
+
+  <button>
+    Отправить
+  </button>
+</form>

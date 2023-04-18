@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CatalogService } from '../../services/catalog.service';
-import {Observable, of, Subscription, switchMap, tap} from 'rxjs';
+import {Observable, of, Subscription, switchMap, tap } from 'rxjs';
 import { Product } from '../../../../shared/models/product/product';
 import { ActivatedRoute, Router } from '@angular/router';
-import {Store} from "@ngxs/store";
-import {AddCartProduct} from "../../../../app.actions";
-import {Category} from "../../../../shared/models/product/category";
-import {Subcategory} from "../../../../shared/models/product/subcategory";
-import {UserService} from "../../../../shared/services/user.service";
-import {User} from "../../../../shared/models/user/user";
+import { Store } from "@ngxs/store";
+import { AddCartProduct } from "../../../../app.actions";
+import { Category } from "../../../../shared/models/product/category";
+import { Subcategory } from "../../../../shared/models/product/subcategory";
+import { UserService } from "../../../../shared/services/user.service";
+import { User } from "../../../../shared/models/user/user";
 
 @Component({
   selector: 'app-catalog-page',

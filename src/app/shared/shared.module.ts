@@ -6,7 +6,8 @@ import { ModalWindowComponent } from './components/modal-window/modal-window.com
 
 import { FooterComponent } from './components/footer/footer.component';
 import { ButtonComponent } from './components/button/button.component';
-import {RouterLinkWithHref, RouterModule} from "@angular/router";
+import { RouterLinkWithHref, RouterModule } from "@angular/router";
+import { SideMenuComponent } from "./components/side-menu/side-menu.component";
 
 @NgModule({
   declarations: [
@@ -14,15 +15,17 @@ import {RouterLinkWithHref, RouterModule} from "@angular/router";
     ModalWindowComponent,
     FooterComponent,
     ButtonComponent,
+    SideMenuComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
   ],
-    exports: [
-        HeaderComponent,
-        FooterComponent,
-        ButtonComponent,
-    ],
+  exports: [
+    HeaderComponent,
+    FooterComponent,
+    ButtonComponent,
+    SideMenuComponent,
+  ],
 })
 export class SharedModule { }
