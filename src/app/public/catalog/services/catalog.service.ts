@@ -16,6 +16,18 @@ export class CatalogService {
   }
 
   getCatalog(): Observable<Product[]> {
+
+    this.http.post('/login', {
+      "user_name": 'testt',
+      'password': 'testt'
+    }, {
+        headers: {
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+          'Accept-Language': 'ru-RU,ru',
+        }
+      }
+    )
+
     return this.http.get('/products').pipe(map(this.getContent));
   }
 

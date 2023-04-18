@@ -4,19 +4,19 @@
 </div>
 
 <form [formGroup]="formGroup" (ngSubmit)="updateProduct()">
-  <div class="form-group">
+  <div class="form-group__field">
     <label>Id</label>
     <input name="id" formControlName="id" />
   </div>
-  <div class="form-group">
+  <div class="form-group__field">
     <label>Имя</label>
     <input name="name" formControlName="name" />
   </div>
-  <div class="form-group">
+  <div class="form-group__field">
     <label>Цена</label>
     <input name="price" formControlName="price" />
   </div>
-  <div class="form-group">
+  <div class="form-group__field">
     <label>Адрес картинки</label>
     <input name="imgUrl" formControlName="imgUrl" />
   </div>

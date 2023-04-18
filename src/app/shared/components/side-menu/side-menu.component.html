@@ -1,0 +1,8 @@
+<span
+  *ngFor="let item of items$ | async"
+  (click)="selectItem(item.id)"
+  [class.item_selected]="item.id === activeItemId"
+  class="item"
+>
+  {{ item.name }}
+</span>
