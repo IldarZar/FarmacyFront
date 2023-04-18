@@ -1,4 +1,4 @@
-<form [formGroup]="formGroup" (ngSubmit)="authorize()">
+<form [formGroup]="formGroup" (ngSubmit)="login()">
   <div class="form-group__field">
     <label>Логин</label>
     <input name="login" formControlName="login" />
@@ -12,3 +12,7 @@
     Отправить
   </button>
 </form>
+
+<button (click)="logout()">
+  Выйти
+</button>

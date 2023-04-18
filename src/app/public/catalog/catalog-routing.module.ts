@@ -6,10 +6,12 @@ import { ProductResolver } from './resolvers/product.resolver';
 import {
   AdminProductDetailsPageComponent
 } from "../../admin/catalog/pages/admin-product-details-page/admin-product-details-page.component";
+import {UserResolver} from "../../core/resolvers/user.resolver";
 
 const routes: Routes = [
   {
     path: '',
+    resolve: [UserResolver],
     component: CatalogPageComponent,
   },
   {

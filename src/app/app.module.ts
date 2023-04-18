@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import {SharedModule} from "./shared/shared.module";
 import {CatalogModule} from "./public/catalog/catalog.module";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {BaseUrlInterceptor} from "./base-url.interceptor";
+import {BaseUrlInterceptor} from "./core/interceptors/base-url.interceptor";
 import {NgxsModule} from "@ngxs/store";
 import {AppState} from "./app.state";
 import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
+import {DashboardModule} from "./dashboard/dashboard.module";
+import {CoreModule} from "./core/core.module";
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
       AppRoutingModule,
       SharedModule,
       CatalogModule,
+      DashboardModule,
+      CoreModule,
       NgxsModule.forRoot([AppState]),
       NgxsLoggerPluginModule.forRoot(),
     ],

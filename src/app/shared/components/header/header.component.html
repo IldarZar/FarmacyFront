@@ -23,9 +23,13 @@
           </span>
         </li>
         <li>
-          <a routerLink="/auth">
+          <a routerLink="/auth" *ngIf="!isUserLoggedIn">
             <div><svg width="16" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-account"></use></svg></div>
             <span>Войти</span>
+          </a>
+          <a routerLink="/account" *ngIf="isUserLoggedIn">
+            <div><svg width="16" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-account"></use></svg></div>
+            <span>Аккаунт</span>
           </a>
         </li>
       </ul>
