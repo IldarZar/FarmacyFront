@@ -3,65 +3,76 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import {
   BehaviorSubject,
-  Observable, of,
+  Observable,
+  of,
   Subject,
+  Subscription,
   switchAll,
   switchMap,
   tap,
 } from 'rxjs';
-import {User} from "../../models/user/user";
-import {AuthService} from "../../../public/auth/services/auth.service";
-import {Actions, ofActionDispatched, Select, Store} from "@ngxs/store";
-import {AddCartProduct, DeleteCartProduct} from "../../../app.actions";
-import {AppState} from "../../../app.state";
-import {CartProduct} from "../../models/product/cart-product";
+import { User } from '@shared/models/user/user';
+import { UserService } from '@app/core/services/user.service';
+import { Actions, ofActionDispatched, Select, Store } from '@ngxs/store';
+import { AddCartProduct, DeleteCartProduct } from '@app/app.actions';
+import { AppState } from '@app/app.state';
+import { CartProduct } from '@shared/models/product/cart-product';
+import { Nullable } from '@app/core/models/nullable';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
-  productCount = new BehaviorSubject(0);
+export class HeaderComponent implements OnInit, OnDestroy {
+  productCount$ = new BehaviorSubject(0);
+  isUserLoggedIn$ = new BehaviorSubject(false);
 
   currentUser: User;
 
-  isUserLoggedIn: boolean = false;
+  subscription = new Subscription();
 
   @Select(AppState.getCartProducts)
   cartProducts$: Observable<CartProduct[]>;
 
   constructor(
     protected route: ActivatedRoute,
-    private authService: AuthService,
+    private authService: UserService,
     private store: Store,
     private actions: Actions
   ) {}
 
   ngOnInit(): void {
-    this.actions
+    const productsSubscription = this.actions
       .pipe(
         ofActionDispatched(AddCartProduct, DeleteCartProduct),
         switchMap(() => this.cartProducts$)
       )
       .subscribe((products) => {
         // @ts-ignore
-        this.productCount.next(
+        this.productCount$.next(
           products.reduce((acc, currVal) => acc + currVal.count, 0)
         );
       });
 
-    this.authService.getCurrentUser().subscribe({
-      next: (user: User) => {
+    const userSubscription = this.authService
+      .getCurrentUser()
+      .subscribe((user: Nullable<User>) => {
         console.log(user);
+        this.isUserLoggedIn$.next(!!user?.id);
+      });
 
-        this.isUserLoggedIn = !!user?.id;
-      }
-    });
+    this.subscription.add(productsSubscription);
+    this.subscription.add(userSubscription);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

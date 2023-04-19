@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core';
 import {
-  Router, Resolve,
+  ActivatedRouteSnapshot,
+  Resolve,
   RouterStateSnapshot,
-  ActivatedRouteSnapshot
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import {User} from "../../shared/models/user/user";
-import {AuthService} from "../../public/auth/services/auth.service";
+import { User } from '@shared/models/user/user';
+import { UserService } from '@app/core/services/user.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserResolver implements Resolve<User> {
+  constructor(private authService: UserService) {}
 
-  constructor(private authService: AuthService) {}
-
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> {
-    // @ts-ignore
-    console.log(JSON.parse(localStorage.getItem('user')));
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<User> {
     // @ts-ignore
     const user = JSON.parse(localStorage.getItem('user')) as User;
-    return of(user);
+    return of<User>(user);
   }
 }

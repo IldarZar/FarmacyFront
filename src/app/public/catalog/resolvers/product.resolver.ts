@@ -7,15 +7,18 @@ import {
   ActivatedRoute,
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { Product } from '../../../shared/models/product/product';
+import { Product } from '@shared/models/product/product';
 import { HttpClient } from '@angular/common/http';
-import { CatalogService } from '../services/catalog.service';
+import { CatalogService } from '@public/catalog/services/catalog.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductResolver implements Resolve<Product> {
-  constructor(private catalogService: CatalogService, private http: HttpClient) {}
+  constructor(
+    private catalogService: CatalogService,
+    private http: HttpClient
+  ) {}
 
   resolve(
     route: ActivatedRouteSnapshot,

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Product } from '../../../../shared/models/product/product';
+import { Product } from '@shared/models/product/product';
 
 @Component({
   selector: 'app-product-card',
@@ -7,7 +7,6 @@ import { Product } from '../../../../shared/models/product/product';
   styleUrls: ['./product-card.component.scss'],
 })
 export class ProductCardComponent implements OnInit {
-
   @Input()
   product!: Product;
 

@@ -3,6 +3,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+
     "outDir": "./dist/out-tsc",
     "strictPropertyInitialization": false,
     "forceConsistentCasingInFileNames": true,
@@ -21,8 +22,16 @@
     "module": "es2020",
     "lib": [
       "es2020",
-      "dom"
-    ]
+      "dom",
+    ],
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@public/*": ["src/app/public/*"],
+      "@admin/*": ["src/app/admin/*"],
+      "@core/*": ["src/app/core/*"],
+      "@dashboard/*": ["src/app/dashboard/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

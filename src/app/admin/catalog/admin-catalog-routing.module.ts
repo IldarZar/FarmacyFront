@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {
-  ProductDetailsPageComponent
-} from "../../public/catalog/pages/product-details-page/product-details-page.component";
-import {ProductResolver} from "../../public/catalog/resolvers/product.resolver";
+import { ProductDetailsPageComponent } from '@public/catalog/pages/product-details-page/product-details-page.component';
+import { ProductResolver } from '@public/catalog/resolvers/product.resolver';
 
 const routes: Routes = [
   {
-    path: 'catalog/admin/:id',
+    path: '',
     component: ProductDetailsPageComponent,
     resolve: [ProductResolver],
     pathMatch: 'full',
@@ -16,6 +14,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AdminCatalogRoutingModule { }
+export class AdminCatalogRoutingModule {}

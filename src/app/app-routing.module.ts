@@ -8,25 +8,31 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'catalog',
-    loadChildren: () => import('./public/catalog/catalog.module').then(m => m.CatalogModule)
+    path: 'cart',
+    pathMatch: 'full',
+    loadChildren: () =>
+      import('./public/cart/cart.module').then((m) => m.CartModule),
   },
   {
-    path: 'cart',
-    loadChildren: () => import('./public/cart/cart.module').then((m) => m.CartModule),
+    path: 'catalog',
+    loadChildren: () =>
+      import('./public/catalog/catalog.module').then((m) => m.CatalogModule),
   },
   {
     path: 'auth',
-    loadChildren: () => import('./public/auth/auth.module').then((m) => m.AuthModule),
+    pathMatch: 'full',
+    loadChildren: () =>
+      import('./public/auth/auth.module').then((m) => m.AuthModule),
   },
   {
-    path: 'account',
-    loadChildren: () => import('./public/account/account.module').then((m) => m.AccountModule),
-  }
+    path: 'dashboard',
+    loadChildren: () =>
+      import('@dashboard/dashboard.module').then((m) => m.DashboardModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { CatalogService } from '../../services/catalog.service';
-import {Observable, of, Subscription, switchMap, tap } from 'rxjs';
-import { Product } from '../../../../shared/models/product/product';
+import { Observable, of, switchMap, tap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from "@ngxs/store";
-import { AddCartProduct } from "../../../../app.actions";
-import { Category } from "../../../../shared/models/product/category";
-import { Subcategory } from "../../../../shared/models/product/subcategory";
-import { UserService } from "../../../../shared/services/user.service";
-import { User } from "../../../../shared/models/user/user";
+import { Store } from '@ngxs/store';
+import { AddCartProduct } from '@app/app.actions';
+import { UserService } from '@app/core/services/user.service';
+import { Product } from '@shared/models/product/product';
+import { Subcategory } from '@shared/models/product/subcategory';
+import { Category } from '@shared/models/product/category';
+import { CatalogService } from '@public/catalog/services/catalog.service';
+import { User } from '@shared/models/user/user';
+import { Nullable } from '@core/models/nullable';
 
 @Component({
   selector: 'app-catalog-page',
@@ -32,8 +33,8 @@ export class CatalogPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.products$ = this.catalogService.getCatalog();
-    this.categories$ = this.catalogService.getCategories()
-    this.subcategories$ = this.catalogService.getSubcategories()
+    this.categories$ = this.catalogService.getCategories();
+    this.subcategories$ = this.catalogService.getSubcategories();
   }
 
   categorySelected(categoryId: number): void {
@@ -44,9 +45,13 @@ export class CatalogPageComponent implements OnInit {
       this.subcategories$ = this.catalogService
         .getSubcategories()
         .pipe(
-          switchMap(
-            (subcategories) => of(subcategories.filter(subcategory => subcategory.parentCategory.id === categoryId)),
-          ),
+          switchMap((subcategories) =>
+            of(
+              subcategories.filter(
+                (subcategory) => subcategory.parentCategory.id === categoryId
+              )
+            )
+          )
         );
     } else {
       this.products$ = this.catalogService.getCatalog();
@@ -59,22 +64,25 @@ export class CatalogPageComponent implements OnInit {
   }
 
   openProductDetails(productId: number): void {
-
-    // @ts-ignore
-    this.userService.login<User>('testt', 'testt').subscribe((user) => {
-      if (user.roles.find(role => role.name === 'admin')) {
-        this.router.navigate(['/catalog/admin', productId]);
+    // Показываем админскую карточку или обычную в зависимости от роли пользователя
+    // TODO: поменять includes на че-нибудь нормальное
+    this.userService.getCurrentUser().subscribe((user: Nullable<User>) => {
+      if (user?.roles.map((role) => role.id).includes(1)) {
+        this.router.navigate(['catalog', 'admin', productId]);
       } else {
-        this.router.navigate([productId], { relativeTo: this.activatedRoute });
+        this.router.navigate(['catalog', productId]);
       }
-    })
+    });
   }
 
   subcategorySelected(subcategoryId: number): void {
     this.activeSubcategoryId = subcategoryId;
     if (subcategoryId)
-      this.products$ = this.catalogService.getCatalogBySubcategoryId(subcategoryId);
+      this.products$ =
+        this.catalogService.getCatalogBySubcategoryId(subcategoryId);
     else
-      this.products$ = this.catalogService.getCatalogByCategoryId(this.activeCategoryId);
+      this.products$ = this.catalogService.getCatalogByCategoryId(
+        this.activeCategoryId
+      );
   }
 }

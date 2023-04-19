@@ -1,0 +1,13 @@
+Личный кабинет
+<p style="color: black;">{{ currentUser$ | async | json }}</p>
+<button (click)="logout()">выйти</button>
+
+<app-side-menu
+  [items]="items$"
+
+>
+
+</app-side-menu>
+<router-outlet>
+
+</router-outlet>

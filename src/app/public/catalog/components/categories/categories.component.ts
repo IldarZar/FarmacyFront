@@ -1,16 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {CatalogService} from "../../services/catalog.service";
-import {Observable} from "rxjs";
-import {Category} from "../../../../shared/models/product/category";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Category } from '@shared/models/product/category';
 
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss']
+  styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent {
-
   @Input('categories')
   categories$!: Observable<Category[]>;
 
@@ -20,10 +17,9 @@ export class CategoriesComponent {
   @Output()
   categorySelected = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
   selectCategory(categoryId: number): void {
-
     if (categoryId === this.activeCategoryId) {
       this.activeCategoryId = null;
       this.categorySelected.emit(this.activeCategoryId);

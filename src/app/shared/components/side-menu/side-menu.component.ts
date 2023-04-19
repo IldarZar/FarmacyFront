@@ -1,16 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from "rxjs";
-// TODO: Вернуть алиасы
-import { Subcategory } from "../../models/product/subcategory";
-import { Dictionary } from "../../models/dictionary";
+import { Observable } from 'rxjs';
+import { Dictionary } from '@app/core/models/dictionary';
 
 @Component({
   selector: 'app-side-menu',
   templateUrl: './side-menu.component.html',
-  styleUrls: ['./side-menu.component.scss']
+  styleUrls: ['./side-menu.component.scss'],
 })
 export class SideMenuComponent {
-
   @Input('items')
   items$!: Observable<Dictionary[]>;
 
@@ -20,10 +17,9 @@ export class SideMenuComponent {
   @Output()
   itemSelected = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
   selectItem(subcategoryId: number): void {
-
     if (subcategoryId === this.activeItemId) {
       this.activeItemId = null;
       this.itemSelected.emit(this.activeItemId);

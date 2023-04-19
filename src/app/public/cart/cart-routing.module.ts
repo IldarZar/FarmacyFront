@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {CartPageComponent} from "./pages/cart-page/cart-page.component";
+import { CartPageComponent } from './pages/cart-page/cart-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: CartPageComponent
-  }
+    component: CartPageComponent,
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class CartRoutingModule { }
+export class CartRoutingModule {}

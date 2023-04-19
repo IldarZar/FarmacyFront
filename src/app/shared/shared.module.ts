@@ -6,8 +6,8 @@ import { ModalWindowComponent } from './components/modal-window/modal-window.com
 
 import { FooterComponent } from './components/footer/footer.component';
 import { ButtonComponent } from './components/button/button.component';
-import { RouterLinkWithHref, RouterModule } from "@angular/router";
-import { SideMenuComponent } from "./components/side-menu/side-menu.component";
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -17,10 +17,7 @@ import { SideMenuComponent } from "./components/side-menu/side-menu.component";
     ButtonComponent,
     SideMenuComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-  ],
+  imports: [CommonModule, RouterModule],
   exports: [
     HeaderComponent,
     FooterComponent,
@@ -28,4 +25,4 @@ import { SideMenuComponent } from "./components/side-menu/side-menu.component";
     SideMenuComponent,
   ],
 })
-export class SharedModule { }
+export class SharedModule {}

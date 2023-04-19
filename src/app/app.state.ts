@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 
-import { Observable } from 'rxjs';
-import {AddCartProduct, DeleteCartProduct, UpdateCartProduct} from "./app.actions";
-import {Product} from "./shared/models/product/product";
-import {CartProduct} from "./shared/models/product/cart-product";
+import {
+  AddCartProduct,
+  DeleteCartProduct,
+  UpdateCartProduct,
+} from './app.actions';
+import { CartProduct } from '@shared/models/product/cart-product';
+import { Product } from '@shared/models/product/product';
 
 export class AppStateModel {
   products!: CartProduct[];
@@ -20,6 +23,8 @@ export class AppStateModel {
 export class AppState {
   @Action(AddCartProduct)
   addProduct(ctx: StateContext<AppStateModel>, { payload }: AddCartProduct) {
+    console.log(123);
+
     const product = ctx
       .getState()
       .products.find(({ product }) => product.id === payload.product.id);
@@ -99,7 +104,9 @@ export class AppState {
               id: payload.product.id,
             },
             count:
-              ctx?.getState()?.products.find(
+              ctx
+                ?.getState()
+                ?.products.find(
                   ({ product }) => product.id === payload.product.id
                 )!.count - 1,
           },

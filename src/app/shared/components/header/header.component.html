@@ -19,15 +19,15 @@
             <span>Корзина</span>
           </a>
           <span style="color: red;">
-            {{ productCount | async }}
+            {{ productCount$ | async }}
           </span>
         </li>
         <li>
-          <a routerLink="/auth" *ngIf="!isUserLoggedIn">
+          <a routerLink="/auth" *ngIf="!(isUserLoggedIn$ | async)">
             <div><svg width="16" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-account"></use></svg></div>
             <span>Войти</span>
           </a>
-          <a routerLink="/account" *ngIf="isUserLoggedIn">
+          <a routerLink="/dashboard" *ngIf="(isUserLoggedIn$ | async)">
             <div><svg width="16" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-account"></use></svg></div>
             <span>Аккаунт</span>
           </a>
