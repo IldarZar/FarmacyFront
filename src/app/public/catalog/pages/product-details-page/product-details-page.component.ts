@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '@shared/models/product/product';
+import {Observable, map} from "rxjs";
 
 @Component({
   selector: 'app-product-details-page',
@@ -8,12 +9,12 @@ import { Product } from '@shared/models/product/product';
   styleUrls: ['./product-details-page.component.scss'],
 })
 export class ProductDetailsPageComponent implements OnInit {
-  product!: Product;
+  product$: Observable<Product>;
 
   constructor(private route: ActivatedRoute) {} // private route: ActivatedRoute
 
   ngOnInit(): void {
     // @ts-ignore
-    this.route.data.subscribe(([res]) => (this.product = res));
+    this.product$ = this.route.data.pipe(map(({ product })  => product));
   }
 }

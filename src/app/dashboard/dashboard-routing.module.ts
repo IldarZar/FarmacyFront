@@ -14,6 +14,7 @@ const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
+    resolve: { user: UserResolver },
     children: [
       {
         path: 'user-data',

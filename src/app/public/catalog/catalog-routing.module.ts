@@ -15,12 +15,12 @@ const routes: Routes = [
   {
     path: 'admin/:id',
     component: AdminProductDetailsPageComponent,
-    resolve: [ProductResolver],
+    resolve: { product: ProductResolver },
   },
   {
     path: ':id',
     component: ProductDetailsPageComponent,
-    resolve: [ProductResolver],
+    resolve: { product: ProductResolver },
     pathMatch: 'full',
   },
 ];

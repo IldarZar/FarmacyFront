@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Product } from '@shared/models/product/product';
 import { AdminCatalogService } from '@admin/catalog/services/admin-catalog.service';
+import {Observable, map, BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-admin-product-details-page',
@@ -10,7 +11,7 @@ import { AdminCatalogService } from '@admin/catalog/services/admin-catalog.servi
   styleUrls: ['./admin-product-details-page.component.scss'],
 })
 export class AdminProductDetailsPageComponent implements OnInit {
-  product!: Product;
+  product$ = new BehaviorSubject<Product>({} as Product);
 
   formGroup: FormGroup = new FormGroup({
     id: new FormControl(),
@@ -23,18 +24,22 @@ export class AdminProductDetailsPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private adminCatalog: AdminCatalogService
-  ) {} // private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.product = this.route.snapshot.data[0];
+    this.route.data.pipe(map(({product}) => {
+      this.formGroup.patchValue({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        imgUrl: product.imgUrl,
+        subCategory: product.subCategory,
+      });
 
-    this.formGroup.patchValue({
-      id: this.product.id,
-      name: this.product.name,
-      price: this.product.price,
-      imgUrl: this.product.imgUrl,
-      subCategory: this.product.subCategory,
-    });
+      return product
+    })).subscribe(
+      this.product$
+    );
   }
 
   updateProduct() {
@@ -47,7 +52,7 @@ export class AdminProductDetailsPageComponent implements OnInit {
     } as Product;
 
     this.adminCatalog.updateProduct(product).subscribe((product) => {
-      this.product = product;
+      this.product$.next(product);
     });
   }
 }

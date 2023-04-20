@@ -1,5 +1,5 @@
 <div style="color: black;">
-  {{ product | json }}
+  {{ product$ | async | json }}
 </div>
 
 <form [formGroup]="formGroup" (ngSubmit)="updateProduct()">

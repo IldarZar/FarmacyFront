@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of, switchMap } from 'rxjs';
+import {map, Observable, of, switchMap} from 'rxjs';
 import { User } from '@shared/models/user/user';
 import { Dictionary } from '@core/models/dictionary';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.currentUser$ = this.route.data.pipe(switchMap((res) => of(res[0])));
+    this.currentUser$ = this.route.data.pipe(map(({ user }) => user));
   }
 
   logout(): void {
