@@ -23,8 +23,6 @@ export class AppStateModel {
 export class AppState {
   @Action(AddCartProduct)
   addProduct(ctx: StateContext<AppStateModel>, { payload }: AddCartProduct) {
-    console.log(123);
-
     const product = ctx
       .getState()
       .products.find(({ product }) => product.id === payload.product.id);
@@ -45,7 +43,7 @@ export class AppState {
             .products.filter(
               ({ product }) => product.id !== payload.product.id
             ),
-          <CartProduct>{ product: { id: payload.product.id }, count: 1 },
+          <CartProduct>{ product: payload.product, count: 1 },
         ],
       });
     }
@@ -62,9 +60,7 @@ export class AppState {
           .getState()
           .products.filter(({ product }) => product.id !== payload.product.id),
         {
-          product: <Product>{
-            id: payload.product.id,
-          },
+          product: payload.product,
           count:
             ctx
               .getState()
@@ -100,9 +96,7 @@ export class AppState {
               ({ product }) => product.id !== payload.product.id
             ),
           {
-            product: <Product>{
-              id: payload.product.id,
-            },
+            product: payload.product,
             count:
               ctx
                 ?.getState()

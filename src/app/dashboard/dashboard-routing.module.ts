@@ -4,6 +4,7 @@ import { UserDataComponent } from '@dashboard/pages/user-data/user-data.componen
 import { BonusCardComponent } from '@dashboard/pages/bonus-card/bonus-card.component';
 import { DashboardComponent } from '@dashboard/dashboard.component';
 import { UserResolver } from '@core/resolvers/user.resolver';
+import { OrderHistoryComponent } from '@dashboard/pages/order-history/order-history.component';
 
 const routes: Routes = [
   {
@@ -14,7 +15,6 @@ const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
-    resolve: { user: UserResolver },
     children: [
       {
         path: 'user-data',
@@ -23,7 +23,12 @@ const routes: Routes = [
       },
       {
         path: 'bonus-card',
+        resolve: { user: UserResolver },
         component: BonusCardComponent,
+      },
+      {
+        path: 'order-history',
+        component: OrderHistoryComponent,
       },
     ],
   },

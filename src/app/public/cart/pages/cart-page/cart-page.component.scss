@@ -1,3 +1,26 @@
+:host {
+  max-width: 1200px;
+  display: block;
+  margin: 0 auto;
+}
+
 .product-row {
   color: black;
+  border-top: 1px solid var(--theme-dark-blue);
+  display: flex;
+  padding: 16px;
+  gap: 16px;
+
+  &__name {
+    flex: 1;
+  }
+}
+
+.product-row:last-of-type {
+  border-bottom: 1px solid var(--theme-dark-blue);
+}
+
+.order-button {
+  margin-top: 24px;
+  margin-left: auto;
 }

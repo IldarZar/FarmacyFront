@@ -17,7 +17,9 @@ export class CartPageComponent implements OnInit {
   @Select(AppState.getCartProducts)
   cartProducts$!: Observable<CartProduct[]>;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.cartProducts$.subscribe((res) => console.log(res));
+  }
 
   deleteProductFromCart(cartProduct: CartProduct): void {
     this.store.dispatch(new DeleteCartProduct(cartProduct));

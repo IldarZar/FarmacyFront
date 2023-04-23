@@ -7,20 +7,23 @@ import { Dictionary } from '@app/core/models/dictionary';
   templateUrl: './side-menu.component.html',
   styleUrls: ['./side-menu.component.scss'],
 })
-export class SideMenuComponent {
+export class SideMenuComponent<T extends number | string> {
   @Input('items')
-  items$!: Observable<Dictionary[]>;
+  items$!: Observable<Dictionary<T>[]>;
 
   @Input()
-  activeItemId: number | null;
+  activeItemId: T | null;
+
+  @Input()
+  isSelectImportant: boolean = false;
 
   @Output()
   itemSelected = new EventEmitter();
 
   constructor() {}
 
-  selectItem(subcategoryId: number): void {
-    if (subcategoryId === this.activeItemId) {
+  selectItem(subcategoryId: T): void {
+    if (subcategoryId === this.activeItemId && !this.isSelectImportant) {
       this.activeItemId = null;
       this.itemSelected.emit(this.activeItemId);
       return;

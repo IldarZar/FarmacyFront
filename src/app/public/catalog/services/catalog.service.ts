@@ -23,15 +23,13 @@ export class CatalogService {
     return this.http.get('/categories').pipe(map(this.getContent));
   }
 
+  getSubcategoryId(id: number): Observable<Subcategory> {
+    return this.http.get<Subcategory>('/subcategories/' + id);
+  }
+
   getSubcategories(): Observable<Subcategory[]> {
     return this.http
       .get<Subcategory[]>('/subcategories')
-      .pipe(map(this.getContent));
-  }
-
-  getCatalogByCategoryId(categoryId: number): Observable<Product[]> {
-    return this.http
-      .get(`/products/category/${categoryId}`)
       .pipe(map(this.getContent));
   }
 
@@ -39,6 +37,12 @@ export class CatalogService {
     return this.http
       .get<Product>(`/products/${productId}`)
       .pipe(tap(console.log));
+  }
+
+  getCatalogByCategoryId(categoryId: number): Observable<Product[]> {
+    return this.http
+      .get(`/products/category/${categoryId}`)
+      .pipe(map(this.getContent));
   }
 
   getCatalogBySubcategoryId(subcategoryId: number): Observable<Product[]> {

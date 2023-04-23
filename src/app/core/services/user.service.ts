@@ -10,6 +10,7 @@ import { User } from '@shared/models/user/user';
 export class UserService {
   constructor(private http: HttpClient) {}
 
+  // Todo: Вся работа с localStorage должна быть в сторе
   private currentUser$ = new ReplaySubject<Nullable<User>>(1);
 
   getCurrentUser(): Observable<Nullable<User>> {

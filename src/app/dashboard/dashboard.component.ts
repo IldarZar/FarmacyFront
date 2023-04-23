@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {map, Observable, of, switchMap} from 'rxjs';
+import { map, Observable, of, switchMap } from 'rxjs';
 import { User } from '@shared/models/user/user';
 import { Dictionary } from '@core/models/dictionary';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,21 +11,22 @@ import { UserService } from '@core/services/user.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  currentUser$: Observable<User>;
-  items$ = of<Dictionary[]>([
+  items$ = of<Dictionary<string>[]>([
     {
-      id: 1,
+      id: 'bonus-card',
       name: 'Бонусная карта',
     },
     {
-      id: 2,
+      id: 'order-history',
       name: 'История заказов',
     },
     {
-      id: 3,
+      id: 'user-data',
       name: 'Личные данные',
     },
   ]);
+
+  activeItem: string;
 
   constructor(
     private router: Router,
@@ -34,7 +35,11 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.currentUser$ = this.route.data.pipe(map(({ user }) => user));
+    this.activeItem = this.router.url.split('/')[2];
+  }
+
+  itemSelected(e: string) {
+    this.router.navigate([e], { relativeTo: this.route });
   }
 
   logout(): void {

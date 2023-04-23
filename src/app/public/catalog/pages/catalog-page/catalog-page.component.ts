@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of, switchMap, tap } from 'rxjs';
+import { map, Observable, of, switchMap, tap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { AddCartProduct } from '@app/app.actions';
@@ -56,6 +56,7 @@ export class CatalogPageComponent implements OnInit {
     } else {
       this.products$ = this.catalogService.getCatalog();
       this.subcategories$ = this.catalogService.getSubcategories();
+      this.activeSubcategoryId = -1;
     }
   }
 
@@ -77,10 +78,14 @@ export class CatalogPageComponent implements OnInit {
 
   subcategorySelected(subcategoryId: number): void {
     this.activeSubcategoryId = subcategoryId;
-    if (subcategoryId)
+    this.catalogService
+      .getSubcategoryId(subcategoryId)
+      .subscribe((res) => console.log(res));
+
+    if (subcategoryId) {
       this.products$ =
         this.catalogService.getCatalogBySubcategoryId(subcategoryId);
-    else
+    } else
       this.products$ = this.catalogService.getCatalogByCategoryId(
         this.activeCategoryId
       );

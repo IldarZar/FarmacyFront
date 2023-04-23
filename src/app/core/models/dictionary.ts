@@ -1,5 +1,5 @@
-import { Identifiable } from "./identifable";
+import { Identifiable } from './identifable';
 
-export interface Dictionary extends Identifiable {
+export interface Dictionary<T extends number | string> extends Identifiable<T> {
   name: string;
 }

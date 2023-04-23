@@ -6,9 +6,21 @@ import { SharedModule } from '@shared/shared.module';
 import { UserDataComponent } from '@dashboard/pages/user-data/user-data.component';
 import { BonusCardComponent } from './pages/bonus-card/bonus-card.component';
 import { DashboardComponent } from './dashboard.component';
+import { OrderHistoryComponent } from './pages/order-history/order-history.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [UserDataComponent, BonusCardComponent, DashboardComponent],
-  imports: [CommonModule, SharedModule, DashboardRoutingModule],
+  declarations: [
+    UserDataComponent,
+    BonusCardComponent,
+    DashboardComponent,
+    OrderHistoryComponent,
+  ],
+  imports: [
+    CommonModule,
+    SharedModule,
+    DashboardRoutingModule,
+    ReactiveFormsModule,
+  ],
 })
 export class DashboardModule {}
