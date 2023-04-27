@@ -1,22 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { CartProduct } from '@shared/models/product/cart-product';
+import { Observable, switchMap } from 'rxjs';
+import { ProductOrder } from '@shared/models/product-order';
+import { User } from '@shared/models/user/user';
+import { Select } from '@ngxs/store';
+import { AppState } from '@app/store/app/app.state';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
+  @Select(AppState.getUser)
+  user$: Observable<User>;
+
   constructor(private http: HttpClient) {}
 
-  createNewOrder(userId: number, cartProduct: CartProduct): Observable<any> {
-    return this.http.post('/user-order/' + userId, {
-      productOrder: [
-        {
-          product: cartProduct.product,
-          countProduct: cartProduct.count,
-        },
-      ],
-    });
+  createNewOrder(productOrders: ProductOrder[]): Observable<any> {
+    return this.user$.pipe(
+      switchMap((user) =>
+        this.http.post('/user-order/' + user.id, {
+          productOrder: productOrders,
+          deliveryPoint: user.deliveryPoint,
+        })
+      )
+    );
   }
 }

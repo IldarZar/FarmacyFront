@@ -8,6 +8,7 @@ import { BonusCardComponent } from './pages/bonus-card/bonus-card.component';
 import { DashboardComponent } from './dashboard.component';
 import { OrderHistoryComponent } from './pages/order-history/order-history.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserOrdersComponent } from './pages/user-orders/user-orders.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     BonusCardComponent,
     DashboardComponent,
     OrderHistoryComponent,
+    UserOrdersComponent,
   ],
   imports: [
     CommonModule,

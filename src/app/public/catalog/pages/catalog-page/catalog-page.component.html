@@ -18,14 +18,18 @@
         <h2>Каталог</h2>
       </div>
       <div class="catalog__content">
-        <app-product-card
-          class="card"
-          *ngFor="let product of products$ | async"
-          [product]="product"
-          (productSelected)="addProductToCart($event)"
-          (click)="openProductDetails(product.id)"
-        >
-        </app-product-card>
+        <ng-container *ngIf="user$ | async as user">
+          <app-product-card
+            class="card"
+            *ngFor="let product of products$ | async"
+            [product]="product"
+            [isFavourite]="user.favorites.includes(product.id)"
+            (productSelected)="addProductToCart($event)"
+            (addedToFavourites)="addProductToFavourites($event)"
+            (click)="openProductDetails(product.id)"
+          >
+          </app-product-card>
+        </ng-container>
       </div>
     </div>
   </div>

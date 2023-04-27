@@ -7,11 +7,11 @@ import { CatalogModule } from '@public/catalog/catalog.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BaseUrlInterceptor } from '@core/interceptors/base-url.interceptor';
 import { NgxsModule } from '@ngxs/store';
-import { AppState } from './app.state';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { DashboardModule } from '@dashboard/dashboard.module';
 import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
+import { AppState } from '@app/store/app/app.state';
 
 @NgModule({
   declarations: [AppComponent],

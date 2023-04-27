@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { map, Observable, of, switchMap } from 'rxjs';
-import { User } from '@shared/models/user/user';
+import { Observable, of } from 'rxjs';
 import { Dictionary } from '@core/models/dictionary';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '@core/services/user.service';
@@ -11,20 +10,7 @@ import { UserService } from '@core/services/user.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  items$ = of<Dictionary<string>[]>([
-    {
-      id: 'bonus-card',
-      name: 'Бонусная карта',
-    },
-    {
-      id: 'order-history',
-      name: 'История заказов',
-    },
-    {
-      id: 'user-data',
-      name: 'Личные данные',
-    },
-  ]);
+  items$: Observable<Dictionary<string>[]>;
 
   activeItem: string;
 
@@ -35,6 +21,30 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const tabs = [
+      {
+        id: 'bonus-card',
+        name: 'Бонусная карта',
+      },
+      {
+        id: 'order-history',
+        name: 'История заказов',
+      },
+      {
+        id: 'user-data',
+        name: 'Личные данные',
+      },
+    ];
+
+    this.route.data.subscribe(({ user }) => {
+      if (user.roles.map(({ id }: Dictionary<number>) => id).includes(2)) {
+        tabs.push({
+          id: 'user-orders',
+          name: 'Обработка заявок',
+        });
+      }
+      this.items$ = of<Dictionary<string>[]>(tabs);
+    });
     this.activeItem = this.router.url.split('/')[2];
   }
 

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { map, Observable, of, switchMap, tap } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngxs/store';
-import { AddCartProduct } from '@app/app.actions';
+import { Actions, Select, Store } from '@ngxs/store';
 import { UserService } from '@app/core/services/user.service';
 import { Product } from '@shared/models/product/product';
 import { Subcategory } from '@shared/models/product/subcategory';
@@ -10,6 +9,9 @@ import { Category } from '@shared/models/product/category';
 import { CatalogService } from '@public/catalog/services/catalog.service';
 import { User } from '@shared/models/user/user';
 import { Nullable } from '@core/models/nullable';
+import { AddCartProduct } from '@app/store/app/cart.actions';
+import { AppState } from '@app/store/app/app.state';
+import { SetUser } from '@app/store/app/user.actions';
 
 @Component({
   selector: 'app-catalog-page',
@@ -22,7 +24,8 @@ export class CatalogPageComponent implements OnInit {
     private catalogService: CatalogService,
     private store: Store,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private route: ActivatedRoute,
+    private actions: Actions
   ) {}
 
   products$?: Observable<Product[]>;
@@ -30,6 +33,9 @@ export class CatalogPageComponent implements OnInit {
   subcategories$: Observable<Subcategory[]>;
   activeCategoryId: number;
   activeSubcategoryId: number;
+
+  @Select(AppState.getUser)
+  user$: Observable<User>;
 
   ngOnInit(): void {
     this.products$ = this.catalogService.getCatalog();
@@ -65,9 +71,8 @@ export class CatalogPageComponent implements OnInit {
   }
 
   openProductDetails(productId: number): void {
-    // Показываем админскую карточку или обычную в зависимости от роли пользователя
-    // TODO: поменять includes на че-нибудь нормальное
     this.userService.getCurrentUser().subscribe((user: Nullable<User>) => {
+      console.log(user);
       if (user?.roles.map((role) => role.id).includes(1)) {
         this.router.navigate(['catalog', 'admin', productId]);
       } else {
@@ -78,16 +83,40 @@ export class CatalogPageComponent implements OnInit {
 
   subcategorySelected(subcategoryId: number): void {
     this.activeSubcategoryId = subcategoryId;
-    this.catalogService
-      .getSubcategoryId(subcategoryId)
-      .subscribe((res) => console.log(res));
 
     if (subcategoryId) {
       this.products$ =
         this.catalogService.getCatalogBySubcategoryId(subcategoryId);
-    } else
+    } else {
       this.products$ = this.catalogService.getCatalogByCategoryId(
         this.activeCategoryId
       );
+    }
+  }
+
+  addProductToFavourites(product: Product) {
+    // this.userService
+    //   .addProductToFavourites(product)
+    //   .pipe(
+    //     switchMap((favourites) =>
+    //       this.user$.pipe(
+    //         map((user) => ({ user: user, favourites: favourites }))
+    //       )
+    //     ),
+    //     switchMap((res) =>
+    //       this.store.dispatch(
+    //         // @ts-ignore
+    //         new SetUser({ user: { ...res.user, favorites: res.favourites } })
+    //       )
+    //     )
+    //   )
+    //   .subscribe();
+
+    this.userService.addProductToFavourites(product).subscribe((res) => {
+      this.store.dispatch(
+        // @ts-ignore
+        new SetUser({ user: { ...res.user, favorites: res.favorites } })
+      );
+    });
   }
 }

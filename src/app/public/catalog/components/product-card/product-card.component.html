@@ -6,7 +6,16 @@
   <div class="price">
     {{ product.price }} ₽
   </div>
+
+  <div *ngIf="isFavourite">
+    избранное
+  </div>
+
   <app-button (click)="addProductToCart($event)">
     В корзину
   </app-button>
+  <app-button (click)="addProductToFavourites($event)">
+    В избранное
+  </app-button>
+
 </div>

@@ -8,10 +8,16 @@ import { Product } from '@shared/models/product/product';
 })
 export class ProductCardComponent implements OnInit {
   @Input()
-  product!: Product;
+  product: Product;
+
+  @Input()
+  isFavourite: boolean;
 
   @Output()
   productSelected = new EventEmitter();
+
+  @Output()
+  addedToFavourites = new EventEmitter();
 
   constructor() {}
 
@@ -20,5 +26,10 @@ export class ProductCardComponent implements OnInit {
   addProductToCart(e: Event) {
     e.stopPropagation();
     this.productSelected.emit(this.product);
+  }
+
+  addProductToFavourites(e: Event) {
+    e.stopPropagation();
+    this.addedToFavourites.emit(this.product);
   }
 }

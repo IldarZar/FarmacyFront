@@ -1,10 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '@core/services/user.service';
-import { User } from '@shared/models/user/user';
-import { Observable, of, switchMap, tap } from 'rxjs';
-import { Dictionary } from '@core/models/dictionary';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
+import { DashboardService } from '@dashboard/services/dashboard.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-user-data',
@@ -12,15 +10,37 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./user-data.component.scss'],
 })
 export class UserDataComponent {
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private dashboardService: DashboardService
+  ) {}
 
   formGroup: FormGroup;
 
   ngOnInit() {
     this.route.data.subscribe(({ user }) => {
+      console.log(user);
       this.formGroup = new FormGroup({
-        name: new FormControl(''),
+        id: new FormControl(user.id),
+        name: new FormControl(user.name),
+        middleName: new FormControl(user.middleName),
+        lastName: new FormControl(user.lastName),
       });
     });
+  }
+
+  updateUserData() {
+    this.route.data
+      .pipe(
+        switchMap(({ user }) =>
+          this.dashboardService.updateUserData({
+            ...user,
+            name: this.formGroup.get('name')?.value,
+            middleName: this.formGroup.get('middleName')?.value,
+            lastName: this.formGroup.get('lastName')?.value,
+          })
+        )
+      )
+      .subscribe();
   }
 }

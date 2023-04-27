@@ -1,5 +1,18 @@
 <form [formGroup]="formGroup">
 
-
-
+  <div class="form-group__field">
+    <label>Фамилия</label>
+    <input placeholder="Фамилия" name="lastName" formControlName="lastName" />
+  </div>
+  <div class="form-group__field">
+    <label>Имя</label>
+    <input name="name" formControlName="name" />
+  </div>
+  <div class="form-group__field">
+    <label>Отчество</label>
+    <input name="middleName" formControlName="middleName" />
+  </div>
+  <button (click)="updateUserData()">
+    Update user data
+  </button>
 </form>

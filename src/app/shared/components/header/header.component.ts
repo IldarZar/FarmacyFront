@@ -1,29 +1,13 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  BehaviorSubject,
-  Observable,
-  of,
-  Subject,
-  Subscription,
-  switchAll,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 import { User } from '@shared/models/user/user';
 import { UserService } from '@app/core/services/user.service';
 import { Actions, ofActionDispatched, Select, Store } from '@ngxs/store';
-import { AddCartProduct, DeleteCartProduct } from '@app/app.actions';
-import { AppState } from '@app/app.state';
-import { CartProduct } from '@shared/models/product/cart-product';
+import { ProductOrder } from '@shared/models/product-order';
 import { Nullable } from '@app/core/models/nullable';
+import { AddCartProduct, DeleteCartProduct } from '@app/store/app/cart.actions';
+import { AppState } from '@app/store/app/app.state';
 
 @Component({
   selector: 'app-header',
@@ -39,7 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscription = new Subscription();
 
   @Select(AppState.getCartProducts)
-  cartProducts$: Observable<CartProduct[]>;
+  cartProducts$: Observable<ProductOrder[]>;
 
   constructor(
     protected route: ActivatedRoute,

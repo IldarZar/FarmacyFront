@@ -4,7 +4,9 @@ import { UserDataComponent } from '@dashboard/pages/user-data/user-data.componen
 import { BonusCardComponent } from '@dashboard/pages/bonus-card/bonus-card.component';
 import { DashboardComponent } from '@dashboard/dashboard.component';
 import { UserResolver } from '@core/resolvers/user.resolver';
+import { OrderHistoryResolver } from '@core/resolvers/order-history.resolver';
 import { OrderHistoryComponent } from '@dashboard/pages/order-history/order-history.component';
+import { UserOrdersComponent } from '@dashboard/pages/user-orders/user-orders.component';
 
 const routes: Routes = [
   {
@@ -15,6 +17,7 @@ const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
+    resolve: { user: UserResolver },
     children: [
       {
         path: 'user-data',
@@ -28,7 +31,12 @@ const routes: Routes = [
       },
       {
         path: 'order-history',
+        resolve: { orderHistory: OrderHistoryResolver },
         component: OrderHistoryComponent,
+      },
+      {
+        path: 'user-orders',
+        component: UserOrdersComponent,
       },
     ],
   },

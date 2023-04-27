@@ -1,30 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, ReplaySubject, Subject, tap } from 'rxjs';
+import { map, Observable, switchMap, tap } from 'rxjs';
 import { Nullable } from '@app/core/models/nullable';
 import { User } from '@shared/models/user/user';
+import { Select, Store } from '@ngxs/store';
+import { AppState } from '@app/store/app/app.state';
+import { GetUser, SetUser } from '@app/store/app/user.actions';
+import { Product } from '@shared/models/product/product';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  @Select(AppState.getUser)
+  user$: Observable<Nullable<User>>;
 
-  // Todo: Вся работа с localStorage должна быть в сторе
-  private currentUser$ = new ReplaySubject<Nullable<User>>(1);
+  constructor(private http: HttpClient, private store: Store) {}
 
   getCurrentUser(): Observable<Nullable<User>> {
-    this.currentUser$.subscribe((res) => console.log(res));
-    console.log(localStorage.getItem('user'));
-
-    if (localStorage.getItem('user')) {
-      // @ts-ignore
-      const localUser = JSON.parse(localStorage.getItem('user')) as User;
-      this.currentUser$.next(localUser);
-    }
-
-    // Если его там нет, то возвращаем currentUser$ со значением null
-    return this.currentUser$;
+    return this.store.dispatch(new GetUser()).pipe(switchMap(() => this.user$));
   }
 
   login(login: string, password: string): Observable<User> {
@@ -32,8 +26,7 @@ export class UserService {
       .get<User>(`/auth/login/?login=${login}&password=${password}`)
       .pipe(
         tap((user) => {
-          this.currentUser$.next(user);
-          localStorage.setItem('user', JSON.stringify(user));
+          this.store.dispatch(new SetUser({ user }));
         })
       );
   }
@@ -41,9 +34,22 @@ export class UserService {
   logout() {
     return this.http.get('/auth/logout').pipe(
       tap(() => {
-        this.currentUser$.next(null);
+        this.store.dispatch(new SetUser({ user: {} as User }));
+      })
+    );
+  }
 
-        localStorage.removeItem('user');
+  addProductToFavourites(product: Product) {
+    return this.store.dispatch(new GetUser()).pipe(
+      map((store) => store.app.user),
+      switchMap((user: User) => {
+        const requestBody = user.favorites.includes(product.id)
+          ? [...user?.favorites.filter((e) => e !== product.id)]
+          : [...user?.favorites, product.id];
+
+        return this.http
+          .patch(`/auth/favorites/${user.id}`, requestBody)
+          .pipe(map((favorites) => ({ favorites, user })));
       })
     );
   }

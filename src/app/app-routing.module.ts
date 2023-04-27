@@ -19,6 +19,13 @@ const routes: Routes = [
       import('./public/catalog/catalog.module').then((m) => m.CatalogModule),
   },
   {
+    path: 'favourites',
+    loadChildren: () =>
+      import('./public/favourites/favourites.module').then(
+        (m) => m.FavouritesModule
+      ),
+  },
+  {
     path: 'auth',
     pathMatch: 'full',
     loadChildren: () =>
