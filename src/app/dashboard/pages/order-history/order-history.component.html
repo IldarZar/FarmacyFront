@@ -1,0 +1,10 @@
+<div *ngFor="let userOrder of orderHistory$ | async">
+  <h3>Дата: {{ userOrder.orderDateTime }}</h3>
+  <div>
+    Заказы:
+  </div>
+  <div *ngFor="let productOrder of userOrder.productOrder">
+    {{ productOrder.product | json }}
+  </div>
+  <div >На сумму {{ userOrder.sum }}</div>
+</div>

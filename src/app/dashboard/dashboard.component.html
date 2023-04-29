@@ -1,0 +1,17 @@
+<!--Личный кабинет-->
+<!--<p style="color: black;">{{ currentUser$ | async | json }}</p>-->
+<!--<button (click)="logout()">выйти</button>-->
+
+<app-side-menu
+  [items]="items$"
+  [activeItemId]="activeItem"
+  [isSelectImportant]="true"
+  (itemSelected)="itemSelected($event)"
+>
+
+</app-side-menu>
+<div class="content-wrapper">
+  <router-outlet>
+
+  </router-outlet>
+</div>

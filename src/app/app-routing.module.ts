@@ -4,25 +4,42 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/catalog',
+    redirectTo: 'catalog',
     pathMatch: 'full',
   },
   {
-    path: 'catalog',
-    loadChildren: () => import('@app/public/catalog/catalog.module').then(m => m.CatalogModule),
+    path: 'cart',
+    pathMatch: 'full',
+    loadChildren: () =>
+      import('./public/cart/cart.module').then((m) => m.CartModule),
   },
   {
-    path: 'categories',
-    loadChildren: () => import('@app/admin/categories/categories.module').then(m => m.CategoriesModule),
+    path: 'catalog',
+    loadChildren: () =>
+      import('./public/catalog/catalog.module').then((m) => m.CatalogModule),
+  },
+  {
+    path: 'favourites',
+    loadChildren: () =>
+      import('./public/favourites/favourites.module').then(
+        (m) => m.FavouritesModule
+      ),
+  },
+  {
+    path: 'auth',
+    pathMatch: 'full',
+    loadChildren: () =>
+      import('./public/auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('@app/dashboard/dashboard.module').then(m => m.DashboardModule),
-  }
+    loadChildren: () =>
+      import('@dashboard/dashboard.module').then((m) => m.DashboardModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

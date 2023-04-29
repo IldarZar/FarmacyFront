@@ -1,0 +1,23 @@
+<h3>Список товаров</h3>
+<div
+  *ngFor="let cartProduct of cartProducts$ | async"
+  class="product-row"
+>
+  <div class="product-row__name">
+    {{ cartProduct.product.name }}
+  </div>
+
+  <div class="product-row__count">
+    Количество: {{ cartProduct.countProduct }}
+  </div>
+
+  <div class="product-row__delete-button"
+       (click)="deleteProductFromCart(cartProduct)"
+  >
+    Убрать
+  </div>
+</div>
+
+<app-button class="order-button" (click)="createNewOrder()">
+  Купить
+</app-button>

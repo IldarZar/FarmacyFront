@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  gap: 32px;
+  margin: 32px auto 0;
+  max-width: 1200px;
+}
+
+.content-wrapper {
+  flex: 1;
+  background-color: var(--theme-light-blue);
+  border-radius: 20px;
+}

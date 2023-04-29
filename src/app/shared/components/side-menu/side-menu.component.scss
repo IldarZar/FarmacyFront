@@ -1,0 +1,27 @@
+
+:host {
+  border-radius: 20px;
+  padding: 16px;
+  background-color: var(--theme-blue);
+  color: black;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item {
+  border-radius: 8px;
+  padding: 4px;
+  transition: .2s;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  &_selected {
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  }
+}
+
+

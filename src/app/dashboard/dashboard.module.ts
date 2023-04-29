@@ -2,16 +2,27 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { AccountComponent } from './pages/account/account.component';
-
+import { SharedModule } from '@shared/shared.module';
+import { UserDataComponent } from '@dashboard/pages/user-data/user-data.component';
+import { BonusCardComponent } from './pages/bonus-card/bonus-card.component';
+import { DashboardComponent } from './dashboard.component';
+import { OrderHistoryComponent } from './pages/order-history/order-history.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { UserOrdersComponent } from './pages/user-orders/user-orders.component';
 
 @NgModule({
   declarations: [
-    AccountComponent
+    UserDataComponent,
+    BonusCardComponent,
+    DashboardComponent,
+    OrderHistoryComponent,
+    UserOrdersComponent,
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule
-  ]
+    SharedModule,
+    DashboardRoutingModule,
+    ReactiveFormsModule,
+  ],
 })
-export class DashboardModule { }
+export class DashboardModule {}

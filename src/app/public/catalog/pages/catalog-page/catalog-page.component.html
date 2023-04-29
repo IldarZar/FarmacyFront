@@ -1,24 +1,37 @@
-<app-header></app-header>
+<main class="main">
 
-<main class="content">
-  <!-- categories -->
   <app-categories
+    class="categories"
+    [categories]="categories$"
+    [activeCategoryId]="activeCategoryId"
     (categorySelected)="categorySelected($event)"
   ></app-categories>
-  <!-- subcategories -->
   <div class="container">
-    <app-product-card
-      class="catalog"
-      *ngFor="let product of products$ | async"
-      [price]="product.price"
-      [name]="product.name"
-      [imgUrl]="product.imgUrl"
+    <app-side-menu
+      [items]="subcategories$"
+      [activeItemId]="activeSubcategoryId"
+      (itemSelected)="subcategorySelected($event)"
     >
-
-    </app-product-card>
+    </app-side-menu>
+    <div class="catalog">
+      <div class="catalog__info">
+        <h2>Каталог</h2>
+      </div>
+      <div class="catalog__content">
+        <ng-container *ngIf="user$ | async as user">
+          <app-product-card
+            class="card"
+            *ngFor="let product of products$ | async"
+            [product]="product"
+            [isFavourite]="user.favorites.includes(product.id)"
+            (productSelected)="addProductToCart($event)"
+            (addedToFavourites)="addProductToFavourites($event)"
+            (click)="openProductDetails(product.id)"
+          >
+          </app-product-card>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </main>
 
-
-
-<app-footer></app-footer>

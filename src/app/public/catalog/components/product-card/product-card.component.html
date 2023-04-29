@@ -1,12 +1,21 @@
-<img src="{{ imgUrl }}" alt="" class="img">
+<img src="{{ product.imgUrl }}" alt="" class="img">
 <div class="name">
-  {{ name }}
+  {{ product.name }}
 </div>
 <div class="bottom-group">
   <div class="price">
-    {{ price }} ₽
+    {{ product.price }} ₽
   </div>
-  <app-button>
+
+  <div *ngIf="isFavourite">
+    избранное
+  </div>
+
+  <app-button (click)="addProductToCart($event)">
     В корзину
   </app-button>
+  <app-button (click)="addProductToFavourites($event)">
+    В избранное
+  </app-button>
+
 </div>

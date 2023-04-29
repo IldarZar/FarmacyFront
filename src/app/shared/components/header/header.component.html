@@ -1,28 +1,35 @@
 <header class="header">
   <div class="header__wrapper container">
     <div class="header__content">
-      <a href="#"><img src="/assets/images/logo.png" alt=""/></a>
+      <a routerLink="/catalog"><img src="assets/images/logo.png" alt=""/></a>
       <div class="header__content_search">
         <input class="main-field" type="text" placeholder="Введите название..."/>
         <div><svg width="20" height="19" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-search"></use></svg></div>
       </div>
       <ul>
         <li>
-          <a href="#">
+          <a routerLink="/favourites">
             <div><svg width="20" height="19" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-favourite"></use></svg></div>
             <span>Избранное</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a routerLink="/cart">
             <div><svg width="20" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-cart"></use></svg></div>
             <span>Корзина</span>
           </a>
+          <span style="color: red;">
+            {{ productCount$ | async }}
+          </span>
         </li>
         <li>
-          <a href="#">
+          <a routerLink="/auth" *ngIf="!(isUserLoggedIn$ | async)">
             <div><svg width="16" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-account"></use></svg></div>
             <span>Войти</span>
+          </a>
+          <a routerLink="/dashboard" *ngIf="(isUserLoggedIn$ | async)">
+            <div><svg width="16" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-account"></use></svg></div>
+            <span>Аккаунт</span>
           </a>
         </li>
       </ul>

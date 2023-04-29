@@ -1,8 +1,0 @@
-<span
-  *ngFor="let category of categories$ | async"
-  (click)="selectCategory(category.id)"
-  [class.category_selected]="category.id === selectedCategoryId"
-  class="category"
->
-  {{ category.name }}
-</span>
