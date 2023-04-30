@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, of, Subscription } from 'rxjs';
 import { Dictionary } from '@core/models/dictionary';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '@core/services/user.service';
+import { Select } from '@ngxs/store';
+import { AppState } from '@app/store/app/app.state';
+import { User } from '@shared/models/user/user';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
+  subscription = new Subscription();
   items$: Observable<Dictionary<string>[]>;
 
   activeItem: string;
@@ -19,6 +23,9 @@ export class DashboardComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService
   ) {}
+
+  @Select(AppState.getUser)
+  user$: Observable<User>;
 
   ngOnInit(): void {
     const tabs = [
@@ -36,7 +43,7 @@ export class DashboardComponent implements OnInit {
       },
     ];
 
-    this.route.data.subscribe(({ user }) => {
+    const subscription = this.user$.subscribe((user: User) => {
       if (user.roles.map(({ id }: Dictionary<number>) => id).includes(2)) {
         tabs.push({
           id: 'user-orders',
@@ -46,16 +53,21 @@ export class DashboardComponent implements OnInit {
       this.items$ = of<Dictionary<string>[]>(tabs);
     });
     this.activeItem = this.router.url.split('/')[2];
+
+    this.subscription.add(subscription);
   }
 
   itemSelected(e: string) {
-    this.router.navigate([e], { relativeTo: this.route });
+    this.router.navigate(['dashboard', e]);
   }
 
   logout(): void {
     this.userService.logout().subscribe((user) => {
-      console.log(user);
       this.router.navigate(['catalog']);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

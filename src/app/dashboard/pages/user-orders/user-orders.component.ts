@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '@dashboard/services/dashboard.service';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { UserOrder } from '@shared/models/user-order';
 
 @Component({
@@ -18,6 +18,10 @@ export class UserOrdersComponent implements OnInit {
   }
 
   setOrderStatus(userOrder: UserOrder) {
-    this.dashboardService.setOrderStatus(userOrder).subscribe();
+    this.orderHistory$ = this.dashboardService
+      .setOrderStatus(userOrder)
+      .pipe(
+        switchMap(() => this.dashboardService.getOrderHistoryByDeliveryPoint())
+      );
   }
 }

@@ -29,6 +29,7 @@ export class DashboardService {
     );
   }
 
+  // для фармацевта
   getOrderHistoryByDeliveryPoint(): Observable<UserOrder[]> {
     return this.user$.pipe(
       switchMap((user) =>
@@ -39,10 +40,11 @@ export class DashboardService {
     );
   }
 
+  // для фармацевта
   setOrderStatus(userOrder: UserOrder): Observable<string> {
     return this.http.patch<string>(
       `/user-order/${userOrder.user.id}/order/${userOrder.id}`,
-      OrderStatus.DONE
+      OrderStatus.IN_PROGRESS
     );
   }
 }
