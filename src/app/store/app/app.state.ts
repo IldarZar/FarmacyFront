@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 
 import {
   AddCartProduct,
@@ -9,8 +9,8 @@ import {
 import { ProductOrder } from '@shared/models/product-order';
 import { User } from '@shared/models/user/user';
 import { Nullable } from '@core/models/nullable';
-import {GetUser, SetUser, UpdateUser, } from './user.actions';
-import {HttpClient} from "@angular/common/http";
+import { SetUser, UpdateUser } from './user.actions';
+import { HttpClient } from '@angular/common/http';
 
 export class AppStateModel {
   products!: ProductOrder[];
@@ -26,13 +26,7 @@ export class AppStateModel {
 })
 @Injectable()
 export class AppState {
-
-  constructor(
-    private http: HttpClient
-  ) {
-
-  }
-
+  constructor(private store: Store, private http: HttpClient) {}
 
   @Action(AddCartProduct)
   addProduct(ctx: StateContext<AppStateModel>, { payload }: AddCartProduct) {
@@ -123,24 +117,13 @@ export class AppState {
   }
 
   @Action(SetUser)
-  UpdateUser(ctx: StateContext<AppStateModel>, { payload: { user } }: UpdateUser) {
-
-    this.http.put<User>(`/auth/${user.id}`, user).subscribe((newUser: User ) => {
+  UpdateUser(
+    ctx: StateContext<AppStateModel>,
+    { payload: { user } }: UpdateUser
+  ) {
+    this.http.put<User>(`/auth/${user.id}`, user).subscribe((newUser: User) => {
       this.SetUser(ctx, new SetUser({ user: newUser }));
     });
-  }
-
-
-  @Action(GetUser)
-  GetUser(ctx: StateContext<AppStateModel>) {
-    console.log(localStorage.getItem('user'));
-    if (localStorage.getItem('user')) {
-      // @ts-ignore
-      const user = JSON.parse(localStorage.getItem('user')) as User;
-      ctx.patchState({ user });
-    } else {
-      ctx.patchState({ user: null });
-    }
   }
 
   @Action(SetUser)
@@ -151,6 +134,13 @@ export class AppState {
 
   @Selector([AppState])
   static getUser(state: AppStateModel): Nullable<User> {
+    if (localStorage.getItem('user')) {
+      // @ts-ignore
+      const user = JSON.parse(localStorage.getItem('user')) as User;
+      state.user = user;
+    } else {
+      state.user = null;
+    }
     return state?.user;
   }
 

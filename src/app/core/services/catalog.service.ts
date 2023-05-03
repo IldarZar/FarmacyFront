@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { map, Observable, of, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable, tap } from 'rxjs';
 import { Product } from '@shared/models/product/product';
 import { Category } from '@shared/models/product/category';
 import { Subcategory } from '@shared/models/product/subcategory';
@@ -49,5 +49,12 @@ export class CatalogService {
     return this.http
       .get(`/products/subcategories/${subcategoryId}`)
       .pipe(map(this.getContent));
+  }
+
+  /**
+   * [Admin] Обновление данных о товаре
+   */
+  updateProduct(product: Product): Observable<Product> {
+    return this.http.put<Product>('/products/' + product.id, product);
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription, switchMap } from 'rxjs';
 import { ProductOrder } from '@shared/models/product-order';
-import { CartService } from '@public/cart/services/cart.service';
+import { CartService } from '@core/services/cart.service';
 import { AppState } from '@app/store/app/app.state';
 import { DeleteCartProduct } from '@app/store/app/cart.actions';
 

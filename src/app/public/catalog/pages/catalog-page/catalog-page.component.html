@@ -25,7 +25,7 @@
             [product]="product"
             [isFavourite]="user.favorites.includes(product.id)"
             (productSelected)="addProductToCart($event)"
-            (addedToFavourites)="addProductToFavourites($event)"
+            (addedToFavourites)="updateFavourites($event, user)"
             (click)="openProductDetails(product.id)"
           >
           </app-product-card>

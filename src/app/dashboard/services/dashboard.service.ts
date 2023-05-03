@@ -29,7 +29,9 @@ export class DashboardService {
     );
   }
 
-  // для фармацевта
+  /**
+   * [Access: Pharmacist]
+   */
   getOrderHistoryByDeliveryPoint(): Observable<UserOrder[]> {
     return this.user$.pipe(
       switchMap((user) =>
@@ -40,7 +42,9 @@ export class DashboardService {
     );
   }
 
-  // для фармацевта
+  /**
+   * [Access: Pharmacist]
+   */
   setOrderStatus(userOrder: UserOrder): Observable<string> {
     return this.http.patch<string>(
       `/user-order/${userOrder.user.id}/order/${userOrder.id}`,

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Product } from '@shared/models/product/product';
-import { AdminCatalogService } from '@admin/catalog/services/admin-catalog.service';
-import {Observable, map, BehaviorSubject} from "rxjs";
+import { BehaviorSubject, map } from 'rxjs';
+import { CatalogService } from '@core/services/catalog.service';
 
 @Component({
   selector: 'app-admin-product-details-page',
@@ -23,23 +23,25 @@ export class AdminProductDetailsPageComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private adminCatalog: AdminCatalogService
+    private catalogService: CatalogService
   ) {}
 
   ngOnInit(): void {
-    this.route.data.pipe(map(({product}) => {
-      this.formGroup.patchValue({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        imgUrl: product.imgUrl,
-        subCategory: product.subCategory,
-      });
+    this.route.data
+      .pipe(
+        map(({ product }) => {
+          this.formGroup.patchValue({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            imgUrl: product.imgUrl,
+            subCategory: product.subCategory,
+          });
 
-      return product
-    })).subscribe(
-      this.product$
-    );
+          return product;
+        })
+      )
+      .subscribe(this.product$);
   }
 
   updateProduct() {
@@ -51,7 +53,7 @@ export class AdminProductDetailsPageComponent implements OnInit {
       subCategory: this.formGroup.get('subCategory')?.value,
     } as Product;
 
-    this.adminCatalog.updateProduct(product).subscribe((product) => {
+    this.catalogService.updateProduct(product).subscribe((product: Product) => {
       this.product$.next(product);
     });
   }

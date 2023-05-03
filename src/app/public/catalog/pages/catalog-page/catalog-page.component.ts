@@ -1,17 +1,16 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Observable, of, Subscription, switchMap} from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Actions, Select, Store } from '@ngxs/store';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, of, Subscription, switchMap } from 'rxjs';
+import { Router } from '@angular/router';
+import { Select, Store } from '@ngxs/store';
 import { UserService } from '@app/core/services/user.service';
 import { Product } from '@shared/models/product/product';
 import { Subcategory } from '@shared/models/product/subcategory';
 import { Category } from '@shared/models/product/category';
-import { CatalogService } from '@public/catalog/services/catalog.service';
+import { CatalogService } from '@core/services/catalog.service';
 import { User } from '@shared/models/user/user';
 import { Nullable } from '@core/models/nullable';
 import { AddCartProduct } from '@app/store/app/cart.actions';
 import { AppState } from '@app/store/app/app.state';
-import { SetUser } from '@app/store/app/user.actions';
 
 @Component({
   selector: 'app-catalog-page',
@@ -19,7 +18,6 @@ import { SetUser } from '@app/store/app/user.actions';
   styleUrls: ['./catalog-page.component.scss'],
 })
 export class CatalogPageComponent implements OnInit, OnDestroy {
-
   @Select(AppState.getUser)
   user$: Observable<User>;
 
@@ -27,7 +25,7 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private catalogService: CatalogService,
     private store: Store,
-    private router: Router,
+    private router: Router
   ) {}
 
   subscription = new Subscription();
@@ -37,7 +35,6 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
   subcategories$: Observable<Subcategory[]>;
   activeCategoryId: number;
   activeSubcategoryId: number;
-
 
   ngOnInit(): void {
     this.products$ = this.catalogService.getCatalog();
@@ -69,12 +66,11 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
   }
 
   addProductToCart(product: Product): void {
-    this.store
-      .dispatch(new AddCartProduct({ product, countProduct: 1 }));
+    this.store.dispatch(new AddCartProduct({ product, countProduct: 1 }));
   }
 
   openProductDetails(productId: number): void {
-    const subscription = this.userService.getCurrentUser().subscribe((user: Nullable<User>) => {
+    const subscription = this.user$.subscribe((user: Nullable<User>) => {
       if (user?.roles.map((role) => role.id).includes(1)) {
         this.router.navigate(['catalog', 'admin', productId]);
       } else {
@@ -97,14 +93,10 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  addProductToFavourites(product: Product) {
-    const subscription = this.userService.addProductToFavourites(product).subscribe((res) => {
-      this.store.dispatch(
-        // @ts-ignore
-        new SetUser({ user: { ...res.user, favorites: res.favorites } })
-      );
-    });
-
+  updateFavourites(product: Product, user: User) {
+    const subscription = this.userService
+      .updateFavourites(product, user)
+      .subscribe();
     this.subscription.add(subscription);
   }
 
