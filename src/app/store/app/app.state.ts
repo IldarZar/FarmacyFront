@@ -9,7 +9,8 @@ import {
 import { ProductOrder } from '@shared/models/product-order';
 import { User } from '@shared/models/user/user';
 import { Nullable } from '@core/models/nullable';
-import { GetUser, SetUser } from './user.actions';
+import {GetUser, SetUser, UpdateUser, } from './user.actions';
+import {HttpClient} from "@angular/common/http";
 
 export class AppStateModel {
   products!: ProductOrder[];
@@ -25,6 +26,14 @@ export class AppStateModel {
 })
 @Injectable()
 export class AppState {
+
+  constructor(
+    private http: HttpClient
+  ) {
+
+  }
+
+
   @Action(AddCartProduct)
   addProduct(ctx: StateContext<AppStateModel>, { payload }: AddCartProduct) {
     const product = ctx
@@ -112,6 +121,15 @@ export class AppState {
       });
     }
   }
+
+  @Action(SetUser)
+  UpdateUser(ctx: StateContext<AppStateModel>, { payload: { user } }: UpdateUser) {
+
+    this.http.put<User>(`/auth/${user.id}`, user).subscribe((newUser: User ) => {
+      this.SetUser(ctx, new SetUser({ user: newUser }));
+    });
+  }
+
 
   @Action(GetUser)
   GetUser(ctx: StateContext<AppStateModel>) {

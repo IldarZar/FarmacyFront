@@ -58,7 +58,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   itemSelected(e: string) {
-    this.router.navigate(['dashboard', e]);
+    if (e === 'exit') {
+
+    } else {
+      this.router.navigate(['dashboard', e]);
+    }
   }
 
   logout(): void {

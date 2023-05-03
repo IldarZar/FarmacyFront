@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, of, switchMap } from 'rxjs';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Observable, of, Subscription, switchMap} from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, Select, Store } from '@ngxs/store';
 import { UserService } from '@app/core/services/user.service';
@@ -18,15 +18,19 @@ import { SetUser } from '@app/store/app/user.actions';
   templateUrl: './catalog-page.component.html',
   styleUrls: ['./catalog-page.component.scss'],
 })
-export class CatalogPageComponent implements OnInit {
+export class CatalogPageComponent implements OnInit, OnDestroy {
+
+  @Select(AppState.getUser)
+  user$: Observable<User>;
+
   constructor(
     private userService: UserService,
     private catalogService: CatalogService,
     private store: Store,
     private router: Router,
-    private route: ActivatedRoute,
-    private actions: Actions
   ) {}
+
+  subscription = new Subscription();
 
   products$?: Observable<Product[]>;
   categories$: Observable<Category[]>;
@@ -34,8 +38,6 @@ export class CatalogPageComponent implements OnInit {
   activeCategoryId: number;
   activeSubcategoryId: number;
 
-  @Select(AppState.getUser)
-  user$: Observable<User>;
 
   ngOnInit(): void {
     this.products$ = this.catalogService.getCatalog();
@@ -68,19 +70,18 @@ export class CatalogPageComponent implements OnInit {
 
   addProductToCart(product: Product): void {
     this.store
-      .dispatch(new AddCartProduct({ product, countProduct: 1 }))
-      .subscribe();
+      .dispatch(new AddCartProduct({ product, countProduct: 1 }));
   }
 
   openProductDetails(productId: number): void {
-    this.userService.getCurrentUser().subscribe((user: Nullable<User>) => {
-      console.log(user);
+    const subscription = this.userService.getCurrentUser().subscribe((user: Nullable<User>) => {
       if (user?.roles.map((role) => role.id).includes(1)) {
         this.router.navigate(['catalog', 'admin', productId]);
       } else {
         this.router.navigate(['catalog', productId]);
       }
     });
+    this.subscription.add(subscription);
   }
 
   subcategorySelected(subcategoryId: number): void {
@@ -97,28 +98,17 @@ export class CatalogPageComponent implements OnInit {
   }
 
   addProductToFavourites(product: Product) {
-    // this.userService
-    //   .addProductToFavourites(product)
-    //   .pipe(
-    //     switchMap((favourites) =>
-    //       this.user$.pipe(
-    //         map((user) => ({ user: user, favourites: favourites }))
-    //       )
-    //     ),
-    //     switchMap((res) =>
-    //       this.store.dispatch(
-    //         // @ts-ignore
-    //         new SetUser({ user: { ...res.user, favorites: res.favourites } })
-    //       )
-    //     )
-    //   )
-    //   .subscribe();
-
-    this.userService.addProductToFavourites(product).subscribe((res) => {
+    const subscription = this.userService.addProductToFavourites(product).subscribe((res) => {
       this.store.dispatch(
         // @ts-ignore
         new SetUser({ user: { ...res.user, favorites: res.favorites } })
       );
     });
+
+    this.subscription.add(subscription);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

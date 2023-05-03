@@ -8,6 +8,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ButtonComponent } from './components/button/button.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { RouterModule } from '@angular/router';
+import {ProductCardComponent} from "@shared/components/product-card/product-card.component";
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { RouterModule } from '@angular/router';
     ModalWindowComponent,
     FooterComponent,
     ButtonComponent,
+    ProductCardComponent,
     SideMenuComponent,
   ],
   imports: [CommonModule, RouterModule],
@@ -23,6 +25,7 @@ import { RouterModule } from '@angular/router';
     FooterComponent,
     ButtonComponent,
     SideMenuComponent,
+    ProductCardComponent
   ],
 })
 export class SharedModule {}
