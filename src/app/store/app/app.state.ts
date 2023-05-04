@@ -3,6 +3,7 @@ import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 
 import {
   AddCartProduct,
+  DeleteAllCartProducts,
   DeleteCartProduct,
   UpdateCartProduct,
 } from './cart.actions';
@@ -114,6 +115,11 @@ export class AppState {
         ],
       });
     }
+  }
+
+  @Action(DeleteAllCartProducts)
+  ClearCart(ctx: StateContext<AppStateModel>) {
+    ctx.patchState({ products: [] });
   }
 
   @Action(SetUser)

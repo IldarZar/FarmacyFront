@@ -7,4 +7,5 @@ export interface Product extends Identifiable<number> {
   imgUrl: string;
   controlled: boolean;
   subCategory: Category;
+  imageUrl: string;
 }
