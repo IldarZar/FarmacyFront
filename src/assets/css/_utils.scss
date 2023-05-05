@@ -64,7 +64,6 @@
 
  .wrapper {
    width: 100%;
-   overflow: hidden;
    position: relative;
    background: white;
    padding-top: $default-padding;
@@ -129,15 +128,15 @@
  }
  /*================================Template====================================*/
 .main-field {
-    display: block;
-    outline: none;
-    border: none;
-    font-size: 16px;
-    background: #FFFFFF;
-    border-radius: 8px;
-    padding: 4px 16px;
-    width: 100%;
-    color: var(--theme-dark-blue);
+  display: block;
+  outline: none;
+  border: none;
+  font-size: 16px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  padding: 4px 16px;
+  width: 100%;
+  color: var(--theme-dark-blue);
 }
  /*==============================TextTemplate==================================*/
  .font-weight-700 {

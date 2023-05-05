@@ -1,5 +1,13 @@
-<ng-container *ngFor="let item of items">
-  <div [ngClass]="{ 'active': item?.id === activeItem?.id }" (click)="select(item)">
-    {{ item | json }}
+<div class="dropdown" [ngClass]="{ 'disabled': disabled }">
+  <div class="select">
+    <span>{{ value ? value[textField] : placeholder }}</span>
+    <svg width="12" height="8"><use xlink:href="assets/icons/sprite.svg#icon-arrow"></use></svg>
   </div>
-</ng-container>
+  <ul class="dropdown-menu">
+    <ng-container *ngFor="let item of data">
+      <li [ngClass]="{ 'active': value ? item[valueField] === value[valueField] : false }" (click)="select($event, item)">
+        {{ item[textField] }}
+      </li>
+    </ng-container>
+  </ul>
+</div>

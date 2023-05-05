@@ -1,35 +1,31 @@
-<div style="color: black;">
-  {{ product$ | async | json }}
-</div>
-
-<form [formGroup]="formGroup" (ngSubmit)="updateProduct()">
-  <div class="form-group__field">
-    <label>Id</label>
-    <input name="id" formControlName="id" />
-  </div>
-  <div class="form-group__field">
-    <label>Имя</label>
-    <input name="name" formControlName="name" />
-  </div>
-  <div class="form-group__field">
-    <label>Цена</label>
-    <input name="price" formControlName="price" />
-  </div>
-  <div class="form-group__field">
-    <label>Адрес картинки</label>
-    <input name="imageUrl" formControlName="imageUrl" />
+<section class="container">
+  <div style="color: black;">
+    {{ product$ | async | json }}
   </div>
 
-<!-- TODO: Сделать dropdown для выбора подкатегории -->
-  <app-combobox
-    [items]="subcategories$ | async"
-    [activeItem]="formGroup.get('subCategory')?.value"
-    (activeItemChanges)="selectedItemChanges($event)"
-  >
+  <form [formGroup]="formGroup" (ngSubmit)="updateProduct()">
+    <div class="form-group__field">
+      <label>Id</label>
+      <input name="id" formControlName="id" />
+    </div>
+    <div class="form-group__field">
+      <label>Имя</label>
+      <input name="name" formControlName="name" />
+    </div>
+    <div class="form-group__field">
+      <label>Цена</label>
+      <input name="price" formControlName="price" />
+    </div>
+    <div class="form-group__field">
+      <label>Адрес картинки</label>
+      <input name="imageUrl" formControlName="imageUrl" />
+    </div>
 
-  </app-combobox>
+    <!-- TODO: Сделать dropdown для выбора подкатегории -->
+    <app-combobox [data]="subcategories$ | async"></app-combobox>
 
-  <button>
-    Отправить
-  </button>
-</form>
+    <button>
+      Отправить
+    </button>
+  </form>
+</section>
