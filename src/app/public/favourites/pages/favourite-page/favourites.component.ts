@@ -47,10 +47,7 @@ export class FavouritesComponent implements OnInit {
   }
 
   updateFavourites(product: Product, user: User) {
-    const subscription = this.userService
-      .updateFavourites(product, user)
-      .subscribe();
-    this.subscription.add(subscription);
+    this.userService.updateFavourites(product, user).subscribe();
   }
 
   openProductDetails(productId: number): void {

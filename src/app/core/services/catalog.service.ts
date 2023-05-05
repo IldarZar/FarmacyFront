@@ -57,4 +57,13 @@ export class CatalogService {
   updateProduct(product: Product): Observable<Product> {
     return this.http.put<Product>('/products/' + product.id, product);
   }
+
+  /**
+   * [Admin] Получение всех подкатегорий
+   */
+  getAllSubcategories() {
+    return this.http
+      .get<Subcategory[]>('/subcategories')
+      .pipe(map(this.getContent));
+  }
 }

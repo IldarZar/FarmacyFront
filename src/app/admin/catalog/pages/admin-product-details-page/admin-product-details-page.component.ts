@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Product } from '@shared/models/product/product';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
 import { CatalogService } from '@core/services/catalog.service';
+import { Subcategory } from '@shared/models/product/subcategory';
 
 @Component({
   selector: 'app-admin-product-details-page',
@@ -11,13 +12,17 @@ import { CatalogService } from '@core/services/catalog.service';
   styleUrls: ['./admin-product-details-page.component.scss'],
 })
 export class AdminProductDetailsPageComponent implements OnInit {
+  subscription = new Subscription();
+
   product$ = new BehaviorSubject<Product>({} as Product);
+
+  subcategories$: Observable<Subcategory[]>;
 
   formGroup: FormGroup = new FormGroup({
     id: new FormControl(),
     name: new FormControl(),
     price: new FormControl(),
-    imgUrl: new FormControl(),
+    imageUrl: new FormControl(),
     subCategory: new FormControl(),
   });
 
@@ -27,14 +32,14 @@ export class AdminProductDetailsPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.data
+    const subscription = this.route.data
       .pipe(
         map(({ product }) => {
           this.formGroup.patchValue({
             id: product.id,
             name: product.name,
             price: product.price,
-            imgUrl: product.imgUrl,
+            imageUrl: product.imageUrl,
             subCategory: product.subCategory,
           });
 
@@ -42,6 +47,10 @@ export class AdminProductDetailsPageComponent implements OnInit {
         })
       )
       .subscribe(this.product$);
+
+    this.subcategories$ = this.catalogService.getAllSubcategories();
+
+    this.subscription.add(subscription);
   }
 
   updateProduct() {
@@ -49,12 +58,19 @@ export class AdminProductDetailsPageComponent implements OnInit {
       id: this.formGroup.get('id')?.value,
       name: this.formGroup.get('name')?.value,
       price: +this.formGroup.get('price')?.value,
-      imgUrl: this.formGroup.get('imgUrl')?.value,
+      imageUrl: this.formGroup.get('imageUrl')?.value,
       subCategory: this.formGroup.get('subCategory')?.value,
     } as Product;
 
     this.catalogService.updateProduct(product).subscribe((product: Product) => {
       this.product$.next(product);
     });
+  }
+
+  // TODO: доделать, когда на бэке появятся изменения
+  selectedItemChanges(e: Subcategory) {
+    this.formGroup.patchValue({ subCategory: e });
+
+    console.log(this.formGroup.value);
   }
 }
