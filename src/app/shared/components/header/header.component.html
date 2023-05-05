@@ -9,18 +9,25 @@
       <ul>
         <li>
           <a routerLink="/favourites">
-            <div><svg width="20" height="19" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-favourite"></use></svg></div>
+            <div>
+              <svg width="20" height="19" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-favourite"></use></svg>
+              <span class="header-counter">
+                0
+              </span>
+            </div>
             <span>Избранное</span>
           </a>
         </li>
         <li>
           <a routerLink="/cart">
-            <div><svg width="20" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-cart"></use></svg></div>
+            <div>
+              <svg width="20" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-cart"></use></svg>
+              <span class="header-counter">
+                {{ productCount$ | async }}
+              </span>
+            </div>
             <span>Корзина</span>
           </a>
-          <span style="color: red;">
-            {{ productCount$ | async }}
-          </span>
         </li>
         <li>
           <a routerLink="/auth" *ngIf="!(user$ | async)">
