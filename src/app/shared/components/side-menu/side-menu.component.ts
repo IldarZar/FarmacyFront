@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Dictionary } from '@app/core/models/dictionary';
 
@@ -8,6 +8,7 @@ import { Dictionary } from '@app/core/models/dictionary';
   styleUrls: ['./side-menu.component.scss'],
 })
 export class SideMenuComponent<T extends number | string> {
+  // TODO: Убрать Observable
   @Input('items')
   items$!: Observable<Dictionary<T>[]>;
 

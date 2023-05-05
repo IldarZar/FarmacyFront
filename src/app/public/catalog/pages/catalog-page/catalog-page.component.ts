@@ -1,41 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, of, switchMap } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Actions, Select, Store } from '@ngxs/store';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, of, Subscription, switchMap } from 'rxjs';
+import { Router } from '@angular/router';
+import { Select, Store } from '@ngxs/store';
 import { UserService } from '@app/core/services/user.service';
 import { Product } from '@shared/models/product/product';
 import { Subcategory } from '@shared/models/product/subcategory';
 import { Category } from '@shared/models/product/category';
-import { CatalogService } from '@public/catalog/services/catalog.service';
+import { CatalogService } from '@core/services/catalog.service';
 import { User } from '@shared/models/user/user';
 import { Nullable } from '@core/models/nullable';
 import { AddCartProduct } from '@app/store/app/cart.actions';
 import { AppState } from '@app/store/app/app.state';
-import { SetUser } from '@app/store/app/user.actions';
 
 @Component({
   selector: 'app-catalog-page',
   templateUrl: './catalog-page.component.html',
   styleUrls: ['./catalog-page.component.scss'],
 })
-export class CatalogPageComponent implements OnInit {
+export class CatalogPageComponent implements OnInit, OnDestroy {
+  @Select(AppState.getUser)
+  user$: Observable<User>;
+
   constructor(
     private userService: UserService,
     private catalogService: CatalogService,
     private store: Store,
-    private router: Router,
-    private route: ActivatedRoute,
-    private actions: Actions
+    private router: Router
   ) {}
+
+  subscription = new Subscription();
 
   products$?: Observable<Product[]>;
   categories$: Observable<Category[]>;
   subcategories$: Observable<Subcategory[]>;
   activeCategoryId: number;
   activeSubcategoryId: number;
-
-  @Select(AppState.getUser)
-  user$: Observable<User>;
 
   ngOnInit(): void {
     this.products$ = this.catalogService.getCatalog();
@@ -67,20 +66,18 @@ export class CatalogPageComponent implements OnInit {
   }
 
   addProductToCart(product: Product): void {
-    this.store
-      .dispatch(new AddCartProduct({ product, countProduct: 1 }))
-      .subscribe();
+    this.store.dispatch(new AddCartProduct({ product, countProduct: 1 }));
   }
 
   openProductDetails(productId: number): void {
-    this.userService.getCurrentUser().subscribe((user: Nullable<User>) => {
-      console.log(user);
+    const subscription = this.user$.subscribe((user: Nullable<User>) => {
       if (user?.roles.map((role) => role.id).includes(1)) {
         this.router.navigate(['catalog', 'admin', productId]);
       } else {
         this.router.navigate(['catalog', productId]);
       }
     });
+    this.subscription.add(subscription);
   }
 
   subcategorySelected(subcategoryId: number): void {
@@ -96,29 +93,14 @@ export class CatalogPageComponent implements OnInit {
     }
   }
 
-  addProductToFavourites(product: Product) {
-    // this.userService
-    //   .addProductToFavourites(product)
-    //   .pipe(
-    //     switchMap((favourites) =>
-    //       this.user$.pipe(
-    //         map((user) => ({ user: user, favourites: favourites }))
-    //       )
-    //     ),
-    //     switchMap((res) =>
-    //       this.store.dispatch(
-    //         // @ts-ignore
-    //         new SetUser({ user: { ...res.user, favorites: res.favourites } })
-    //       )
-    //     )
-    //   )
-    //   .subscribe();
+  updateFavourites(product: Product, user: User) {
+    const subscription = this.userService
+      .updateFavourites(product, user)
+      .subscribe();
+    this.subscription.add(subscription);
+  }
 
-    this.userService.addProductToFavourites(product).subscribe((res) => {
-      this.store.dispatch(
-        // @ts-ignore
-        new SetUser({ user: { ...res.user, favorites: res.favorites } })
-      );
-    });
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

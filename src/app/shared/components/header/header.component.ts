@@ -5,7 +5,6 @@ import { User } from '@shared/models/user/user';
 import { UserService } from '@app/core/services/user.service';
 import { Actions, ofActionDispatched, Select, Store } from '@ngxs/store';
 import { ProductOrder } from '@shared/models/product-order';
-import { Nullable } from '@app/core/models/nullable';
 import { AddCartProduct, DeleteCartProduct } from '@app/store/app/cart.actions';
 import { AppState } from '@app/store/app/app.state';
 
@@ -16,11 +15,14 @@ import { AppState } from '@app/store/app/app.state';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   productCount$ = new BehaviorSubject(0);
-  isUserLoggedIn$ = new BehaviorSubject(false);
+  // isUserLoggedIn$ = new BehaviorSubject(false);
 
-  currentUser: User;
+  // currentUser: User;
 
   subscription = new Subscription();
+
+  @Select(AppState.getUser)
+  user$: Observable<User>;
 
   @Select(AppState.getCartProducts)
   cartProducts$: Observable<ProductOrder[]>;
@@ -45,15 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         );
       });
 
-    const userSubscription = this.authService
-      .getCurrentUser()
-      .subscribe((user: Nullable<User>) => {
-        console.log(user);
-        this.isUserLoggedIn$.next(!!user?.id);
-      });
-
     this.subscription.add(productsSubscription);
-    this.subscription.add(userSubscription);
   }
 
   ngOnDestroy(): void {

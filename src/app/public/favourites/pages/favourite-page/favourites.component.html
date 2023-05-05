@@ -1,3 +1,13 @@
-<div *ngFor="let product of products$ | async">
-  {{ product | json }}
-</div>
+<ng-container *ngIf="user$ | async as user">
+  <app-product-card
+    class="card"
+    *ngFor="let product of products$ | async"
+    [product]="product"
+    [isFavourite]="user.favorites.includes(product.id)"
+    (productSelected)="addProductToCart($event)"
+    (addedToFavourites)="updateFavourites($event, user)"
+    (click)="openProductDetails(product.id)"
+  >
+
+  </app-product-card>
+</ng-container>

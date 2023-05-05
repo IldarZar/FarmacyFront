@@ -17,10 +17,17 @@
   </div>
   <div class="form-group__field">
     <label>Адрес картинки</label>
-    <input name="imgUrl" formControlName="imgUrl" />
+    <input name="imageUrl" formControlName="imageUrl" />
   </div>
 
 <!-- TODO: Сделать dropdown для выбора подкатегории -->
+  <app-combobox
+    [items]="subcategories$ | async"
+    [activeItem]="formGroup.get('subCategory')?.value"
+    (activeItemChanges)="selectedItemChanges($event)"
+  >
+
+  </app-combobox>
 
   <button>
     Отправить

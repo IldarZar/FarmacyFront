@@ -13,6 +13,8 @@ import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
 import { AppState } from '@app/store/app/app.state';
 
+// TODO: Закинуть все сервисы + резолверы в папку core
+
 @NgModule({
   declarations: [AppComponent],
   imports: [

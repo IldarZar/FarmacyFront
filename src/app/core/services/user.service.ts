@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, switchMap, tap } from 'rxjs';
-import { Nullable } from '@app/core/models/nullable';
+import { forkJoin, Observable, of, switchMap, tap } from 'rxjs';
 import { User } from '@shared/models/user/user';
 import { Select, Store } from '@ngxs/store';
 import { AppState } from '@app/store/app/app.state';
-import { GetUser, SetUser } from '@app/store/app/user.actions';
+import { SetUser } from '@app/store/app/user.actions';
 import { Product } from '@shared/models/product/product';
 
 @Injectable({
@@ -13,17 +12,13 @@ import { Product } from '@shared/models/product/product';
 })
 export class UserService {
   @Select(AppState.getUser)
-  user$: Observable<Nullable<User>>;
+  user$: Observable<User>;
 
   constructor(private http: HttpClient, private store: Store) {}
 
-  getCurrentUser(): Observable<Nullable<User>> {
-    return this.store.dispatch(new GetUser()).pipe(switchMap(() => this.user$));
-  }
-
   login(login: string, password: string): Observable<User> {
     return this.http
-      .get<User>(`/auth/login/?login=${login}&password=${password}`)
+      .get<User>(`/auth/login?login=${login}&password=${password}`)
       .pipe(
         tap((user) => {
           this.store.dispatch(new SetUser({ user }));
@@ -39,18 +34,27 @@ export class UserService {
     );
   }
 
-  addProductToFavourites(product: Product) {
-    return this.store.dispatch(new GetUser()).pipe(
-      map((store) => store.app.user),
-      switchMap((user: User) => {
-        const requestBody = user.favorites.includes(product.id)
-          ? [...user?.favorites.filter((e) => e !== product.id)]
-          : [...user?.favorites, product.id];
+  // берём юзера из параметра, а не из селекта, дабы избежать бесконечного цикла
+  updateFavourites(product: Product, user: User): Observable<User> {
+    const requestBody = user.favorites.includes(product.id)
+      ? [...user?.favorites.filter((e) => e !== product.id)]
+      : [...user?.favorites, product.id];
 
-        return this.http
-          .patch(`/auth/favorites/${user.id}`, requestBody)
-          .pipe(map((favorites) => ({ favorites, user })));
-      })
+    return this.http.patch(`/auth/favorites/${user.id}`, requestBody).pipe(
+      switchMap(() =>
+        this.http.get<User>(
+          `/auth/login?login=${user.login}&password=${user.password}`
+        )
+      ),
+      tap((user) => this.store.dispatch(new SetUser({ user })))
     );
+  }
+
+  getFavouriteProducts(favouriteProductIds: number[]): Observable<Product[]> {
+    const sources = favouriteProductIds.map((favProdId) =>
+      this.http.get<Product>(`/products/${favProdId}`)
+    );
+
+    return sources.length ? forkJoin(sources) : of([]);
   }
 }

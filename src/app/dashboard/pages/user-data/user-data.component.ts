@@ -2,11 +2,12 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DashboardService } from '@dashboard/services/dashboard.service';
-import { Observable, Subscription, switchMap } from 'rxjs';
-import { Select } from '@ngxs/store';
+import { Observable, Subscription, take, tap } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
 import { AppState } from '@app/store/app/app.state';
 import { User } from '@shared/models/user/user';
 import * as L from 'leaflet';
+import { UpdateUser } from '@app/store/app/user.actions';
 
 @Component({
   selector: 'app-user-data',
@@ -21,6 +22,7 @@ export class UserDataComponent implements OnDestroy {
   private markers: Map<string, L.Marker> = new Map();
 
   constructor(
+    private store: Store,
     private route: ActivatedRoute,
     private dashboardService: DashboardService
   ) {}
@@ -40,18 +42,25 @@ export class UserDataComponent implements OnDestroy {
       this.initMap(user);
     });
     this.subscription.add(subscription);
+
+    this.user$.subscribe((res) => console.log(res));
   }
 
   updateUserData() {
     this.user$
       .pipe(
-        switchMap((user) =>
-          this.dashboardService.updateUserData({
-            ...user,
-            name: this.formGroup.get('name')?.value,
-            middleName: this.formGroup.get('middleName')?.value,
-            lastName: this.formGroup.get('lastName')?.value,
-          })
+        take(1),
+        tap((user) =>
+          this.store.dispatch(
+            new UpdateUser({
+              user: {
+                ...user,
+                name: this.formGroup.get('name')?.value,
+                middleName: this.formGroup.get('middleName')?.value,
+                lastName: this.formGroup.get('lastName')?.value,
+              },
+            })
+          )
         )
       )
       .subscribe();

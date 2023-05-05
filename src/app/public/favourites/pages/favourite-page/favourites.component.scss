@@ -1,3 +1,11 @@
 :host {
-  color: black;
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  margin-top: 52px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
