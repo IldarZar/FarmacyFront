@@ -31,6 +31,9 @@
         position: relative;
         min-height: 42px;
         padding-right: 44px;
+        max-width: 100%;
+        border: none;
+        color: var(--theme-black);
       }
 
       div {

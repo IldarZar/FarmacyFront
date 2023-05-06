@@ -1,31 +1,31 @@
 <section class="container">
-  <div style="color: black;">
-    {{ product$ | async | json }}
+  <div class="section__wrapper">
+    <div style="color: black;">
+      {{ product$ | async | json }}
+    </div>
+
+    <form [formGroup]="formGroup" (ngSubmit)="updateProduct()">
+      <label>
+        <span>ID</span>
+        <input class="main-field" name="id" formControlName="id" />
+      </label>
+      <label>
+        <span>Имя</span>
+        <input class="main-field" name="name" formControlName="name" />
+      </label>
+      <label>
+        <span>Цена</span>
+        <input class="main-field" name="price" formControlName="price" />
+      </label>
+      <label>
+        <span>Адрес картинки</span>
+        <input class="main-field" name="imageUrl" formControlName="imageUrl" />
+      </label>
+      <label>
+        <span>Категория</span>
+        <app-combobox [data]="subcategories$ | async" [value]="formGroup.get('subCategory')?.value"></app-combobox>
+      </label>
+      <input class="blue-btn" type="submit" value="Обновить"/>
+    </form>
   </div>
-
-  <form [formGroup]="formGroup" (ngSubmit)="updateProduct()">
-    <div class="form-group__field">
-      <label>Id</label>
-      <input name="id" formControlName="id" />
-    </div>
-    <div class="form-group__field">
-      <label>Имя</label>
-      <input name="name" formControlName="name" />
-    </div>
-    <div class="form-group__field">
-      <label>Цена</label>
-      <input name="price" formControlName="price" />
-    </div>
-    <div class="form-group__field">
-      <label>Адрес картинки</label>
-      <input name="imageUrl" formControlName="imageUrl" />
-    </div>
-
-    <!-- TODO: Сделать dropdown для выбора подкатегории -->
-    <app-combobox [data]="subcategories$ | async"></app-combobox>
-
-    <button>
-      Отправить
-    </button>
-  </form>
 </section>

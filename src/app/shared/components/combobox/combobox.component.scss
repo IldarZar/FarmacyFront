@@ -3,7 +3,7 @@
   display: inline-block;
   width: 100%;
   max-width: 500px;
-  background-color: #deebff;
+  background-color: var(--theme-main);
   font-size: 14px;
   color: var(--theme-black);
   height: max-content;
@@ -36,7 +36,9 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    padding: 12px;
+    padding: 12px 20px;
+    font-size: 16px;
+    color: var(--theme-dark-blue);
     user-select: none;
 
     svg {
@@ -61,10 +63,12 @@
     user-select: none;
 
     li {
-      padding: 12px 12px;
+      padding: 12px 20px;
+      font-size: 16px;
       transition: all .15s ease-in-out;
       line-height: 1;
       cursor: pointer;
+      border-top: 1px solid var(--theme-dark-blue);
 
       &.active {
         background-color: var(--theme-dark-blue) !important;
@@ -73,10 +77,6 @@
 
       &:hover {
         background-color: var(--theme-light-blue);
-      }
-
-      &:not(:last-of-type) {
-        border-bottom: 1px solid var(--theme-dark-blue);
       }
     }
   }
