@@ -5,6 +5,10 @@ export class SetUser {
   constructor(public payload: { user: User }) {}
 }
 
+export class ClearUser {
+  static readonly type = '[User] Clear User';
+}
+
 export class UpdateUser {
   static readonly type = '[User] Set User';
   constructor(public payload: { user: User }) {}

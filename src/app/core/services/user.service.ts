@@ -4,7 +4,7 @@ import { forkJoin, Observable, of, switchMap, tap } from 'rxjs';
 import { User } from '@shared/models/user/user';
 import { Select, Store } from '@ngxs/store';
 import { AppState } from '@app/store/app/app.state';
-import { SetUser } from '@app/store/app/user.actions';
+import { ClearUser, SetUser } from '@app/store/app/user.actions';
 import { Product } from '@shared/models/product/product';
 
 @Injectable({
@@ -29,7 +29,7 @@ export class UserService {
   logout() {
     return this.http.get('/auth/logout').pipe(
       tap(() => {
-        this.store.dispatch(new SetUser({ user: {} as User }));
+        this.store.dispatch(new ClearUser());
       })
     );
   }

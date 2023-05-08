@@ -18,18 +18,29 @@
         <h2>Каталог</h2>
       </div>
       <div class="catalog__content">
-        <ng-container *ngIf="user$ | async as user">
+        <ng-container *ngIf="user$ | async as user; else unauthorized">
           <app-product-card
             class="card"
             *ngFor="let product of products$ | async"
             [product]="product"
             [isFavourite]="user.favorites.includes(product.id)"
+            [showFavouriteButton]="!!user"
             (productSelected)="addProductToCart($event)"
             (addedToFavourites)="updateFavourites($event, user)"
             (click)="openProductDetails(product.id)"
           >
           </app-product-card>
         </ng-container>
+        <ng-template #unauthorized>
+          <app-product-card
+            class="card"
+            *ngFor="let product of products$ | async"
+            [product]="product"
+            (productSelected)="addProductToCart($event)"
+            (click)="openProductDetails(product.id)"
+          >
+          </app-product-card>
+        </ng-template>
       </div>
     </div>
   </div>

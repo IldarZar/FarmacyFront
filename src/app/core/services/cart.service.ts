@@ -38,7 +38,9 @@ export class CartService {
     );
   }
 
-  getAllDeliveryPoints() {
-    return this.http.get('/delivery-point').pipe(map(this.getContent));
+  getAllDeliveryPoints(): Observable<DeliveryPoint[]> {
+    return this.http
+      .get<DeliveryPoint[]>('/delivery-point')
+      .pipe(map(this.getContent));
   }
 }

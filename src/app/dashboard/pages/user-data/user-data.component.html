@@ -1,21 +1,34 @@
 <div id="map"></div>
 
 
-<form [formGroup]="formGroup">
+<form class="form" [formGroup]="formGroup" (ngSubmit)="updateUserData()">
 
   <div class="form-group__field">
     <label>Фамилия</label>
-    <input placeholder="Фамилия" name="lastName" formControlName="lastName" />
+    <input class="main-field" placeholder="Фамилия" name="lastName" formControlName="lastName" />
   </div>
   <div class="form-group__field">
     <label>Имя</label>
-    <input name="name" formControlName="name" />
+    <input class="main-field" name="name" formControlName="name" />
   </div>
   <div class="form-group__field">
     <label>Отчество</label>
-    <input name="middleName" formControlName="middleName" />
+    <input class="main-field" name="middleName" formControlName="middleName" />
   </div>
-  <button (click)="updateUserData()">
-    Update user data
-  </button>
+
+  <div class="form-group__field">
+    <label>Адрес пункта выдачи</label>
+    <app-combobox
+      [data]="deliveryPoints$ | async"
+      [value]="formGroup.get('deliveryPoint')?.value"
+      (valueChanges)="deliveryPointChanges($event)"
+    >
+
+    </app-combobox>
+  </div>
+
+  <!-- TODO: Выпилить компонент? Внешний вид кнопки задать в main.css -->
+  <app-button class="button">
+    Обновить данные
+  </app-button>
 </form>

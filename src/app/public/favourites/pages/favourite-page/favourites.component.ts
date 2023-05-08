@@ -1,7 +1,7 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { AppState } from '@app/store/app/app.state';
-import { Observable, Subscription, switchMap, tap } from 'rxjs';
+import { Observable, Subscription, switchMap, take } from 'rxjs';
 import { User } from '@shared/models/user/user';
 import { Product } from '@shared/models/product/product';
 import { AddCartProduct } from '@app/store/app/cart.actions';
@@ -33,12 +33,8 @@ export class FavouritesComponent implements OnInit {
 
   ngOnInit(): void {
     this.products$ = this.user$.pipe(
-      switchMap((user) => {
-        console.log(user.favorites);
-        return this.userService
-          .getFavouriteProducts(user.favorites)
-          .pipe(tap((favorites) => console.log(favorites)));
-      })
+      take(1),
+      switchMap((user) => this.userService.getFavouriteProducts(user.favorites))
     );
   }
 
@@ -47,12 +43,15 @@ export class FavouritesComponent implements OnInit {
   }
 
   updateFavourites(product: Product, user: User) {
-    this.userService.updateFavourites(product, user).subscribe();
+    const subscription = this.userService
+      .updateFavourites(product, user)
+      .subscribe();
+    this.subscription.add(subscription);
   }
 
   openProductDetails(productId: number): void {
     const subscription = this.user$.subscribe((user: Nullable<User>) => {
-      if (user?.roles.map((role) => role.id).includes(1)) {
+      if (user?.roles.map((role) => role.id)?.includes(2)) {
         this.router.navigate(['catalog', 'admin', productId]);
       } else {
         this.router.navigate(['catalog', productId]);

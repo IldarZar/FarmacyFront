@@ -1,14 +1,27 @@
 :host {
+  width: 200px;
   display: block;
 }
 
 .button {
+  display: block;
+  cursor: pointer;
   border-radius: 8px;
   padding: 6px 24px;
   background-color: var(--theme-dark-blue);
-  max-width: 130px;
-  height: 100%;
   width: 100%;
   color: var(--theme-main);
   border: none;
+  transition: background-color .4s, color .4s;
+
+  &__error {
+    border: 1px solid var(--theme-light-red);
+    background-color: var(--theme-main);
+    color: var(--theme-light-red);
+
+    &:hover {
+      background-color: var(--theme-light-red);
+      color: var(--theme-main);
+    }
+  }
 }

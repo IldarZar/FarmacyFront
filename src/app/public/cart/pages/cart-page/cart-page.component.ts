@@ -37,8 +37,6 @@ export class CartPageComponent implements OnDestroy {
       (user) => (this.selectedDeliveryPoint = user.deliveryPoint)
     );
     this.subscription.add(subscription);
-
-    this.cartProducts$.subscribe((res) => console.log(res));
   }
 
   deleteProductFromCart(cartProduct: ProductOrder): void {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '@shared/models/product/product';
 
 @Component({
@@ -6,12 +6,18 @@ import { Product } from '@shared/models/product/product';
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.scss'],
 })
-export class ProductCardComponent implements OnInit {
+export class ProductCardComponent {
   @Input()
   product: Product;
 
   @Input()
   isFavourite: boolean;
+
+  @Input()
+  showFavouriteButton: boolean;
+
+  @Input()
+  showBuyButton: boolean = true;
 
   @Output()
   productSelected = new EventEmitter();
@@ -20,8 +26,6 @@ export class ProductCardComponent implements OnInit {
   addedToFavourites = new EventEmitter();
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   addProductToCart(e: Event) {
     e.stopPropagation();

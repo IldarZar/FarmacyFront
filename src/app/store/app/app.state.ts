@@ -10,7 +10,7 @@ import {
 import { ProductOrder } from '@shared/models/product-order';
 import { User } from '@shared/models/user/user';
 import { Nullable } from '@core/models/nullable';
-import { SetUser, UpdateUser } from './user.actions';
+import { ClearUser, SetUser, UpdateUser } from './user.actions';
 import { HttpClient } from '@angular/common/http';
 
 export class AppStateModel {
@@ -136,6 +136,12 @@ export class AppState {
   SetUser(ctx: StateContext<AppStateModel>, { payload: { user } }: SetUser) {
     localStorage.setItem('user', JSON.stringify(user));
     ctx.patchState({ user });
+  }
+
+  @Action(ClearUser)
+  ClearUser(ctx: StateContext<AppStateModel>) {
+    localStorage.clear();
+    ctx.patchState({ user: null });
   }
 
   @Selector([AppState])

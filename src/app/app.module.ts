@@ -14,6 +14,8 @@ import { SharedModule } from '@shared/shared.module';
 import { AppState } from '@app/store/app/app.state';
 
 // TODO: Закинуть все сервисы + резолверы в папку core
+// TODO: Запретить кидать товары в избранное и корзину без авторизации
+// TODO: Сделать поисковик
 
 @NgModule({
   declarations: [AppComponent],

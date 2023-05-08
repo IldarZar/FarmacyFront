@@ -7,38 +7,55 @@
         <div><svg width="20" height="19" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-search"></use></svg></div>
       </div>
       <ul>
-        <li>
-          <a routerLink="/favourites">
-            <div>
-              <svg width="20" height="19" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-favourite"></use></svg>
-              <span class="header-counter">
+        <ng-container *ngIf="user$ | async as user; else unauthorizedUser">
+          <li>
+            <a routerLink="/favourites">
+              <div>
+                <svg width="20" height="19" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-favourite"></use></svg>
+                <span class="header-counter">
                 0
               </span>
-            </div>
-            <span>Избранное</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/cart">
-            <div>
-              <svg width="20" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-cart"></use></svg>
-              <span class="header-counter">
+              </div>
+              <span>Избранное</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/cart">
+              <div>
+                <svg width="20" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-cart"></use></svg>
+                <span class="header-counter">
                 {{ productCount$ | async }}
               </span>
-            </div>
-            <span>Корзина</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/auth" *ngIf="!(user$ | async)">
-            <div><svg width="16" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-account"></use></svg></div>
-            <span>Войти</span>
-          </a>
-          <a routerLink="/dashboard" *ngIf="(user$ | async)">
-            <div><svg width="16" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-account"></use></svg></div>
-            <span>Аккаунт</span>
-          </a>
-        </li>
+              </div>
+              <span>Корзина</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/dashboard">
+              <div><svg width="16" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-account"></use></svg></div>
+              <span>Аккаунт</span>
+            </a>
+          </li>
+        </ng-container>
+        <ng-template #unauthorizedUser>
+          <li>
+            <a routerLink="/cart">
+              <div>
+                <svg width="20" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-cart"></use></svg>
+                <span class="header-counter">
+                {{ productCount$ | async }}
+              </span>
+              </div>
+              <span>Корзина</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/auth">
+              <div><svg width="16" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-account"></use></svg></div>
+              <span>Войти</span>
+            </a>
+          </li>
+        </ng-template>
       </ul>
     </div>
     <div class="header__bottom-nav">

@@ -4,6 +4,8 @@
       {{ product$ | async | json }}
     </div>
 
+    <img class="image" src="{{ formGroup.get('imageUrl')?.value }}" alt="">
+
     <form [formGroup]="formGroup" (ngSubmit)="updateProduct()">
       <label>
         <span>ID</span>
@@ -23,7 +25,7 @@
       </label>
       <label>
         <span>Категория</span>
-        <app-combobox [data]="subcategories$ | async" [value]="formGroup.get('subCategory')?.value"></app-combobox>
+        <app-combobox [data]="subcategories$ | async" [value]="formGroup.get('subCategory')?.value" (valueChanges)="subcategoryChanges($event)"></app-combobox>
       </label>
       <input class="blue-btn" type="submit" value="Обновить"/>
     </form>

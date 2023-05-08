@@ -11,10 +11,10 @@
     избранное
   </div>
 
-  <app-button (click)="addProductToCart($event)">
+  <app-button *ngIf="showBuyButton" (click)="addProductToCart($event)">
     В корзину
   </app-button>
-  <app-button (click)="addProductToFavourites($event)">
+  <app-button *ngIf="showFavouriteButton" (click)="addProductToFavourites($event)">
     В избранное
   </app-button>
 

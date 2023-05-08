@@ -1,9 +1,11 @@
 <ng-container *ngIf="cartProducts$ | async as cartProducts">
-<h3>Список товаров</h3>
+  <h3>Список товаров</h3>
   <div
     *ngFor="let cartProduct of cartProducts"
     class="product-row"
   >
+    <img class="product-row__image" src="{{ cartProduct.product.imageUrl }}" alt="">
+
     <div class="product-row__name">
       {{ cartProduct.product.name }}
     </div>

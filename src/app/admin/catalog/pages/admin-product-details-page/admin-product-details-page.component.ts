@@ -57,20 +57,20 @@ export class AdminProductDetailsPageComponent implements OnInit {
     const product: Product = {
       id: this.formGroup.get('id')?.value,
       name: this.formGroup.get('name')?.value,
+      controlled: false,
       price: +this.formGroup.get('price')?.value,
       imageUrl: this.formGroup.get('imageUrl')?.value,
       subCategory: this.formGroup.get('subCategory')?.value,
     } as Product;
+
+    console.log(product);
 
     this.catalogService.updateProduct(product).subscribe((product: Product) => {
       this.product$.next(product);
     });
   }
 
-  // TODO: доделать, когда на бэке появятся изменения
-  selectedItemChanges(e: Subcategory) {
+  subcategoryChanges(e: Subcategory) {
     this.formGroup.patchValue({ subCategory: e });
-
-    console.log(this.formGroup.value);
   }
 }

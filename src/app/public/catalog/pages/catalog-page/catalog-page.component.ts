@@ -30,7 +30,7 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
 
   subscription = new Subscription();
 
-  products$?: Observable<Product[]>;
+  products$: Observable<Product[]>;
   categories$: Observable<Category[]>;
   subcategories$: Observable<Subcategory[]>;
   activeCategoryId: number;
@@ -71,7 +71,7 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
 
   openProductDetails(productId: number): void {
     const subscription = this.user$.subscribe((user: Nullable<User>) => {
-      if (user?.roles.map((role) => role.id).includes(1)) {
+      if (user?.roles.map((role) => role.id)?.includes(2)) {
         this.router.navigate(['catalog', 'admin', productId]);
       } else {
         this.router.navigate(['catalog', productId]);
