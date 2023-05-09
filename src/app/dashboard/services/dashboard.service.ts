@@ -6,7 +6,7 @@ import { Select, Store } from '@ngxs/store';
 import { SetUser } from '@app/store/app/user.actions';
 import { AppState } from '@app/store/app/app.state';
 import { UserOrder } from '@shared/models/user-order';
-import { OrderStatus } from '@shared/models/enums/order-status';
+import { Dictionary } from '@core/models/dictionary';
 
 @Injectable({
   providedIn: 'root',
@@ -45,10 +45,13 @@ export class DashboardService {
   /**
    * [Access: Pharmacist]
    */
-  setOrderStatus(userOrder: UserOrder): Observable<string> {
+  setOrderStatus(
+    userOrder: UserOrder,
+    newStatus: Dictionary<number>
+  ): Observable<string> {
     return this.http.patch<string>(
       `/user-order/${userOrder.user.id}/order/${userOrder.id}`,
-      OrderStatus.IN_PROGRESS
+      newStatus.id
     );
   }
 }
