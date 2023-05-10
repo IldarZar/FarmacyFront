@@ -2,11 +2,10 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DashboardService } from '@dashboard/services/dashboard.service';
-import { map, Observable, Subscription, switchMap, take, tap } from 'rxjs';
+import { Observable, Subscription, switchMap, take, tap } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { AppState } from '@app/store/app/app.state';
 import { User } from '@shared/models/user/user';
-import * as L from 'leaflet';
 import { UpdateUser } from '@app/store/app/user.actions';
 import { DeliveryPoint } from '@shared/models/delivery-point';
 import { CartService } from '@core/services/cart.service';
@@ -20,9 +19,6 @@ export class UserDataComponent implements OnDestroy {
   subscription = new Subscription();
   formGroup: FormGroup;
   deliveryPoints$: Observable<DeliveryPoint[]>;
-
-  private map!: L.Map;
-  private markers: Map<string, L.Marker> = new Map();
 
   constructor(
     private store: Store,
@@ -53,25 +49,8 @@ export class UserDataComponent implements OnDestroy {
           middleName: user.middleName,
           deliveryPoint: user.deliveryPoint,
         });
-        return this.cartService
-          .getAllDeliveryPoints()
-          .pipe(map((deliveryPoints) => ({ deliveryPoints, user })));
-      }),
-      tap(({ deliveryPoints, user }) => {
-        this.initMap(user);
-        deliveryPoints.forEach((deliveryPoint: DeliveryPoint) => {
-          const marker = L.marker([
-            deliveryPoint.longitude,
-            deliveryPoint.latitude,
-          ])
-            .addTo(this.map)
-            .bindPopup(deliveryPoint.name);
-          this.markers.set(deliveryPoint.name, marker);
-        });
-
-        this.markers.get(user.deliveryPoint.name)?.openPopup();
-      }),
-      map(({ deliveryPoints, user }) => deliveryPoints)
+        return this.cartService.getAllDeliveryPoints();
+      })
     );
   }
 
@@ -98,23 +77,7 @@ export class UserDataComponent implements OnDestroy {
     this.subscription.add(subscription);
   }
 
-  initMap(user: User) {
-    this.map = L.map('map', {
-      center: [user.deliveryPoint.longitude, user.deliveryPoint.latitude],
-      zoom: 12,
-    });
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      minZoom: 3,
-      attribution:
-        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    }).addTo(this.map);
-  }
-
   deliveryPointChanges(deliveryPoint: DeliveryPoint) {
-    this.markers.get(deliveryPoint.name)?.openPopup();
-    this.map.setView([deliveryPoint.longitude, deliveryPoint.latitude]);
     this.formGroup.patchValue({ deliveryPoint });
   }
 

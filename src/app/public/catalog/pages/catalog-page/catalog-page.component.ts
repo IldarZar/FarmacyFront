@@ -93,6 +93,8 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
     }
   }
 
+  applyFilters() {}
+
   updateFavourites(product: Product, user: User) {
     const subscription = this.userService
       .updateFavourites(product, user)
