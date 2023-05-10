@@ -1,34 +1,26 @@
-<div id="map"></div>
-
-
-<form class="form" [formGroup]="formGroup" (ngSubmit)="updateUserData()">
-
-  <div class="form-group__field">
-    <label>Фамилия</label>
-    <input class="main-field" placeholder="Фамилия" name="lastName" formControlName="lastName" />
-  </div>
-  <div class="form-group__field">
-    <label>Имя</label>
-    <input class="main-field" name="name" formControlName="name" />
-  </div>
-  <div class="form-group__field">
-    <label>Отчество</label>
-    <input class="main-field" name="middleName" formControlName="middleName" />
-  </div>
-
-  <div class="form-group__field">
-    <label>Адрес пункта выдачи</label>
-    <app-combobox
-      [data]="deliveryPoints$ | async"
-      [value]="formGroup.get('deliveryPoint')?.value"
-      (valueChanges)="deliveryPointChanges($event)"
-    >
-
-    </app-combobox>
-  </div>
-
-  <!-- TODO: Выпилить компонент? Внешний вид кнопки задать в main.css -->
-  <app-button class="button">
-    Обновить данные
-  </app-button>
-</form>
+<div class="section__wrapper">
+  <form [formGroup]="formGroup" (ngSubmit)="updateUserData()">
+    <label>
+      <span>Фамилия</span>
+      <input class="main-field" placeholder="Введите фамилию" name="lastName" formControlName="lastName" />
+    </label>
+    <label>
+      <span>Имя</span>
+      <input class="main-field" placeholder="Введите имя" name="name" formControlName="name" />
+    </label>
+    <label>
+      <span>Отчество</span>
+      <input class="main-field" placeholder="Введите отчество" name="middleName" formControlName="middleName" />
+    </label>
+    <label>
+      <span>Адрес пункта выдачи</span>
+      <app-combobox
+        [data]="deliveryPoints$ | async"
+        [value]="formGroup.get('deliveryPoint')?.value"
+        (valueChanges)="deliveryPointChanges($event)"
+      >
+      </app-combobox>
+    </label>
+    <input class="blue-btn" type="submit" value="Обновить данные"/>
+  </form>
+</div>
