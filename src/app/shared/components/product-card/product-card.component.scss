@@ -1,27 +1,57 @@
 :host {
-  display: block;
-  padding: 17px;
-  background-color: #F5F9FF;
-  max-width: 276px;
-  max-height: 271px;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  row-gap: 16px;
   border-radius: 20px;
-  color: var( --theme-black);
+  width: 100%;
+  max-width: 288px;
+  color: var(--theme-black);
+  background-color: var(--theme-light-blue);
 }
 
-.img {
-  max-width: 240px;
-  border-radius: 20px;
-}
-
-.name {
-  margin-top: 14px;
+.product-name {
+  font-size: 18px;
 }
 
 .bottom-group {
-  margin-top: 20px;
   display: flex;
-  gap: 16px;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
+
+  .product-price {
+    font-size: 24px;
+    color: var(--theme-dark-blue);
+  }
+
+  .blue-btn {
+    text-transform: initial;
+    padding: 6px 20px;
+    margin-left: auto;
+  }
+
+  .favourite-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background-color: var(--theme-accent-blue);
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+
+    svg {
+      stroke: var(--theme-light-blue);
+      fill: var(--theme-accent-blue);
+      transition: all .3s ease-in-out;
+    }
+
+    &.active {
+      svg {
+        fill: var(--theme-light-blue);
+      }
+    }
+  }
 }

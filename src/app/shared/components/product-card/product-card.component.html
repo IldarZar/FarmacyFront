@@ -1,21 +1,15 @@
-<img src="{{ product.imageUrl }}" alt="" class="img">
-<div class="name">
-  {{ product.name }}
-</div>
+<img class="product-image" src="{{ product.imageUrl }}" alt="">
+<h2 class="product-name">{{ product.name }}</h2>
 <div class="bottom-group">
-  <div class="price">
-    {{ product.price }} ₽
-  </div>
-
-  <div *ngIf="isFavourite">
-    избранное
-  </div>
-
-  <app-button *ngIf="showBuyButton" (click)="addProductToCart($event)">
+  <span class="product-price">{{ product.price }} ₽</span>
+  <span class="blue-btn" *ngIf="showBuyButton" (click)="addProductToCart($event)">
     В корзину
-  </app-button>
-  <app-button *ngIf="showFavouriteButton" (click)="addProductToFavourites($event)">
-    В избранное
-  </app-button>
-
+  </span>
+  <span class="favourite-btn"
+    *ngIf="showFavouriteButton"
+    [class.active]="isFavourite"
+    (click)="addProductToFavourites($event)"
+  >
+    <svg width="20" height="21"><use xlink:href="assets/icons/sprite.svg#icon-favourite"></use></svg>
+  </span>
 </div>

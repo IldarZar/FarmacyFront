@@ -67,6 +67,18 @@
       display: flex;
 
       li {
+
+        &:first-of-type {
+          a:hover {
+            div {
+              svg {
+                stroke: var(--theme-main);
+                fill: none;
+              }
+            }
+          }
+        }
+
         a {
           display: flex;
           align-items: center;
