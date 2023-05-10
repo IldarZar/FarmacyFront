@@ -18,12 +18,18 @@
 
       &__header {
         display: flex;
+        justify-content: space-between;
         align-items: center;
         margin-bottom: 16px;
 
         h1 {
           font-size: 32px;
           color: var(--theme-dark-blue);
+        }
+
+        &__buttons {
+          display: flex;
+          column-gap: 16px;
         }
       }
 

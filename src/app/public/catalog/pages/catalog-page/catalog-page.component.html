@@ -17,6 +17,16 @@
     <div class="main__wrapper__catalog">
       <div class="main__wrapper__catalog__header">
         <h1>Каталог</h1>
+        <div class="main__wrapper__catalog__header__buttons">
+          <span class="light-blue-btn">
+            <svg width="16" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-geo"></use></svg>
+            Выберите аптеку...
+          </span>
+          <span class="light-blue-btn">
+            <svg width="20" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-sort"></use></svg>
+            Сначала дешевле
+          </span>
+        </div>
       </div>
       <div class="main__wrapper__catalog__products">
         <ng-container *ngIf="user$ | async as user; else unauthorized">
