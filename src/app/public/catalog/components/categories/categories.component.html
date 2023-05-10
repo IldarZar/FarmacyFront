@@ -1,8 +1,20 @@
-<span
-  *ngFor="let category of categories$ | async"
-  (click)="selectCategory(category.id)"
-  [class.category_selected]="category.id === activeCategoryId"
-  class="category"
->
-  {{ category.name }}
-</span>
+<ul class="categories__wrapper">
+  <li
+    *ngFor="let category of categories$ | async"
+    (click)="selectCategory(category.id)"
+    [class.active]="category.id === activeCategoryId"
+    class="categories__item"
+  >
+    {{ category.name }}
+  </li>
+</ul>
+<div class="categories__buttons">
+  <span class="light-blue-btn">
+    <svg width="25" height="24" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-discount"></use></svg>
+    Акции
+  </span>
+  <span class="light-blue-btn">
+    <svg width="20" height="16" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-card"></use></svg>
+    Бонусная карта
+  </span>
+</div>

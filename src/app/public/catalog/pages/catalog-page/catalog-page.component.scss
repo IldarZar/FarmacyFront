@@ -1,33 +1,36 @@
-:host {
-  width: 100%;
-}
-
-.categories {
-  padding: 12px 36px;
-  max-width: 200px;
-}
-
 .main {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.container {
   display: flex;
-  gap: 16px;
-}
+  flex-direction: column;
 
-.catalog {
-  width: 100%;
-  &__info {
-    color: black;
-  }
-  &__content {
+  &__wrapper {
     display: flex;
-    gap: 16px;
-  }
-}
+    column-gap: 16px;
 
-.subcategories {
-  width: 242px;
+    &__menu {
+      width: 100%;
+      max-width: 240px;
+    }
+
+    &__catalog {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      &__header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+
+        h1 {
+          font-size: 32px;
+          color: var(--theme-dark-blue);
+        }
+      }
+
+      &__products {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      }
+    }
+  }
 }

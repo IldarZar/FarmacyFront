@@ -1,23 +1,24 @@
-<main class="main">
-
+<main class="main container">
   <app-categories
     class="categories"
     [categories]="categories$"
     [activeCategoryId]="activeCategoryId"
     (categorySelected)="categorySelected($event)"
   ></app-categories>
-  <div class="container">
-    <app-side-menu
-      [items]="subcategories$"
-      [activeItemId]="activeSubcategoryId"
-      (itemSelected)="subcategorySelected($event)"
-    >
-    </app-side-menu>
-    <div class="catalog">
-      <div class="catalog__info">
-        <h2>Каталог</h2>
+  <div class="main__wrapper">
+    <div class="main__wrapper__menu">
+      <app-side-menu
+        [items]="subcategories$"
+        [activeItemId]="activeSubcategoryId"
+        (itemSelected)="subcategorySelected($event)"
+      >
+      </app-side-menu>
+    </div>
+    <div class="main__wrapper__catalog">
+      <div class="main__wrapper__catalog__header">
+        <h1>Каталог</h1>
       </div>
-      <div class="catalog__content">
+      <div class="main__wrapper__catalog__products">
         <ng-container *ngIf="user$ | async as user; else unauthorized">
           <app-product-card
             class="card"
@@ -45,4 +46,3 @@
     </div>
   </div>
 </main>
-

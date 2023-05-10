@@ -57,5 +57,20 @@ form {
   @extend .main-btn;
 
   color: var(--theme-main);
-  background-color: var(--theme-dark-blue);
+  background-color: var(--theme-accent-blue);
+}
+
+.light-blue-btn {
+  @extend .main-btn;
+
+  color: var(--theme-dark-blue);
+  background-color: var(--theme-blue);
+  padding: 0 10px;
+  font-size: 16px;
+  text-transform: initial;
+  height: 32px;
+
+  svg {
+    margin-right: 6px;
+  }
 }

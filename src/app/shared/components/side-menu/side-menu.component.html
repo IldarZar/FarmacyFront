@@ -1,8 +1,13 @@
-<span
-  *ngFor="let item of items$ | async"
-  (click)="selectItem(item.id)"
-  [class.item_selected]="item.id === activeItemId"
-  class="item"
->
-  {{ item.name }}
-</span>
+<div class="side-menu__subcategories">
+  <h3>Категории</h3>
+  <ul>
+    <li
+      *ngFor="let item of items$ | async"
+      (click)="selectItem(item.id)"
+      [class.active]="item.id === activeItemId"
+      class="item"
+    >
+      {{ item.name }}
+    </li>
+  </ul>
+</div>
