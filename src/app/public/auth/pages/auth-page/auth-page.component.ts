@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '@app/core/services/user.service';
 import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,9 +16,11 @@ export class AuthPageComponent implements OnDestroy {
   subscription = new Subscription();
 
   formGroup: FormGroup = new FormGroup({
-    login: new FormControl(),
-    password: new FormControl(),
+    login: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
   });
+
+  errorMessage: string = '';
 
   constructor(
     private router: Router,
@@ -35,8 +37,13 @@ export class AuthPageComponent implements OnDestroy {
         this.formGroup.get('login')?.value,
         this.formGroup.get('password')?.value
       )
-      .subscribe(() => {
-        this.router.navigate(['/catalog']);
+      .subscribe({
+        error: (e) => {
+          this.errorMessage = 'Неверный логин или пароль';
+        },
+        next: () => {
+          this.router.navigate(['/catalog']);
+        },
       });
 
     this.subscription.add(subscription);

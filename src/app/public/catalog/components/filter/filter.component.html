@@ -1,6 +1,16 @@
-<!--<app-side-menu-->
-<!--  [items]="subcategories$"-->
-<!--  [activeItemId]="activeSubcategoryId"-->
-<!--  (itemSelected)="subcategorySelected($event)"-->
-<!--&gt;-->
-<!--</app-side-menu>-->
+<app-side-menu
+  [items]="subcategories"
+  [activeItemId]="activeSubcategoryId"
+  (itemSelected)="subcategorySelected( $event)"
+>
+</app-side-menu>
+
+<ngx-slider
+  [(value)]="minPrice"
+  [(highValue)]="maxPrice"
+  [options]="options"
+  (valueChange)="priceChanged($event, 'minPrice')"
+  (highValueChange)="priceChanged($event, 'maxPrice')"
+>
+
+</ngx-slider>

@@ -1,0 +1,19 @@
+:host {
+  display: block;
+  margin: 20px auto 0;
+  max-width: 1200px;
+}
+
+.form {
+  border-radius: 16px;
+  background-color: var(--theme-blue);
+  padding: 24px;
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+}
+
+
+.error-message {
+  color: red;
+}

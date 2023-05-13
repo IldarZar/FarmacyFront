@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Dictionary } from '@app/core/models/dictionary';
+import { Nullable } from '@core/models/nullable';
 
 @Component({
   selector: 'app-side-menu',
@@ -8,9 +8,8 @@ import { Dictionary } from '@app/core/models/dictionary';
   styleUrls: ['./side-menu.component.scss'],
 })
 export class SideMenuComponent<T extends number | string> {
-  // TODO: Убрать Observable
   @Input('items')
-  items$!: Observable<Dictionary<T>[]>;
+  items$: Nullable<Dictionary<T>[]>;
 
   @Input()
   activeItemId: T | null;

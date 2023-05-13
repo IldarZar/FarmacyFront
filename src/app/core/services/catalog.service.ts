@@ -1,26 +1,54 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Product } from '@shared/models/product/product';
 import { Category } from '@shared/models/product/category';
 import { Subcategory } from '@shared/models/product/subcategory';
+import { Nullable } from '@core/models/nullable';
+import { SearchFilter } from '@shared/models/search-filter';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CatalogService {
+  searchText = new BehaviorSubject<string>('');
+
   constructor(private http: HttpClient) {}
 
   private getContent(body: any) {
     return body.content;
   }
 
-  getCatalog(): Observable<Product[]> {
-    return this.http.get('/products').pipe(map(this.getContent));
+  private createParamsString(params: Nullable<SearchFilter>): string {
+    return params
+      ? Object.entries(params).reduce(
+          (acc, [key, value]) => acc + `&${key}=${value ? value : ''}`,
+          '?'
+        )
+      : '';
+  }
+
+  getCatalog(params: Nullable<SearchFilter> = null): Observable<Product[]> {
+    // если указана подкатегория, то игнорируем категорию
+    if (params?.subCategoryId) {
+      return this.http
+        .get(
+          `/products${this.createParamsString({ ...params, categoryId: null })}`
+        )
+        .pipe(map(this.getContent));
+    } else {
+      return this.http
+        .get(`/products${this.createParamsString(params)}`)
+        .pipe(map(this.getContent));
+    }
   }
 
   getCategories(): Observable<Category[]> {
     return this.http.get('/categories').pipe(map(this.getContent));
+  }
+
+  getCategoryId(id: number): Observable<Category> {
+    return this.http.get<Category>('/categories/' + id);
   }
 
   getSubcategoryId(id: number): Observable<Subcategory> {
@@ -34,21 +62,7 @@ export class CatalogService {
   }
 
   getProductById(productId: number): Observable<Product> {
-    return this.http
-      .get<Product>(`/products/${productId}`)
-      .pipe(tap(console.log));
-  }
-
-  getCatalogByCategoryId(categoryId: number): Observable<Product[]> {
-    return this.http
-      .get(`/products/category/${categoryId}`)
-      .pipe(map(this.getContent));
-  }
-
-  getCatalogBySubcategoryId(subcategoryId: number): Observable<Product[]> {
-    return this.http
-      .get(`/products/subcategories/${subcategoryId}`)
-      .pipe(map(this.getContent));
+    return this.http.get<Product>(`/products/${productId}`);
   }
 
   /**

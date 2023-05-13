@@ -9,6 +9,7 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { ProductDetailsPageComponent } from './pages/product-details-page/product-details-page.component';
 import { AdminCatalogModule } from '@admin/catalog/admin-catalog.module';
 import { FilterComponent } from './components/filter/filter.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { FilterComponent } from './components/filter/filter.component';
     HttpClientModule,
     CatalogRoutingModule,
     AdminCatalogModule,
+    NgxSliderModule,
   ],
 })
 export class CatalogModule {}

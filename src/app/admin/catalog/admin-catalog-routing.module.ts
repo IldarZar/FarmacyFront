@@ -8,7 +8,6 @@ const routes: Routes = [
     path: '',
     component: ProductDetailsPageComponent,
     resolve: [ProductResolver],
-    pathMatch: 'full',
   },
 ];
 

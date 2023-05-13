@@ -13,9 +13,10 @@ import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
 import { AppState } from '@app/store/app/app.state';
 
-// TODO: Закинуть все сервисы + резолверы в папку core
-// TODO: Запретить кидать товары в избранное и корзину без авторизации
+// TODO: Запретить кидать товары в избранное без авторизации
 // TODO: Сделать поисковик
+// TODO: role id = 2 - admin, сделать нормальную проверку на права
+// TODO: убрать Nullable, мб без него норм будет
 
 @NgModule({
   declarations: [AppComponent],

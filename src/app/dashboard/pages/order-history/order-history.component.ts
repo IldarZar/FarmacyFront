@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DashboardService } from '@dashboard/services/dashboard.service';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { UserOrder } from '@shared/models/user-order';
 
 @Component({
@@ -19,6 +19,7 @@ export class OrderHistoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.orderHistory$ = this.route.data.pipe(
+      tap((res) => console.log(res)),
       map((res) => res['orderHistory'] as UserOrder[])
     );
   }

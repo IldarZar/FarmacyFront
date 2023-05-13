@@ -34,7 +34,7 @@ export class CartPageComponent implements OnDestroy {
   ngOnInit() {
     this.deliveryPoints$ = this.cartService.getAllDeliveryPoints();
     const subscription = this.user$.subscribe(
-      (user) => (this.selectedDeliveryPoint = user.deliveryPoint)
+      (user) => (this.selectedDeliveryPoint = user?.deliveryPoint)
     );
     this.subscription.add(subscription);
   }
