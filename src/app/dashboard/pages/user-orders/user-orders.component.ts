@@ -40,16 +40,11 @@ export class UserOrdersComponent implements OnInit {
       .pipe(
         tap((userOrders) => {
           userOrders.forEach((userOrder: UserOrder) => {
-            console.log(userOrder as UserOrder);
             this.formGroup.controls['userOrders'].push(
               new FormGroup({
                 id: new FormControl(userOrder.id),
-                orderDateTime: new FormControl(
-                  userOrder.orderDateTime.toString()
-                ),
-                expectedDate: new FormControl(
-                  userOrder.expectedDate.toString()
-                ),
+                orderDateTime: new FormControl(userOrder.orderDateTime),
+                expectedDate: new FormControl(userOrder.expectedDate),
                 lastStorageDay: new FormControl(userOrder.lastStorageDay),
                 productOrder: new FormControl(userOrder.productOrder),
                 sum: new FormControl(userOrder.sum),

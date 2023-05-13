@@ -1,9 +1,18 @@
-<div *ngFor="let userOrder of formGroup.controls.userOrders.controls; let i = index">
+<div *ngFor="let userOrder of formGroup.controls.userOrders.controls; let i = index" class="user-order-row">
   <div>
-    {{ userOrder.value | json }}
+    Заявка от {{ userOrder.get('orderDateTime')?.value | date : 'dd-MM-yyyy в hh:mm' }}
   </div>
 
-  {{ formGroup.controls.userOrders.controls[i].value.status | json }}
+<!-- TODO: бэк должен возвращать полный объект юзера, а не только id -->
+  <div>Ожидаемая дата доставки: {{ userOrder.get('expectedDate')?.value | date : 'dd-MM-yyyy в hh:mm' }}</div>
+  <div>Заказчик: {{userOrder.get('user')?.value | json }}</div>
+
+<!--  {{ formGroup.controls.userOrders.controls[i].value.status | json }}-->
+
+  <div>
+    <span>
+      Статус:
+    </span>
   <app-combobox
     [data]="statuses"
     [value]="formGroup.controls.userOrders.controls[i].value.status"
@@ -11,6 +20,7 @@
   >
 
   </app-combobox>
+  </div>
   <br>
   <br>
 

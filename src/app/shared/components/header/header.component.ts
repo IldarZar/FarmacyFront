@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 import { User } from '@shared/models/user/user';
@@ -7,6 +13,7 @@ import { Actions, ofActionDispatched, Select, Store } from '@ngxs/store';
 import { ProductOrder } from '@shared/models/product-order';
 import { AddCartProduct, DeleteCartProduct } from '@app/store/app/cart.actions';
 import { AppState } from '@app/store/app/app.state';
+import { CatalogService } from '@core/services/catalog.service';
 
 @Component({
   selector: 'app-header',
@@ -15,11 +22,11 @@ import { AppState } from '@app/store/app/app.state';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   productCount$ = new BehaviorSubject(0);
-  // isUserLoggedIn$ = new BehaviorSubject(false);
-
-  // currentUser: User;
 
   subscription = new Subscription();
+
+  @ViewChild('input')
+  input: ElementRef;
 
   @Select(AppState.getUser)
   user$: Observable<User>;
@@ -30,6 +37,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     protected route: ActivatedRoute,
     private authService: UserService,
+    private catalogService: CatalogService,
     private store: Store,
     private actions: Actions
   ) {}
@@ -48,6 +56,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
 
     this.subscription.add(productsSubscription);
+  }
+
+  searchProduct() {
+    this.catalogService.searchText.next(this.input.nativeElement.value);
   }
 
   ngOnDestroy(): void {

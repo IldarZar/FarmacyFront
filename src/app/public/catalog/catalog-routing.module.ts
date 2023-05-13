@@ -4,6 +4,7 @@ import { CatalogPageComponent } from './pages/catalog-page/catalog-page.componen
 import { ProductDetailsPageComponent } from './pages/product-details-page/product-details-page.component';
 import { ProductResolver } from '@core/resolvers/product.resolver';
 import { AdminProductDetailsPageComponent } from '@app/admin/catalog/pages/admin-product-details-page/admin-product-details-page.component';
+import { AdminGuard } from '@core/guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -13,6 +14,7 @@ const routes: Routes = [
   {
     path: 'admin/:id',
     component: AdminProductDetailsPageComponent,
+    canActivate: [AdminGuard],
     resolve: { product: ProductResolver },
   },
   {

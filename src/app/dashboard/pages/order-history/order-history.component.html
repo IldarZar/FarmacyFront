@@ -1,12 +1,23 @@
-<div *ngFor="let userOrder of orderHistory$ | async">
+<ng-container *ngIf="orderHistory$ | async as orderHistory">
 
-  {{ userOrder | json }}
-  <h3>Дата: {{ userOrder.orderDateTime }}</h3>
-  <div>
-    Заказы:
+  <div *ngIf="orderHistory.length === 0">
+    Вы ещё не сделали ни одного заказа
   </div>
-<!--  <div *ngFor="let productOrder of userOrder.productOrder">-->
-<!--    {{ productOrder.product | json }}-->
-<!--  </div>-->
-  <div >На сумму {{ userOrder.sum }}</div>
-</div>
+
+  <div *ngFor="let userOrder of orderHistory">
+
+    <h3>Дата заказа: {{ userOrder.orderDateTime | date : 'dd-MM-yyyy в hh:mm' }}</h3>
+    <h3>Ожидаемая дата доставки: {{ userOrder.expectedDate | date : 'dd-MM-yyyy в hh:mm' }}</h3>
+    <div>
+      Заказы:
+    </div>
+    <div *ngFor="let productOrder of userOrder.productOrder" class="product-order-row">
+      <img class="product-order-row__image" src="{{ productOrder.product.imageUrl }}" alt="">
+      <div>{{ productOrder.product.name }} за {{ productOrder.product.price }} ₽ в количестве {{ productOrder.countProduct }} ({{ productOrder.product.price * productOrder.countProduct }} ₽) </div>
+    </div>
+    <!--  <div *ngFor="let productOrder of userOrder.productOrder">-->
+    <!--    {{ productOrder.product | json }}-->
+    <!--  </div>-->
+    <div >На сумму {{ userOrder.sum }} ₽ </div>
+  </div>
+</ng-container>

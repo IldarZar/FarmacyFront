@@ -8,12 +8,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { ProductDetailsPageComponent } from './pages/product-details-page/product-details-page.component';
 import { AdminCatalogModule } from '@admin/catalog/admin-catalog.module';
+import { FilterComponent } from './components/filter/filter.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 @NgModule({
   declarations: [
     CatalogPageComponent,
     CategoriesComponent,
     ProductDetailsPageComponent,
+    FilterComponent,
   ],
   imports: [
     CommonModule,
@@ -21,6 +24,7 @@ import { AdminCatalogModule } from '@admin/catalog/admin-catalog.module';
     HttpClientModule,
     CatalogRoutingModule,
     AdminCatalogModule,
+    NgxSliderModule,
   ],
 })
 export class CatalogModule {}

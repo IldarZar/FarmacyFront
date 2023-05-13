@@ -1,3 +1,20 @@
 :host {
   color: black;
 }
+
+.user-order-row {
+  margin-left: 12px;
+}
+
+.product-order-row {
+  margin-left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 24px;
+
+  &__image {
+    border-radius: 12px;
+    max-width: 240px;
+  }
+}

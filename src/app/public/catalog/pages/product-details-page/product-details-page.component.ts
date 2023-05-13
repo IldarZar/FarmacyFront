@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '@shared/models/product/product';
-import {Observable, map} from "rxjs";
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product-details-page',
@@ -15,6 +15,6 @@ export class ProductDetailsPageComponent implements OnInit {
 
   ngOnInit(): void {
     // @ts-ignore
-    this.product$ = this.route.data.pipe(map(({ product })  => product));
+    this.product$ = this.route.data.pipe(map(({ product }) => product));
   }
 }

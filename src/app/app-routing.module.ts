@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '@core/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'favourites',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./public/favourites/favourites.module').then(
         (m) => m.FavouritesModule
@@ -28,11 +30,13 @@ const routes: Routes = [
   {
     path: 'auth',
     pathMatch: 'full',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./public/auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'dashboard',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('@dashboard/dashboard.module').then((m) => m.DashboardModule),
   },

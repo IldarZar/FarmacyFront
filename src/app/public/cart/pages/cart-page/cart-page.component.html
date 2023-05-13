@@ -22,18 +22,10 @@
   </div>
 
 
-
+<!-- TODO: Добавить проверку на авторизированного пользователя -->
   <ng-container
     *ngIf="cartProducts.length !== 0"
   >
-<!--    <app-combobox-->
-<!--      [activeItem]="selectedDeliveryPoint"-->
-<!--      [items]="deliveryPoints$ | async"-->
-<!--      (activeItemChanges)="deliveryPointChanges($event)"-->
-<!--    >-->
-
-<!--    </app-combobox>-->
-
     <app-button class="order-button" (click)="createNewOrder(cartProducts)">
       Купить
     </app-button>

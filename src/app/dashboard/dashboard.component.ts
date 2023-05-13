@@ -44,7 +44,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ];
 
     const subscription = this.user$.subscribe((user: User) => {
-      if (user.roles.map(({ id }: Dictionary<number>) => id).includes(2)) {
+      if (
+        user.roles.map(({ id }: Dictionary<number>) => id).includes(2) &&
+        !tabs.find((tab) => tab.id === 'user-orders')
+      ) {
         tabs.push({
           id: 'user-orders',
           name: 'Обработка заявок',
@@ -59,7 +62,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   itemSelected(e: string) {
     if (e === 'exit') {
-
     } else {
       this.router.navigate(['dashboard', e]);
     }
