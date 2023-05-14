@@ -1,13 +1,18 @@
 <ng-container *ngIf="cartProducts$ | async as cartProducts">
   <h3>Список товаров</h3>
   <div
-    *ngFor="let cartProduct of cartProducts"
+    *ngFor="let cartProduct of cartProducts; let i = index"
     class="product-row"
+    [ngClass]="{ 'product-row_last': i === cartProducts.length - 1 }"
   >
     <img class="product-row__image" src="{{ cartProduct.product.imageUrl }}" alt="">
 
     <div class="product-row__name">
       {{ cartProduct.product.name }}
+    </div>
+
+    <div class="product-row__price">
+      Цена: {{ cartProduct.product.price }}
     </div>
 
     <div class="product-row__count">
@@ -21,14 +26,24 @@
     </div>
   </div>
 
-
 <!-- TODO: Добавить проверку на авторизированного пользователя -->
-  <ng-container
+  <div
     *ngIf="cartProducts.length !== 0"
+    class="cart__footer"
   >
-    <app-button class="order-button" (click)="createNewOrder(cartProducts)">
-      Купить
-    </app-button>
-  </ng-container>
+    <div>
+      <label>Адрес пункта выдачи</label>
+      <app-combobox
+        class="button"
+        [data]="deliveryPoints$ | async"
+        [value]="selectedDeliveryPoint"
+        (valueChanges)="deliveryPointChanges($event)"
+      >
+      </app-combobox>
+    </div>
+
+    <button class="blue-btn" (click)="createNewOrder(cartProducts)">Купить за {{ totalPrice | async }} ₽ </button>
+  </div>
+
 
 </ng-container>
