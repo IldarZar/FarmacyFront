@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, debounceTime, skip } from 'rxjs';
 import { Subcategory } from '@shared/models/product/subcategory';
 import { Nullable } from '@core/models/nullable';
-import { Options } from '@angular-slider/ngx-slider';
+import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { CatalogService } from '@core/services/catalog.service';
 
 @Component({
@@ -21,11 +21,22 @@ export class FilterComponent implements OnInit {
   filterChanged = new EventEmitter();
 
   minPrice: number = 0;
-  maxPrice: number = 5000;
+  maxPrice: number = 20000;
 
   options: Options = {
     floor: 0,
-    ceil: 5000,
+    boundPointerLabels: true,
+    ceil: 20000,
+    translate: (value: number, label: LabelType): string => {
+      switch (label) {
+        case LabelType.Low:
+          return `<b>От</b> ${value}₽`;
+        case LabelType.High:
+          return `<b>До</b> ${value}₽`;
+        default:
+          return '₽' + value;
+      }
+    },
   };
 
   filter = new BehaviorSubject({
@@ -53,7 +64,5 @@ export class FilterComponent implements OnInit {
 
   priceChanged(value: number, type: string) {
     this.filter.next({ ...this.filter.value, [type]: value });
-
-    // this.filterChanged.emit(filter);
   }
 }

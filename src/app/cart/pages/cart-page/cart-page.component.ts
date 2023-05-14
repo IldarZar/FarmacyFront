@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { Observable, Subscription, tap } from 'rxjs';
+import { map, Observable, Subscription, tap } from 'rxjs';
 import { ProductOrder } from '@shared/models/product-order';
 import { CartService } from '@core/services/cart.service';
 import { AppState } from '@app/store/app/app.state';
@@ -37,6 +37,18 @@ export class CartPageComponent implements OnDestroy {
       (user) => (this.selectedDeliveryPoint = user?.deliveryPoint)
     );
     this.subscription.add(subscription);
+  }
+
+  get totalPrice(): Observable<number> {
+    return this.cartProducts$.pipe(
+      map((cartProducts) =>
+        cartProducts.reduce(
+          (acc, { product, countProduct }) =>
+            acc + product.price * countProduct,
+          0
+        )
+      )
+    );
   }
 
   deleteProductFromCart(cartProduct: ProductOrder): void {

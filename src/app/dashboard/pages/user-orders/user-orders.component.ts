@@ -5,6 +5,7 @@ import { UserOrder } from '@shared/models/user-order';
 import { OrderStatus } from '@shared/models/enums/order-status';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Dictionary } from '@core/models/dictionary';
+import { User } from '@shared/models/user/user';
 
 @Component({
   selector: 'app-user-orders',
@@ -50,7 +51,7 @@ export class UserOrdersComponent implements OnInit {
                 sum: new FormControl(userOrder.sum),
                 deliveryPoint: new FormControl(userOrder.deliveryPoint),
                 status: new FormControl(this.setStatus(userOrder.status)),
-                user: new FormControl(userOrder.user),
+                user: new FormControl<User>(userOrder.user),
               })
             );
           });
@@ -76,6 +77,8 @@ export class UserOrdersComponent implements OnInit {
   }
 
   statusChanged(newStatus: Dictionary<number>, userOrder: UserOrder) {
+    console.log(newStatus, userOrder);
+
     this.dashboardService.setOrderStatus(userOrder, newStatus).subscribe(() => {
       this.formGroup.controls['userOrders'].controls
         .find((el) => el.controls['id'].value === userOrder.id)

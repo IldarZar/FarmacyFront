@@ -3,23 +3,30 @@
     Заявка от {{ userOrder.get('orderDateTime')?.value | date : 'dd-MM-yyyy в hh:mm' }}
   </div>
 
-<!-- TODO: бэк должен возвращать полный объект юзера, а не только id -->
   <div>Ожидаемая дата доставки: {{ userOrder.get('expectedDate')?.value | date : 'dd-MM-yyyy в hh:mm' }}</div>
-  <div>Заказчик: {{userOrder.get('user')?.value | json }}</div>
-
-<!--  {{ formGroup.controls.userOrders.controls[i].value.status | json }}-->
+  <div *ngIf="userOrder.get('user')?.value as user">
+    Заказчик: {{ user.name }} {{ user?.middleName }} {{ user?.lastName }}
+  </div>
+  <div>
+    <span>
+      Товары:
+    </span>
+    <div *ngFor="let productOrder of userOrder.get('productOrder')?.value">
+      {{ productOrder.product.name }} в количестве {{ productOrder.countProduct }} шт.
+    </div>
+  </div>
 
   <div>
     <span>
       Статус:
     </span>
-  <app-combobox
-    [data]="statuses"
-    [value]="formGroup.controls.userOrders.controls[i].value.status"
-    (valueChanges)="statusChanged($event, userOrder.value)"
-  >
+    <app-combobox
+      [data]="statuses"
+      [value]="formGroup.controls.userOrders.controls[i].value.status"
+      (valueChanges)="statusChanged($event, userOrder.value)"
+    >
 
-  </app-combobox>
+    </app-combobox>
   </div>
   <br>
   <br>

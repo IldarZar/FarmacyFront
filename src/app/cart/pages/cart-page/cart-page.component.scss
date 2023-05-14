@@ -2,6 +2,16 @@
   max-width: 1200px;
   display: block;
   margin: 0 auto;
+
+  app-button  {
+    height: 100px;
+    padding: 0;
+
+    button {
+      height: 50px;
+      padding: 0;
+    }
+  }
 }
 
 .product-row {
@@ -18,13 +28,22 @@
     max-width: 240px;
     border-radius: 20px;
   }
+
+  &_last {
+    border-bottom: 1px solid var(--theme-dark-blue);
+  }
 }
 
-.product-row:last-of-type {
-  border-bottom: 1px solid var(--theme-dark-blue);
+.cart {
+  &__footer {
+    margin-top: 24px;
+    display: flex;
+    align-items: end;
+    justify-content: flex-end;
+    gap: 20px;
+    color: var(--theme-accent-blue);
+
+  }
 }
 
-.order-button {
-  margin-top: 24px;
-  margin-left: auto;
-}
+
