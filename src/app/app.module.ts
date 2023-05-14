@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CatalogModule } from '@public/catalog/catalog.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BaseUrlInterceptor } from '@core/interceptors/base-url.interceptor';
 import { NgxsModule } from '@ngxs/store';
@@ -12,6 +11,7 @@ import { DashboardModule } from '@dashboard/dashboard.module';
 import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
 import { AppState } from '@app/store/app/app.state';
+import { CatalogModule } from '@app/catalog/catalog.module';
 
 // TODO: Запретить кидать товары в избранное без авторизации
 // TODO: Сделать поисковик

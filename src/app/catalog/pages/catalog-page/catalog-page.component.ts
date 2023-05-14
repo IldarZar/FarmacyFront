@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { map, Observable, Subscription, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
-import { UserService } from '@app/core/services/user.service';
+import { UserService } from '@core/services/user.service';
 import { Product } from '@shared/models/product/product';
 import { Subcategory } from '@shared/models/product/subcategory';
 import { Category } from '@shared/models/product/category';
@@ -78,14 +78,7 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
   }
 
   openProductDetails(productId: number): void {
-    const subscription = this.user$.subscribe((user: Nullable<User>) => {
-      if (user?.roles.map((role) => role.id)?.includes(2)) {
-        this.router.navigate(['catalog', 'admin', productId]);
-      } else {
-        this.router.navigate(['catalog', productId]);
-      }
-    });
-    this.subscription.add(subscription);
+    this.router.navigate(['catalog', productId]);
   }
 
   applyFilters({ maxPrice, minPrice, subCategoryId }: SearchFilter): void {
@@ -118,6 +111,16 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
       .updateFavourites(product, user)
       .subscribe();
     this.subscription.add(subscription);
+  }
+
+  create() {
+    this.router.navigate(['/catalog/create']);
+  }
+
+  isUserAdmin(): Observable<boolean> {
+    return this.user$.pipe(
+      map((user) => user.roles.map((role) => role.id).includes(2))
+    );
   }
 
   ngOnDestroy(): void {

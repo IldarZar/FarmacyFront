@@ -73,6 +73,13 @@ export class CatalogService {
   }
 
   /**
+   * [Admin] Добавление нового товара
+   */
+  createProduct(product: Product): Observable<Product> {
+    return this.http.post<Product>('/products', product);
+  }
+
+  /**
    * [Admin] Получение всех подкатегорий
    */
   getAllSubcategories() {

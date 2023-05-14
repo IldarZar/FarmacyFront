@@ -11,28 +11,24 @@ const routes: Routes = [
   {
     path: 'cart',
     pathMatch: 'full',
-    loadChildren: () =>
-      import('./public/cart/cart.module').then((m) => m.CartModule),
+    loadChildren: () => import('./cart/cart.module').then((m) => m.CartModule),
   },
   {
     path: 'catalog',
     loadChildren: () =>
-      import('./public/catalog/catalog.module').then((m) => m.CatalogModule),
+      import('./catalog/catalog.module').then((m) => m.CatalogModule),
   },
   {
     path: 'favourites',
     canActivate: [AuthGuard],
     loadChildren: () =>
-      import('./public/favourites/favourites.module').then(
-        (m) => m.FavouritesModule
-      ),
+      import('./favourites/favourites.module').then((m) => m.FavouritesModule),
   },
   {
     path: 'auth',
     pathMatch: 'full',
     canActivate: [AuthGuard],
-    loadChildren: () =>
-      import('./public/auth/auth.module').then((m) => m.AuthModule),
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'dashboard',

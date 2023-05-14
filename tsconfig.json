@@ -27,8 +27,6 @@
     "paths": {
       "@app/*": ["src/app/*"],
       "@shared/*": ["src/app/shared/*"],
-      "@public/*": ["src/app/public/*"],
-      "@admin/*": ["src/app/admin/*"],
       "@core/*": ["src/app/core/*"],
       "@dashboard/*": ["src/app/dashboard/*"]
     }
