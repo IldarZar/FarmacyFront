@@ -41,7 +41,9 @@ export class ComboboxComponent<T extends { [key: string]: any } > implements  Af
   toggle(e: Event) {
     const dropdown = this.dropdown;
 
-    if(e.target != this.dropdownSelect || this.disabled) return;
+    console.log(e.target);
+
+    if(!e.composedPath().includes(this.dropdownSelect) || this.disabled) return;
 
     if(!dropdown.classList.contains('active')) {
       this.openCombo();
@@ -68,7 +70,7 @@ export class ComboboxComponent<T extends { [key: string]: any } > implements  Af
     dropdownMenu.addEventListener('transitionend', function () {
       setTimeout(function(){
         dropdownMenu.style.overflowY = 'auto';
-      },150);
+      },300);
     }, { once: true });
   }
 
