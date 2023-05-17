@@ -3,7 +3,6 @@
     *ngFor="let item of items$"
     (click)="selectItem(item.id)"
     [class.active]="item.id === activeItemId"
-    class="item"
   >
     {{ item.name }}
   </li>

@@ -4,8 +4,12 @@
   background-color: var(--theme-light-blue);
   padding: 40px;
   border-radius: 20px;
-}
 
+  .text-accent {
+    color: var(--theme-dark-blue);
+    margin-bottom: 16px;
+  }
+}
 /*=================================Fields=====================================*/
 form {
   label {

@@ -2,10 +2,12 @@
   <div class="header__wrapper container">
     <div class="header__content">
       <a routerLink="/catalog"><img src="assets/images/logo.png" alt=""/></a>
-      <div class="header__content_search">
-        <input class="main-field" type="text" placeholder="Введите название..." #input/>
-        <div (click)="searchProduct()" ><svg width="20" height="19" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-search"></use></svg></div>
-      </div>
+      <ng-container *ngIf="showSearch">
+        <div class="header__content_search">
+          <input class="main-field" type="text" placeholder="Введите название..." #input/>
+          <div (click)="searchProduct()" ><svg width="20" height="19" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-search"></use></svg></div>
+        </div>
+      </ng-container>
       <ul>
         <ng-container *ngIf="user$ | async as user; else unauthorizedUser">
           <li>

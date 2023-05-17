@@ -1,18 +1,14 @@
-<div class="side-menu-wrapper">
+<div class="side-menu">
   <app-menu-list
-    class="side-menu"
     [items]="items$ | async"
     [activeItemId]="activeItem"
     [isSelectImportant]="true"
     (itemSelected)="itemSelected($event)"
   >
-
   </app-menu-list>
-  <app-button class="error-button" type="error" (click)="logout()">
-    Выйти
-  </app-button>
+  <input class="blue-btn logout-btn" type="submit" value="Выйти" (click)="logout()"/>
 </div>
-<div class="content-wrapper">
+<div class="content">
   <router-outlet>
 
   </router-outlet>

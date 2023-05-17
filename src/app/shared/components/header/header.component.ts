@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 import { User } from '@shared/models/user/user';
 import { UserService } from '@app/core/services/user.service';
@@ -34,8 +34,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Select(AppState.getCartProducts)
   cartProducts$: Observable<ProductOrder[]>;
 
+  showSearch = true;
+
   constructor(
-    protected route: ActivatedRoute,
+    protected router: Router,
     private authService: UserService,
     private catalogService: CatalogService,
     private store: Store,
@@ -43,6 +45,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.router.events.subscribe((e) => {
+      if(e instanceof NavigationEnd) {
+        this.showSearch = !e.url.includes('dashboard');
+      }
+    });
+
     const productsSubscription = this.actions
       .pipe(
         ofActionDispatched(AddCartProduct, DeleteCartProduct),
