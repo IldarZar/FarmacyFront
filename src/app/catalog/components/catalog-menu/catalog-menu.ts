@@ -6,11 +6,11 @@ import { LabelType, Options } from '@angular-slider/ngx-slider';
 import { CatalogService } from '@core/services/catalog.service';
 
 @Component({
-  selector: 'app-filter',
-  templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.scss'],
+  selector: 'app-catalog-menu',
+  templateUrl: './catalog-menu.html',
+  styleUrls: ['./catalog-menu.scss'],
 })
-export class FilterComponent implements OnInit {
+export class CatalogMenu implements OnInit {
   @Input('subcategories')
   subcategories: Nullable<Subcategory[]>;
 

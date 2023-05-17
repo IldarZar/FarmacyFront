@@ -2,18 +2,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: var(--theme-blue);
-  color: var(--theme-black);
-  row-gap: 16px;
-  padding: 16px;
-  border-radius: 20px;
-}
-
-.side-menu__subcategories {
-  h3 {
-    margin-bottom: 8px;
-    font-size: 18px;
-  }
 
   ul {
     display: flex;

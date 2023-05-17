@@ -3,11 +3,12 @@ import { Dictionary } from '@app/core/models/dictionary';
 import { Nullable } from '@core/models/nullable';
 
 @Component({
-  selector: 'app-side-menu',
-  templateUrl: './side-menu.component.html',
-  styleUrls: ['./side-menu.component.scss'],
+  selector: 'app-menu-list',
+  templateUrl: './menu-list.html',
+  styleUrls: ['./menu-list.scss'],
 })
-export class SideMenuComponent<T extends number | string> {
+
+export class MenuList<T extends number | string> {
   @Input('items')
   items$: Nullable<Dictionary<T>[]>;
 

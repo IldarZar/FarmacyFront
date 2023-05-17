@@ -1,30 +1,30 @@
 <main class="main container">
-  <app-categories
+  <app-catalog-categories
     class="categories"
     [categories]="categories$"
     [activeCategoryId]="params.categoryId"
     (categorySelected)="categorySelected($event)"
-  ></app-categories>
+  ></app-catalog-categories>
 
   <!-- TODO: сделать фильтр по отпуску с рецептом или без-->
 
 
   <div class="main__wrapper">
     <div class="main__wrapper__menu">
-<!--      <app-side-menu-->
+<!--      <app-menu-list-->
 <!--        [items]="subcategories$"-->
 <!--        [activeItemId]="activeSubcategoryId"-->
 <!--        (itemSelected)="subcategorySelected($event)"-->
 <!--      >-->
-<!--      </app-side-menu>-->
+<!--      </app-menu-list>-->
 <!--  TODO: доделать    -->
-      <app-filter
+      <app-catalog-menu
         [subcategories]="subcategories$ | async"
         [activeSubcategoryId]="params.subCategoryId"
         (filterChanged)="applyFilters($event)"
       >
 
-      </app-filter>
+      </app-catalog-menu>
     </div>
     <div class="main__wrapper__catalog">
       <div class="main__wrapper__catalog__header">

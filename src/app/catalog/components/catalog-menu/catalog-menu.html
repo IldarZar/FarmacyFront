@@ -1,0 +1,18 @@
+<div class="catalog-menu">
+  <h3>Категории</h3>
+  <app-menu-list
+    [items]="subcategories"
+    [activeItemId]="activeSubcategoryId"
+    (itemSelected)="subcategorySelected( $event)"
+  >
+  </app-menu-list>
+  <h3>Цена</h3>
+  <ngx-slider
+    [(value)]="minPrice"
+    [(highValue)]="maxPrice"
+    [options]="options"
+    (valueChange)="priceChanged($event, 'minPrice')"
+    (highValueChange)="priceChanged($event, 'maxPrice')"
+  >
+  </ngx-slider>
+</div>

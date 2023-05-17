@@ -1,0 +1,45 @@
+::ng-deep {
+  .ngx-slider span.ngx-slider-pointer {
+    background-color: var(--theme-dark-blue);
+  }
+
+  .ngx-slider span.ngx-slider-selection {
+    background-color: #7A87A7 !important;
+  }
+
+  .ngx-slider .ngx-slider-bar {
+    background: white !important;
+  }
+
+  .ngx-slider .ngx-slider-pointer {
+    width: 16px !important;
+    height: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+
+  .ngx-slider .ngx-slider-pointer:after {
+    width: 6px !important;
+    height: 6px !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    border-radius: 50% !important;
+  }
+
+  .ngx-slider .ngx-slider-pointer.ngx-slider-active:after {
+    background-color: white !important;
+  }
+
+
+}
+
+.catalog-menu {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--theme-blue);
+  color: var(--theme-black);
+  row-gap: 16px;
+  padding: 16px;
+  border-radius: 20px;
+}

@@ -5,9 +5,9 @@ import { CatalogRoutingModule } from './catalog-routing.module';
 import { CatalogPageComponent } from './pages/catalog-page/catalog-page.component';
 import { SharedModule } from '@shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
-import { CategoriesComponent } from './components/categories/categories.component';
+import { CategoriesComponent } from '@app/catalog/components/catalog-categories/categories.component';
 import { ProductDetailsPageComponent } from './pages/product-details-page/product-details-page.component';
-import { FilterComponent } from './components/filter/filter.component';
+import { CatalogMenu } from '@app/catalog/components/catalog-menu/catalog-menu';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -16,7 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CatalogPageComponent,
     CategoriesComponent,
     ProductDetailsPageComponent,
-    FilterComponent,
+    CatalogMenu,
   ],
   imports: [
     CommonModule,

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Category } from '@shared/models/product/category';
 
 @Component({
-  selector: 'app-categories',
+  selector: 'app-catalog-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss'],
 })

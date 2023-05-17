@@ -6,7 +6,7 @@ import { ModalWindowComponent } from './components/modal-window/modal-window.com
 
 import { FooterComponent } from './components/footer/footer.component';
 import { ButtonComponent } from './components/button/button.component';
-import { SideMenuComponent } from './components/side-menu/side-menu.component';
+import { MenuList } from '@shared/components/menu-list/menu-list';
 import { RouterModule } from '@angular/router';
 import { ProductCardComponent } from '@shared/components/product-card/product-card.component';
 import { ComboboxComponent } from './components/combobox/combobox.component';
@@ -18,7 +18,7 @@ import { ComboboxComponent } from './components/combobox/combobox.component';
     FooterComponent,
     ButtonComponent,
     ProductCardComponent,
-    SideMenuComponent,
+    MenuList,
     ComboboxComponent,
   ],
   imports: [CommonModule, RouterModule],
@@ -26,7 +26,7 @@ import { ComboboxComponent } from './components/combobox/combobox.component';
     HeaderComponent,
     FooterComponent,
     ButtonComponent,
-    SideMenuComponent,
+    MenuList,
     ProductCardComponent,
     ComboboxComponent,
   ],

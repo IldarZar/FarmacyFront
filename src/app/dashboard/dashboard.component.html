@@ -1,5 +1,5 @@
 <div class="side-menu-wrapper">
-  <app-side-menu
+  <app-menu-list
     class="side-menu"
     [items]="items$ | async"
     [activeItemId]="activeItem"
@@ -7,7 +7,7 @@
     (itemSelected)="itemSelected($event)"
   >
 
-  </app-side-menu>
+  </app-menu-list>
   <app-button class="error-button" type="error" (click)="logout()">
     Выйти
   </app-button>
