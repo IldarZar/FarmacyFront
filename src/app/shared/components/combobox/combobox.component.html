@@ -4,6 +4,9 @@
     <svg width="12" height="8"><use xlink:href="assets/icons/sprite.svg#icon-arrow"></use></svg>
   </div>
   <ul class="dropdown-menu">
+    <ng-container *ngIf="!data?.length">
+      <li>Нет данных</li>
+    </ng-container>
     <ng-container *ngFor="let item of data">
       <li [ngClass]="{ 'active': value ? item[valueField] === value[valueField] : false }" (click)="select($event, item)">
         {{ item[textField] }}

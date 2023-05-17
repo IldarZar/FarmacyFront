@@ -9,7 +9,7 @@ import {Nullable} from "@core/models/nullable";
 
 export class ComboboxComponent<T extends { [key: string]: any } > implements  AfterViewInit {
   @Input()
-  data: Nullable<T[]>;
+  data: T[] | null;
   @Input()
   value: Nullable<T>;
   @Output()
