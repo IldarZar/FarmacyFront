@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { map, Observable, Subscription, switchMap } from 'rxjs';
+import { Observable, Subscription, tap} from 'rxjs';
 import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { UserService } from '@core/services/user.service';
@@ -23,7 +23,7 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
   user$: Observable<User>;
 
   constructor(
-    private userService: UserService,
+    protected userService: UserService,
     private catalogService: CatalogService,
     private store: Store,
     private router: Router
@@ -31,46 +31,43 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
 
   subscription = new Subscription();
 
-  products$: Observable<Product[]>;
-  categories$: Observable<Category[]>;
+  products$: Observable<Nullable<Product[]>>;
+  categories$: Observable<Nullable<Category[]>>;
   subcategories$: Observable<Nullable<Subcategory[]>>;
 
-  params: SearchFilter = {
+  activeCategory: Nullable<Category>;
+  activeSubcategory: Nullable<Subcategory>;
+
+  productFilter: SearchFilter = {
     name: '',
     minPrice: 0,
-    maxPrice: 5000,
-    controlled: false,
+    maxPrice: 20000,
+    controlled: null,
     categoryId: null,
     subCategoryId: null,
   };
 
   ngOnInit(): void {
-    this.products$ = this.catalogService.getCatalog();
-    this.categories$ = this.catalogService.getCategories();
-    this.subcategories$ = this.catalogService.getSubcategories();
+    this.categories$ = this.catalogService.getCategories().pipe(
+      tap(categories => {
+        this.activeCategory = categories[0] ?? null;
+        this.productFilter.categoryId = this.activeCategory.id;
+      })
+    );
+    this.subcategories$ = this.catalogService.getSubcategories(this.activeCategory);
+    this.products$ = this.catalogService.getCatalog(this.productFilter);
 
     this.catalogService.searchText.subscribe((searchText: string) => {
-      this.params = { ...this.params, name: searchText };
-      this.products$ = this.catalogService.getCatalog(this.params);
+      this.productFilter = { ...this.productFilter, name: searchText };
+      this.products$ = this.catalogService.getCatalog(this.productFilter);
     });
   }
 
-  categorySelected(categoryId: Nullable<number>): void {
-    this.params = { ...this.params, subCategoryId: null, categoryId };
-
-    if (categoryId) {
-      this.products$ = this.catalogService.getCatalog(this.params);
-      this.subcategories$ = this.catalogService
-        .getSubcategories()
-        .pipe(
-          map((subcats: Subcategory[]) =>
-            subcats.filter(({ parentCategory: { id } }) => id === categoryId)
-          )
-        );
-    } else {
-      this.products$ = this.catalogService.getCatalog(this.params);
-      this.subcategories$ = this.catalogService.getSubcategories();
-    }
+  categorySelected(category: Category): void {
+    this.productFilter.categoryId = category.id;
+    this.activeCategory = category;
+    this.subcategories$ = this.catalogService.getSubcategories(this.activeCategory);
+    this.products$ = this.catalogService.getCatalog(this.productFilter);
   }
 
   addProductToCart(product: Product): void {
@@ -81,29 +78,15 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
     this.router.navigate(['catalog', productId]);
   }
 
-  applyFilters({ maxPrice, minPrice, subCategoryId }: SearchFilter): void {
-    this.params = {
-      ...this.params,
-      subCategoryId,
-      maxPrice,
+  applyFilters({ minPrice, maxPrice, subCategoryId }: SearchFilter): void {
+    this.productFilter = {
+      ...this.productFilter,
       minPrice,
+      maxPrice,
+      subCategoryId,
     };
 
-    if (subCategoryId) {
-      this.products$ = this.catalogService
-        .getSubcategoryId(subCategoryId!)
-        .pipe(
-          switchMap((subCategory: Subcategory) => {
-            this.params = {
-              ...this.params,
-              categoryId: subCategory.parentCategory.id,
-            };
-            return this.catalogService.getCatalog(this.params);
-          })
-        );
-    } else {
-      this.products$ = this.catalogService.getCatalog(this.params);
-    }
+    this.products$ = this.catalogService.getCatalog(this.productFilter);
   }
 
   updateFavourites(product: Product, user: User) {
@@ -115,12 +98,6 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
 
   create() {
     this.router.navigate(['/catalog/create']);
-  }
-
-  isUserAdmin(): Observable<boolean> {
-    return this.user$.pipe(
-      map((user) => user.roles.map((role) => role.id).includes(2))
-    );
   }
 
   ngOnDestroy(): void {

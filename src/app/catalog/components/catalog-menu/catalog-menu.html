@@ -2,7 +2,7 @@
   <h3>Категории</h3>
   <app-menu-list
     [items]="subcategories"
-    [activeItemId]="activeSubcategoryId"
+    [activeItem]="activeSubcategory"
     (itemSelected)="subcategorySelected( $event)"
   >
   </app-menu-list>

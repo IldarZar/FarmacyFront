@@ -4,7 +4,7 @@ export interface SearchFilter {
   name: string;
   minPrice: number;
   maxPrice: number;
-  controlled: boolean;
+  controlled: Nullable<boolean>;
   categoryId: Nullable<number>;
   subCategoryId: Nullable<number>;
 }

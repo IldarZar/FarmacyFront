@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Dictionary } from '@app/core/models/dictionary';
 import { Nullable } from '@core/models/nullable';
+import { MenuItem } from "@shared/models/menu-item";
 
 @Component({
   selector: 'app-menu-list',
@@ -8,12 +8,12 @@ import { Nullable } from '@core/models/nullable';
   styleUrls: ['./menu-list.scss'],
 })
 
-export class MenuList<T extends number | string> {
+export class MenuList<T extends MenuItem> {
   @Input('items')
-  items$: Nullable<Dictionary<T>[]>;
+  items$: Nullable<T[]>;
 
   @Input()
-  activeItemId: T | null;
+  activeItem: Nullable<T>;
 
   @Input()
   isSelectImportant: boolean = false;
@@ -23,14 +23,14 @@ export class MenuList<T extends number | string> {
 
   constructor() {}
 
-  selectItem(subcategoryId: T): void {
-    if (subcategoryId === this.activeItemId && !this.isSelectImportant) {
-      this.activeItemId = null;
-      this.itemSelected.emit(this.activeItemId);
+  selectItem(subcategory: T): void {
+    if (subcategory.id === this.activeItem?.id && !this.isSelectImportant) {
+      this.activeItem = null;
+      this.itemSelected.emit(this.activeItem);
       return;
     }
 
-    this.activeItemId = subcategoryId;
-    this.itemSelected.emit(subcategoryId);
+    this.activeItem = subcategory;
+    this.itemSelected.emit(subcategory);
   }
 }

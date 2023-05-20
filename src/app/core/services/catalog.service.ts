@@ -28,17 +28,17 @@ export class CatalogService {
       : '';
   }
 
-  getCatalog(params: Nullable<SearchFilter> = null): Observable<Product[]> {
+  getCatalog(filter: Nullable<SearchFilter> = null): Observable<Product[]> {
     // если указана подкатегория, то игнорируем категорию
-    if (params?.subCategoryId) {
+    if (filter?.subCategoryId) {
       return this.http
         .get(
-          `/products${this.createParamsString({ ...params, categoryId: null })}`
+          `/products${this.createParamsString({ ...filter, categoryId: null })}`
         )
         .pipe(map(this.getContent));
     } else {
       return this.http
-        .get(`/products${this.createParamsString(params)}`)
+        .get(`/products${this.createParamsString(filter)}`)
         .pipe(map(this.getContent));
     }
   }
@@ -55,7 +55,15 @@ export class CatalogService {
     return this.http.get<Subcategory>('/subcategories/' + id);
   }
 
-  getSubcategories(): Observable<Subcategory[]> {
+  getSubcategories(category?: Nullable<Category>): Observable<Subcategory[]> {
+    return category
+      ? this.http
+      .get<Subcategory[]>('/subcategories/parentCategory/' + category.id)
+      .pipe(map(this.getContent))
+      : this.getAllSubcategories();
+  }
+
+  getSubcategoriesByCategory(): Observable<Subcategory[]> {
     return this.http
       .get<Subcategory[]>('/subcategories')
       .pipe(map(this.getContent));

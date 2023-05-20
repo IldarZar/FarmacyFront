@@ -15,7 +15,7 @@ export class CatalogMenu implements OnInit {
   subcategories: Nullable<Subcategory[]>;
 
   @Input()
-  activeSubcategoryId: Nullable<number>;
+  activeSubcategory: Nullable<Subcategory>;
 
   @Output()
   filterChanged = new EventEmitter();
@@ -53,10 +53,10 @@ export class CatalogMenu implements OnInit {
     });
   }
 
-  subcategorySelected(subCategoryId: Nullable<number>): void {
+  subcategorySelected(subCategory: Subcategory): void {
     const filter = {
       ...this.filter.value,
-      subCategoryId,
+      subCategoryId: subCategory.id,
     };
 
     this.filterChanged.emit(filter);

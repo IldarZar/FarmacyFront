@@ -1,7 +1,7 @@
 <div class="side-menu">
   <app-menu-list
     [items]="items$ | async"
-    [activeItemId]="activeItem"
+    [activeItem]="activeItem"
     [isSelectImportant]="true"
     (itemSelected)="itemSelected($event)"
   >

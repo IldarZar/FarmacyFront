@@ -6,6 +6,8 @@ import { UserService } from '@core/services/user.service';
 import { Select } from '@ngxs/store';
 import { AppState } from '@app/store/app/app.state';
 import { User } from '@shared/models/user/user';
+import {Nullable} from "@core/models/nullable";
+import {MenuItem} from "@shared/models/menu-item";
 
 @Component({
   selector: 'app-dashboard',
@@ -14,9 +16,9 @@ import { User } from '@shared/models/user/user';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   subscription = new Subscription();
-  items$: Observable<Dictionary<string>[]>;
+  items$: Observable<MenuItem[]>;
 
-  activeItem: string;
+  activeItem: Nullable<MenuItem>;
 
   constructor(
     private router: Router,
@@ -55,7 +57,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
       this.items$ = of<Dictionary<string>[]>(tabs);
     });
-    this.activeItem = this.router.url.split('/')[2];
+    this.activeItem = { id: this.router.url.split('/')[2] }; // TODO: Сделать нормально
 
     this.subscription.add(subscription);
   }

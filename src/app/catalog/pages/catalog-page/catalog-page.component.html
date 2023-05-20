@@ -2,7 +2,7 @@
   <app-catalog-categories
     class="categories"
     [categories]="categories$"
-    [activeCategoryId]="params.categoryId"
+    [activeCategory]="activeCategory"
     (categorySelected)="categorySelected($event)"
   ></app-catalog-categories>
 
@@ -11,19 +11,11 @@
 
   <div class="main__wrapper">
     <div class="main__wrapper__menu">
-<!--      <app-menu-list-->
-<!--        [items]="subcategories$"-->
-<!--        [activeItemId]="activeSubcategoryId"-->
-<!--        (itemSelected)="subcategorySelected($event)"-->
-<!--      >-->
-<!--      </app-menu-list>-->
-<!--  TODO: доделать    -->
       <app-catalog-menu
         [subcategories]="subcategories$ | async"
-        [activeSubcategoryId]="params.subCategoryId"
+        [activeSubcategory]="activeSubcategory"
         (filterChanged)="applyFilters($event)"
       >
-
       </app-catalog-menu>
     </div>
     <div class="main__wrapper__catalog">
@@ -32,7 +24,7 @@
 
         <div class="main__wrapper__catalog__header__buttons">
           <ng-container *ngIf="user$ | async as user">
-            <span class="light-blue-btn" (click)="create()" *ngIf="isUserAdmin() | async">
+            <span class="light-blue-btn" (click)="create()" *ngIf="userService.isUserAdmin() | async">
               Создать
             </span>
           </ng-container>

@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Category } from '@shared/models/product/category';
+import {Nullable} from "@core/models/nullable";
 
 @Component({
   selector: 'app-catalog-categories',
@@ -9,24 +10,24 @@ import { Category } from '@shared/models/product/category';
 })
 export class CategoriesComponent {
   @Input('categories')
-  categories$!: Observable<Category[]>;
+  categories$!: Observable<Nullable<Category[]>>;
 
   @Input()
-  activeCategoryId: number | null;
+  activeCategory: Nullable<Category>;
 
   @Output()
   categorySelected = new EventEmitter();
 
   constructor() {}
 
-  selectCategory(categoryId: number): void {
-    if (categoryId === this.activeCategoryId) {
-      this.activeCategoryId = null;
-      this.categorySelected.emit(this.activeCategoryId);
+  selectCategory(category: Category): void {
+    if (category.id === this.activeCategory?.id) {
+      this.activeCategory = null;
+      this.categorySelected.emit(this.activeCategory);
       return;
     }
 
-    this.activeCategoryId = categoryId;
-    this.categorySelected.emit(categoryId);
+    this.activeCategory = category;
+    this.categorySelected.emit(category);
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { forkJoin, Observable, of, switchMap, tap } from 'rxjs';
+import {forkJoin, map, Observable, of, switchMap, tap} from 'rxjs';
 import { User } from '@shared/models/user/user';
 import { Select, Store } from '@ngxs/store';
 import { AppState } from '@app/store/app/app.state';
@@ -56,5 +56,11 @@ export class UserService {
     );
 
     return sources.length ? forkJoin(sources) : of([]);
+  }
+
+  isUserAdmin(): Observable<boolean> {
+    return this.user$.pipe(
+      map((user) => user.roles.map((role) => role.id).includes(2))
+    );
   }
 }

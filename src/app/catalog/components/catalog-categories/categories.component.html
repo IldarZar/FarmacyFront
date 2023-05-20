@@ -1,8 +1,8 @@
 <ul class="categories__wrapper">
   <li
     *ngFor="let category of categories$ | async"
-    (click)="selectCategory(category.id)"
-    [class.active]="category.id === activeCategoryId"
+    (click)="selectCategory(category)"
+    [class.active]="category.id === activeCategory?.id"
     class="categories__item"
   >
     {{ category.name }}
