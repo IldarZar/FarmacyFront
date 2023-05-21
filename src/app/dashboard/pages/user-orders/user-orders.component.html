@@ -1,35 +1,43 @@
-<div *ngFor="let userOrder of formGroup.controls.userOrders.controls; let i = index" class="user-order-row">
-  <div>
-    Заявка от {{ userOrder.get('orderDateTime')?.value | date : 'dd-MM-yyyy в hh:mm' }}
-  </div>
-
-  <div>Ожидаемая дата доставки: {{ userOrder.get('expectedDate')?.value | date : 'dd-MM-yyyy в hh:mm' }}</div>
-  <div *ngIf="userOrder.get('user')?.value as user">
-    Заказчик: {{ user.name }} {{ user?.middleName }} {{ user?.lastName }}
-  </div>
-  <div>
-    <span>
-      Товары:
-    </span>
-    <div *ngFor="let productOrder of userOrder.get('productOrder')?.value">
-      {{ productOrder.product.name }} в количестве {{ productOrder.countProduct }} шт.
+<div class="section__wrapper">
+  <h2 class="text-accent">Обработка заказов</h2>
+  <ng-container *ngIf="formGroup.controls.userOrders.controls as orderHistory">
+    <div *ngIf="orderHistory.length === 0">
+      Нет заказов для обработки
     </div>
-  </div>
 
-  <div>
-    <span>
-      Статус:
-    </span>
-    <app-combobox
-      [data]="statuses"
-      [value]="formGroup.controls.userOrders.controls[i].value.status"
-      (valueChanges)="statusChanged($event, userOrder.value)"
-    >
+    <div class="user-order__wrapper">
+      <div class="user-order__item" *ngFor="let userOrder of orderHistory; let i = index">
+        <h3 *ngIf="userOrder.get('user')?.value as user">
+          Заказчик: {{ user.name }} {{ user?.middleName }} {{ user?.lastName }}
+        </h3>
+        <h3>Дата заказа: {{ userOrder.get('orderDateTime')?.value | date : 'dd.MM.yyyy в H:mm' }}</h3>
+        <h3>Ожидаемая дата доставки: {{ userOrder.get('expectedDate')?.value | date : 'dd.MM.yyyy' }}</h3>
+        <div class="user-order__item__products">
+          <h3>Товары:</h3>
+          <div *ngFor="let productOrder of userOrder.get('productOrder')?.value" class="user-order__item__products__item">
+            <img src="{{ productOrder.product.imageUrl }}" alt="">
+            <div class="user-order__item__products__item_info">
+              <h3>{{ productOrder.product.name }}</h3>
+              <div class="user-order__item__products__item_info-description">
+                <h3>Цена: {{ productOrder.product.price }} ₽</h3>
+                <h3>Количество: {{ productOrder.countProduct }}</h3>
+                <h3>Стоимость: {{ productOrder.product.price * productOrder.countProduct }} ₽</h3>
+              </div>
+            </div>
+          </div>
+          <h3>На сумму: {{ userOrder.get('sum')?.value }} ₽</h3>
+        </div>
 
-    </app-combobox>
-  </div>
-  <br>
-  <br>
-
+        <label>
+          <h3>Статус</h3>
+          <app-combobox
+            [data]="statuses"
+            [value]="orderHistory[i].value.status"
+            (valueChanges)="statusChanged($event, userOrder.value)"
+          >
+          </app-combobox>
+        </label>
+      </div>
+    </div>
+  </ng-container>
 </div>
-

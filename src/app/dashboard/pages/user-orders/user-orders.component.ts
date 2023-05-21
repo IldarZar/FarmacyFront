@@ -27,9 +27,9 @@ export class UserOrdersComponent implements OnInit {
       id: OrderStatus.IN_PROGRESS,
       name: 'В процессе',
     },
-    { id: OrderStatus.DONE, name: 'Сделано' },
-    { id: OrderStatus.CANCELLED, name: 'Отменено' },
-    { id: OrderStatus.EXPIRED, name: 'Задержано' },
+    { id: OrderStatus.DONE, name: 'Выдан' },
+    { id: OrderStatus.CANCELLED, name: 'Отменен' },
+    { id: OrderStatus.EXPIRED, name: 'Закончился срок хранения' },
   ];
 
   orderHistory$: Observable<UserOrder[]>;
@@ -40,7 +40,12 @@ export class UserOrdersComponent implements OnInit {
       .getOrderHistoryByDeliveryPoint()
       .pipe(
         tap((userOrders) => {
-          userOrders.forEach((userOrder: UserOrder) => {
+          userOrders
+            .sort(function(a: UserOrder, b: UserOrder){
+              // @ts-ignore
+              return new Date(b.orderDateTime) - new Date(a.orderDateTime);
+            })
+            .forEach((userOrder: UserOrder) => {
             this.formGroup.controls['userOrders'].push(
               new FormGroup({
                 id: new FormControl(userOrder.id),

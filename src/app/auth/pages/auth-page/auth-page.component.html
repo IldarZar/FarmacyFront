@@ -1,18 +1,21 @@
-<form [formGroup]="formGroup" (ngSubmit)="login()" class="form">
-  <div class="form-group__field">
-    <label>Логин</label>
-    <input class="main-field" name="login" formControlName="login" />
-  </div>
-  <div class="form-group__field">
-    <label>Пароль</label>
-    <input class="main-field" name="password" formControlName="password" />
-  </div>
+<div class="container">
+  <div class="section__wrapper">
+    <h2 class="text-accent">Вход в аккаунт</h2>
+    <form [formGroup]="formGroup" (ngSubmit)="login()">
+      <label>
+        <span>Логин</span>
+        <input class="main-field" placeholder="Введите логин" name="login" formControlName="login"/>
+      </label>
+      <label>
+        <span>Пароль</span>
+        <input class="main-field" type="password" placeholder="Введите пароль" name="password" formControlName="password"/>
+      </label>
 
-  <div *ngIf="errorMessage" class="error-message">
-    {{ errorMessage }}
-  </div>
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
 
-  <app-button>
-    Отправить
-  </app-button>
-</form>
+      <input class="blue-btn" type="submit" value="Войти"/>
+    </form>
+  </div>
+</div>

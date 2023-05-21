@@ -65,7 +65,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     const favouritesSubscription = this.authService.user$.subscribe(user => {
       this.favouritesCount$.next(
-        user.favorites.length
+        user?.favorites.length
       );
     })
 

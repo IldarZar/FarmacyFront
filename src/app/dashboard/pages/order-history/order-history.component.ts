@@ -20,7 +20,10 @@ export class OrderHistoryComponent implements OnInit {
   ngOnInit(): void {
     this.orderHistory$ = this.route.data.pipe(
       tap((res) => console.log(res)),
-      map((res) => res['orderHistory'] as UserOrder[])
+      map((res) => res['orderHistory'].sort(function(a: UserOrder, b: UserOrder){
+        // @ts-ignore
+        return new Date(b.orderDateTime) - new Date(a.orderDateTime);
+      }) as UserOrder[])
     );
   }
 }

@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       ) {
         tabs.push({
           id: 'user-orders',
-          name: 'Обработка заявок',
+          name: 'Обработка заказов',
           icon: 'icon-orders',
         });
       }
