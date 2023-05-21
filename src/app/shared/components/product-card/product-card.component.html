@@ -5,6 +5,7 @@
   <span class="blue-btn" *ngIf="showBuyButton" (click)="addProductToCart($event)">
     В корзину
   </span>
+<!--  TODO: addProductToFavourites иконка становится активной оч долго-->
   <span class="favourite-btn"
     *ngIf="showFavouriteButton"
     [class.active]="isFavourite"

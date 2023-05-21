@@ -64,7 +64,15 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
   }
 
   categorySelected(category: Category): void {
-    this.productFilter.categoryId = category.id;
+    this.productFilter = {
+      name: '',
+      minPrice: 0,
+      maxPrice: 20000,
+      controlled: null,
+      categoryId: category.id,
+      subCategoryId: null,
+    }
+
     this.activeCategory = category;
     this.subcategories$ = this.catalogService.getSubcategories(this.activeCategory);
     this.products$ = this.catalogService.getCatalog(this.productFilter);

@@ -1,11 +1,13 @@
 <div class="catalog-menu">
-  <h3>Категории</h3>
-  <app-menu-list
-    [items]="subcategories"
-    [activeItem]="activeSubcategory"
-    (itemSelected)="subcategorySelected( $event)"
-  >
-  </app-menu-list>
+  <ng-container *ngIf="subcategories?.length">
+    <h3>Категории</h3>
+    <app-menu-list
+      [items]="subcategories"
+      [activeItem]="activeSubcategory"
+      (itemSelected)="subcategorySelected($event)"
+    >
+    </app-menu-list>
+  </ng-container>
   <h3>Цена</h3>
   <ngx-slider
     [(value)]="minPrice"

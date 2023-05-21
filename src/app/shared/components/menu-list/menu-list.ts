@@ -16,7 +16,7 @@ export class MenuList<T extends MenuItem> {
   activeItem: Nullable<T>;
 
   @Input()
-  isSelectImportant: boolean = false;
+  isSelectImportant: boolean = true;
 
   @Output()
   itemSelected = new EventEmitter();

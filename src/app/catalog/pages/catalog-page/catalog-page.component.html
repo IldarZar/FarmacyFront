@@ -35,6 +35,9 @@
         </div>
       </div>
       <div class="main__wrapper__catalog__products">
+        <ng-container *ngIf="!(products$ | async)?.length">
+          <h3 class="text-accent">Товары не найдены</h3>
+        </ng-container>
         <ng-container *ngIf="user$ | async as user; else unauthorized">
           <app-product-card
             class="card"

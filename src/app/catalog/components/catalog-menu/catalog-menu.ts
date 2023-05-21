@@ -54,6 +54,11 @@ export class CatalogMenu implements OnInit {
   }
 
   subcategorySelected(subCategory: Subcategory): void {
+    if(subCategory === this.activeSubcategory)
+      return;
+
+    this.activeSubcategory = subCategory;
+
     const filter = {
       ...this.filter.value,
       subCategoryId: subCategory.id,

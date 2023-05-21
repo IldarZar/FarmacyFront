@@ -21,13 +21,10 @@ export class CategoriesComponent {
   constructor() {}
 
   selectCategory(category: Category): void {
-    if (category.id === this.activeCategory?.id) {
-      this.activeCategory = null;
-      this.categorySelected.emit(this.activeCategory);
-      return;
+    if (category.id !== this.activeCategory?.id) {
+      this.activeCategory = category;
     }
 
-    this.activeCategory = category;
     this.categorySelected.emit(category);
   }
 }

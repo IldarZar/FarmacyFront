@@ -16,7 +16,9 @@ export class CatalogService {
   constructor(private http: HttpClient) {}
 
   private getContent(body: any) {
-    return body.content;
+    return body.content.sort(function(a: any, b: any) {
+      return a.id - b.id  ||  a.name.localeCompare(b.name);
+    });
   }
 
   private createParamsString(params: Nullable<SearchFilter>): string {
