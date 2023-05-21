@@ -1,49 +1,48 @@
-<ng-container *ngIf="cartProducts$ | async as cartProducts">
-  <h3>Список товаров</h3>
-  <div
-    *ngFor="let cartProduct of cartProducts; let i = index"
-    class="product-row"
-    [ngClass]="{ 'product-row_last': i === cartProducts.length - 1 }"
-  >
-    <img class="product-row__image" src="{{ cartProduct.product.imageUrl }}" alt="">
+<div class="container">
+  <div class="section__wrapper">
+    <h2 class="text-accent">Корзина</h2>
+    <ng-container *ngIf="cartProducts$ | async as cardProducts">
+      <ng-container *ngIf="cardProducts.length; else productsNone">
+        <h3 class="text-accent">Список товаров</h3>
+        <div class="section__wrapper__content">
+          <div class="products__wrapper">
+            <div class="product-item" *ngFor="let cartProduct of cardProducts; let i = index">
+              <img class="product-item__image" src="{{ cartProduct.product.imageUrl }}" alt="">
+              <div class="product-item__info">
+                <span class="product-item__info_name">
+                  {{ cartProduct.product.name }}
+                </span>
+                <div class="product-item__info_controls">
+                  <span class="product-item__info_controls-price">{{ cartProduct.product.price * cartProduct.countProduct }} ₽</span>
+                  <div class="product-item__info_controls-count">
+                    <app-count-select [value]="cartProduct.countProduct"></app-count-select>
+                  </div>
+                  <div class="product-item__info_controls_delete-button" (click)="deleteProductFromCart(cartProduct)">
+                    <svg width="24" height="24"><use xlink:href="assets/icons/sprite.svg#icon-close"></use></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-    <div class="product-row__name">
-      {{ cartProduct.product.name }}
-    </div>
-
-    <div class="product-row__price">
-      Цена: {{ cartProduct.product.price }}
-    </div>
-
-    <div class="product-row__count">
-      Количество: {{ cartProduct.countProduct }}
-    </div>
-
-    <div class="product-row__delete-button"
-         (click)="deleteProductFromCart(cartProduct)"
-    >
-      Убрать
-    </div>
+          <!-- TODO: Добавить проверку на авторизированного пользователя -->
+          <form class="order-form" *ngIf="cardProducts.length !== 0">
+            <label>
+              <span>Адрес пункта выдачи</span>
+              <app-combobox
+                [data]="deliveryPoints$ | async"
+                [value]="selectedDeliveryPoint"
+                (valueChanges)="deliveryPointChanges($event)"
+              >
+              </app-combobox>
+            </label>
+            <input type="submit" class="blue-btn" (click)="createNewOrder(cardProducts)" value="Купить за {{ totalPrice | async }} ₽"/>
+          </form>
+        </div>
+      </ng-container>
+      <ng-template #productsNone>
+        <h3 class="text-accent">Коризна пуста</h3>
+      </ng-template>
+    </ng-container>
   </div>
-
-<!-- TODO: Добавить проверку на авторизированного пользователя -->
-  <div
-    *ngIf="cartProducts.length !== 0"
-    class="cart__footer"
-  >
-    <div>
-      <label>Адрес пункта выдачи</label>
-      <app-combobox
-        class="button"
-        [data]="deliveryPoints$ | async"
-        [value]="selectedDeliveryPoint"
-        (valueChanges)="deliveryPointChanges($event)"
-      >
-      </app-combobox>
-    </div>
-
-    <button class="blue-btn" (click)="createNewOrder(cartProducts)">Купить за {{ totalPrice | async }} ₽ </button>
-  </div>
-
-
-</ng-container>
+</div>

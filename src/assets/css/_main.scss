@@ -8,8 +8,10 @@
   background-color: var(--theme-light-blue);
   padding: 40px;
   border-radius: 20px;
+  min-height: 80vh;
 
-  .text-accent {
+  > .text-accent {
+    font-weight: 500;
     margin-bottom: 16px;
   }
 }
@@ -65,6 +67,7 @@ form {
   font-size: 16px;
   font-weight: 500;
   padding: 12px 20px;
+  font-family: 'Gilroy', sans-serif;
   transition: all .5s ease;
 
   &:hover {
