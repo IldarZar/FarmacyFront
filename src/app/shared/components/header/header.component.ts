@@ -22,7 +22,7 @@ import { CatalogService } from '@core/services/catalog.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   productCount$ = new BehaviorSubject(0);
-
+  favouritesCount$ = new BehaviorSubject(0);
   subscription = new Subscription();
 
   @ViewChild('input')
@@ -63,7 +63,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         );
       });
 
+    const favouritesSubscription = this.authService.user$.subscribe(user => {
+      this.favouritesCount$.next(
+        user.favorites.length
+      );
+    })
+
     this.subscription.add(productsSubscription);
+    this.subscription.add(favouritesSubscription);
   }
 
   searchProduct() {
