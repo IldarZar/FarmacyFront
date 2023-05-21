@@ -10,6 +10,7 @@ import { MenuList } from '@shared/components/menu-list/menu-list';
 import { RouterModule } from '@angular/router';
 import { ProductCardComponent } from '@shared/components/product-card/product-card.component';
 import { ComboboxComponent } from './components/combobox/combobox.component';
+import { CountSelectComponent } from './components/count-select/count-select.component';
 
 @NgModule({
   declarations: [
@@ -20,15 +21,17 @@ import { ComboboxComponent } from './components/combobox/combobox.component';
     ProductCardComponent,
     MenuList,
     ComboboxComponent,
+    CountSelectComponent,
   ],
   imports: [CommonModule, RouterModule],
-  exports: [
-    HeaderComponent,
-    FooterComponent,
-    ButtonComponent,
-    MenuList,
-    ProductCardComponent,
-    ComboboxComponent,
-  ],
+    exports: [
+        HeaderComponent,
+        FooterComponent,
+        ButtonComponent,
+        MenuList,
+        ProductCardComponent,
+        ComboboxComponent,
+        CountSelectComponent,
+    ],
 })
 export class SharedModule {}
