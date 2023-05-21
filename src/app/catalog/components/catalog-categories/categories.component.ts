@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Category } from '@shared/models/product/category';
-import {Nullable} from "@core/models/nullable";
+import { Nullable } from "@core/models/nullable";
 
 @Component({
   selector: 'app-catalog-categories',

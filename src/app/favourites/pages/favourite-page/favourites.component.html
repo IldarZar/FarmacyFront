@@ -1,13 +1,22 @@
 <ng-container *ngIf="user$ | async as user">
-  <app-product-card
-    class="card"
-    *ngFor="let product of products$ | async"
-    [product]="product"
-    [isFavourite]="user.favorites.includes(product.id)"
-    (productSelected)="addProductToCart($event)"
-    (addedToFavourites)="updateFavourites($event, user)"
-    (click)="openProductDetails(product.id)"
-  >
+  <div class="section__wrapper container">
+    <h2 class="text-accent">Избранное</h2>
+<!--    TODO: два async наверное херня, надо посмотреть-->
+    <ng-container *ngIf="(products$ | async)?.length; else favouritesNone">
+      <app-product-card
+        class="card"
+        *ngFor="let product of products$ | async"
+        [product]="product"
+        [isFavourite]="user.favorites.includes(product.id)"
+        (productSelected)="addProductToCart($event)"
+        (addedToFavourites)="updateFavourites($event, user)"
+        (click)="openProductDetails(product.id)"
+      >
 
-  </app-product-card>
+      </app-product-card>
+    </ng-container>
+    <ng-template #favouritesNone>
+      <h3 class="text-accent">Избранные товары отсутствуют</h3>
+    </ng-template>
+  </div>
 </ng-container>

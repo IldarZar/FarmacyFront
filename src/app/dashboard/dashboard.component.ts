@@ -57,15 +57,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
       this.items$ = of<Dictionary<string>[]>(tabs);
     });
-    this.activeItem = { id: this.router.url.split('/')[2] }; // TODO: Сделать нормально
+    this.activeItem = tabs.find(x => x.id === this.router.url.split('/')[2]) as MenuItem;
 
     this.subscription.add(subscription);
   }
 
-  itemSelected(e: string) {
-    if (e === 'exit') {
+  itemSelected(e: MenuItem) {
+    if (e.id === 'exit') {
     } else {
-      this.router.navigate(['dashboard', e]);
+      this.router.navigate(['dashboard', e.id]);
     }
   }
 

@@ -2,10 +2,14 @@
   width: 100%;
   display: flex;
   gap: 16px;
-  margin-top: 52px;
+  margin-top: 32px;
+
+  app-product-card {
+    background-color: var(--theme-blue);
+  }
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
+.section__wrapper {
+  width: 100%;
 }
+
