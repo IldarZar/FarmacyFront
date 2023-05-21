@@ -13,3 +13,8 @@
   width: 100%;
 }
 
+.favourites__wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 300px);
+  gap: 40px;
+}
