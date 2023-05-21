@@ -34,14 +34,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
       {
         id: 'bonus-card',
         name: 'Бонусная карта',
+        icon: 'icon-card',
       },
       {
         id: 'order-history',
         name: 'История заказов',
+        icon: 'icon-history',
       },
       {
         id: 'user-data',
         name: 'Личные данные',
+        icon: 'icon-settings',
       },
     ];
 
@@ -53,6 +56,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         tabs.push({
           id: 'user-orders',
           name: 'Обработка заявок',
+          icon: 'icon-orders',
         });
       }
       this.items$ = of<Dictionary<string>[]>(tabs);

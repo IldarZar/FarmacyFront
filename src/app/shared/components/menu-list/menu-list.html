@@ -4,6 +4,9 @@
     (click)="selectItem(item)"
     [class.active]="item === activeItem"
   >
+    <ng-container *ngIf="item?.icon">
+      <svg width="20" height="20" fill="#253B6E"><use [attr.xlink:href]="'assets/icons/sprite.svg#' + item?.icon"></use></svg>
+    </ng-container>
     {{ item.name }}
   </li>
 </ul>
