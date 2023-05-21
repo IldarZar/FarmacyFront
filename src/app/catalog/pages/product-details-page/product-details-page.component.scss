@@ -1,72 +1,53 @@
-.image {
-  display: inline-block;
-  max-width: 240px;
-  max-hegiht: 280px;
-  border-radius: 20px;
+:host {
+  color: var(--theme-dark-blue);
 }
 
-.section__wrapper {
+section {
+  padding-bottom: 0;
+
+  h2 {
+    font-size: 32px;
+  }
+}
+
+.product__wrapper {
   display: flex;
-  gap: 28px;
-  &_observer {
+  gap: 32px;
+
+  &__title {
+    width: 33%;
+
+    img {
+      display: block;
+      border-radius: 20px;
+      max-width: 100%;
+    }
+  }
+
+  &__description {
     display: flex;
-    color: black;
-  }
-}
+    flex-direction: column;
+    gap: 8px;
+    width: 66%;
 
-.form {
-  min-width: 300px;
-}
+    h3 {
+      font-weight: 500;
+    }
 
-
-.detail {
-  &__buttons {
-    margin-top: auto;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-  &__image {
-    margin-right: 28px;
-    max-width: 240px;
-    border-radius: 24px;
-  }
-
-  &__product {
-    &-info {
+    &__controls {
       display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
+      align-items: center;
+      gap: 12px;
 
-    &-field-title {
-      font-size: 24px;
-    }
-  }
-}
+      .favourite-btn {
+        background-color: var(--theme-accent-blue);
+        padding: 11px;
 
-
-.favourite-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  background-color: var(--theme-accent-blue);
-  height: 32px;
-  width: 32px;
-  cursor: pointer;
-  transition: all .3s ease-in-out;
-
-  svg {
-    stroke: var(--theme-light-blue);
-    fill: var(--theme-accent-blue);
-    transition: all .3s ease-in-out;
-  }
-
-  &.active {
-    svg {
-      fill: var(--theme-light-blue);
+        svg {
+          stroke: var(--theme-main);
+          fill: none;
+        }
+      }
     }
   }
 }

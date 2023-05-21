@@ -1,80 +1,68 @@
 <section class="container">
-  <div class="section__wrapper" *ngIf="isUserAdmin() | async; else userIsNotAdmin">
-    <div>
-      <img class="image" src="{{ formGroup.get('imageUrl')?.value }}" alt="">
-    </div>
-
-    <form class="form" [formGroup]="formGroup" >
-<!--      <label>-->
-<!--        <span>ID</span>-->
-<!--        <input class="main-field" name="id" formControlName="id" />-->
-<!--      </label>-->
-      <label>
-        <span>Имя</span>
-        <input class="main-field" name="name" formControlName="name" />
-      </label>
-      <label>
-        <span>Цена</span>
-        <input class="main-field" name="price" formControlName="price" />
-      </label>
-
-      <label>
-        <span>Адрес картинки</span>
-        <input class="main-field" name="imageUrl" formControlName="imageUrl" />
-      </label>
-      <label>
-        <span>Категория</span>
-        <app-combobox [data]="subcategories$ | async" [value]="formGroup.get('subCategory')?.value" (valueChanges)="subcategoryChanges($event)"></app-combobox>
-      </label>
-
-
-<!--   TODO: сделать нормальную проверку   -->
-      <ng-container *ngIf="route?.url | async as url">
-        <input *ngIf="url[0].path === 'create'" (click)="createProduct()" class="blue-btn" type="submit" value="Создать"/>
-      </ng-container>
-      <ng-container *ngIf="route?.url | async as url">
-        <input *ngIf="url[0].path !== 'create'" (click)="updateProduct()" class="blue-btn" type="submit" value="Обновить"/>
-      </ng-container>
-    </form>
-
-    {{ (route?.url | async)![0].path }}
-  </div>
-
-  <ng-template #userIsNotAdmin>
-  <div class="section__wrapper section__wrapper_observer">
-      <img class="detail__image" src="{{ formGroup.get('imageUrl')?.value }}" alt="">
-
-      <div class="detail__product-info">
-        <div class="detail__product-name">
-          <label class="detail__product-field-title">Название</label>
-          <div class="detail__product-field-content">{{ formGroup.get('name')?.value }}</div>
-        </div>
-        <div class="detail__product-price">
-          <label class="detail__product-field-title">Цена</label>
-          <div>{{ formGroup.get('price')?.value }} ₽</div>
-        </div>
-
-        <div class="detail__product-subCategory">
-          <label class="detail__product-field-title">Категория</label>
-          <div>{{ formGroup.get('subCategory')?.value.name }}</div>
-        </div>
-
-        <div class="detail__buttons">
-          <app-button class="" (click)="addProductToCart(formGroup.value)">
-            В корзину
-          </app-button>
-          <ng-container *ngIf="user$ | async as user">
-            <span class="favourite-btn"
-              [class.active]="user.favorites.includes(formGroup.get('id')?.value)"
-              (click)="addProductToFavourites(formGroup.value, user)"
-            >
-              <svg width="20" height="21"><use xlink:href="assets/icons/sprite.svg#icon-favourite"></use></svg>
-            </span>
-          </ng-container>
-        </div>
+  <div class="section__wrapper">
+    <h2 class="text-accent">{{ formGroup.get('name')?.value }}</h2>
+    <div class="product__wrapper">
+      <div class="product__wrapper__title">
+        <img class="product-image" src="{{ formGroup.get('imageUrl')?.value }}" alt="">
       </div>
+      <div class="product__wrapper__description">
+        <ng-container *ngIf="isUserAdmin() | async; else userIsNotAdmin">
+          <form class="form" [formGroup]="formGroup" >
+            <label>
+              <span>Имя</span>
+              <input class="main-field" name="name" formControlName="name" />
+            </label>
+            <label>
+              <span>Цена</span>
+              <input class="main-field" name="price" formControlName="price" />
+            </label>
+
+            <label>
+              <span>Адрес картинки</span>
+              <input class="main-field" name="imageUrl" formControlName="imageUrl" />
+            </label>
+            <label>
+              <span>Категория</span>
+              <app-combobox [data]="subcategories$ | async" [value]="formGroup.get('subCategory')?.value" (valueChanges)="subcategoryChanges($event)"></app-combobox>
+            </label>
+
+            <div class="product__wrapper__description__controls">
+              <!--   TODO: сделать нормальную проверку   -->
+              <ng-container *ngIf="route?.url | async as url">
+                <input *ngIf="url[0].path === 'create'" (click)="createProduct()" class="blue-btn" type="submit" value="Создать"/>
+              </ng-container>
+              <ng-container *ngIf="route?.url | async as url">
+                <input *ngIf="url[0].path !== 'create'" (click)="updateProduct()" class="blue-btn" type="submit" value="Обновить"/>
+              </ng-container>
+              <!--   TODO: убрать кнопки из создания  -->
+              <input class="blue-btn" type="submit" value="В корзину" (click)="addProductToCart(formGroup.value)"/>
+              <ng-container *ngIf="user$ | async as user">
+                <div class="main-btn favourite-btn"
+                     [class.active]="user.favorites.includes(formGroup.get('id')?.value)"
+                     (click)="addProductToFavourites(formGroup.value, user)"
+                >
+                  <svg width="20" height="21"><use xlink:href="assets/icons/sprite.svg#icon-favourite"></use></svg>
+                </div>
+              </ng-container>
+            </div>
+          </form>
+        </ng-container>
+        <ng-template #userIsNotAdmin>
+          <h3>Цена: {{ formGroup.get('price')?.value }} ₽</h3>
+          <h3>Категория: {{ formGroup.get('subCategory')?.value?.name }}</h3>
+          <div class="product__wrapper__description__controls">
+            <input class="blue-btn" type="submit" value="В корзину" (click)="addProductToCart(formGroup.value)"/>
+            <ng-container *ngIf="user$ | async as user">
+              <div class="main-btn favourite-btn"
+                   [class.active]="user.favorites.includes(formGroup.get('id')?.value)"
+                   (click)="addProductToFavourites(formGroup.value, user)"
+              >
+                <svg width="20" height="21"><use xlink:href="assets/icons/sprite.svg#icon-favourite"></use></svg>
+              </div>
+            </ng-container>
+          </div>
+        </ng-template>
+      </div>
+    </div>
   </div>
-  </ng-template>
 </section>
-
-

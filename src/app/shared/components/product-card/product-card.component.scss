@@ -10,6 +10,16 @@
   background-color: var(--theme-light-blue);
 }
 
+.product-image {
+  display: block;
+  border-radius: 20px;
+  max-width: 100%;
+  height: 160px;
+  background-color: white;
+  background-size: cover;
+  background-position: center center;
+}
+
 .product-name {
   font-size: 18px;
 }
