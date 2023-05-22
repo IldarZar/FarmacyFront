@@ -26,6 +26,10 @@
     }
   }
 
+  &-image {
+    max-width: 300px;
+  }
+
   &__products {
     display: flex;
     flex-direction: column;

@@ -47,6 +47,12 @@ section {
           stroke: var(--theme-main);
           fill: none;
         }
+
+        &.active {
+          svg {
+            fill: var(--theme-light-blue);
+          }
+        }
       }
     }
   }

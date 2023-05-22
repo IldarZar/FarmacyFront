@@ -15,7 +15,7 @@
         <div class="user-order__item__products">
           <h3>Товары:</h3>
           <div *ngFor="let productOrder of userOrder.get('productOrder')?.value" class="user-order__item__products__item">
-            <img src="{{ productOrder.product.imageUrl }}" alt="">
+            <img class="user-order__item-image" src="{{ productOrder.product.imageUrl }}" alt="">
             <div class="user-order__item__products__item_info">
               <h3>{{ productOrder.product.name }}</h3>
               <div class="user-order__item__products__item_info-description">
