@@ -35,18 +35,14 @@ export class UserService {
   }
 
   // берём юзера из параметра, а не из селекта, дабы избежать бесконечного цикла
-  updateFavourites(product: Product, user: User): Observable<User> {
+  updateFavourites(product: Product, user: User): Observable<any> {
     const requestBody = user.favorites.includes(product.id)
       ? [...user?.favorites.filter((e) => e !== product.id)]
       : [...user?.favorites, product.id];
 
-    return this.http.patch(`/auth/favorites/${user.id}`, requestBody).pipe(
-      switchMap(() =>
-        this.http.get<User>(
-          `/auth/login?login=${user.login}&password=${user.password}`
-        )
-      ),
-      tap((user) => this.store.dispatch(new SetUser({ user })))
+    user.favorites = requestBody;
+    return this.store.dispatch(new SetUser( { user })).pipe(
+      switchMap(() => this.http.patch(`/auth/favorites/${user.id}`, requestBody))
     );
   }
 

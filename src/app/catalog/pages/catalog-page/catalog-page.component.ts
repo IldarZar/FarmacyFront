@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription, tap} from 'rxjs';
+import {debounceTime, Observable, Subscription, tap} from 'rxjs';
 import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { UserService } from '@core/services/user.service';
@@ -57,10 +57,12 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
     this.subcategories$ = this.catalogService.getSubcategories(this.activeCategory);
     this.products$ = this.catalogService.getCatalog(this.productFilter);
 
-    this.catalogService.searchText.subscribe((searchText: string) => {
-      this.productFilter = { ...this.productFilter, name: searchText };
-      this.products$ = this.catalogService.getCatalog(this.productFilter);
-    });
+    this.subscription.add(
+      this.catalogService.searchText.subscribe((searchText: string) => {
+        this.productFilter = { ...this.productFilter, name: searchText };
+        this.products$ = this.catalogService.getCatalog(this.productFilter);
+      })
+    );
   }
 
   categorySelected(category: Category): void {

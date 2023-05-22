@@ -70,19 +70,21 @@ export class ProductDetailsPageComponent implements OnInit {
   }
 
   updateProduct() {
-    this.catalogService
+    const subscription = this.catalogService
       .updateProduct(this.formGroup.value)
       .subscribe((product: Product) => {
         this.product$.next(product);
       });
+    this.subscription.add(subscription);
   }
 
   createProduct() {
-    this.catalogService
+    const subscription = this.catalogService
       .createProduct(this.formGroup.value)
       .subscribe((product: Product) => {
         this.product$.next(product);
       });
+    this.subscription.add(subscription);
   }
 
   addProductToCart(product: Product): void {

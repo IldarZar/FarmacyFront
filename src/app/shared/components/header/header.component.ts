@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import { NavigationEnd, Router} from '@angular/router';
 import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 import { User } from '@shared/models/user/user';
 import { UserService } from '@app/core/services/user.service';
@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.router.events.subscribe((e) => {
+    const routeSubscription = this.router.events.subscribe((e) => {
       if(e instanceof NavigationEnd) {
         this.showSearch = !e.url.includes('dashboard');
       }
@@ -71,6 +71,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.subscription.add(productsSubscription);
     this.subscription.add(favouritesSubscription);
+    this.subscription.add(routeSubscription);
   }
 
   searchProduct() {

@@ -74,9 +74,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    this.userService.logout().subscribe((user) => {
-      this.router.navigate(['catalog']);
-    });
+    this.subscription.add(
+      this.userService.logout().subscribe((user) => {
+        this.router.navigate(['catalog']);
+      })
+    );
   }
 
   ngOnDestroy(): void {

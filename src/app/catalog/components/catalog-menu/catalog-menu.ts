@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, debounceTime, skip } from 'rxjs';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {BehaviorSubject, debounceTime, skip, Subscription} from 'rxjs';
 import { Subcategory } from '@shared/models/product/subcategory';
 import { Nullable } from '@core/models/nullable';
 import { LabelType, Options } from '@angular-slider/ngx-slider';
@@ -10,7 +10,7 @@ import { CatalogService } from '@core/services/catalog.service';
   templateUrl: './catalog-menu.html',
   styleUrls: ['./catalog-menu.scss'],
 })
-export class CatalogMenu implements OnInit {
+export class CatalogMenu implements OnInit, OnDestroy {
   @Input('subcategories')
   subcategories: Nullable<Subcategory[]>;
 
@@ -44,13 +44,15 @@ export class CatalogMenu implements OnInit {
     maxPrice: this.maxPrice,
     subCategoryId: null,
   });
-
+  subscription = new Subscription();
   constructor(private catalogService: CatalogService) {}
 
   ngOnInit(): void {
-    this.filter.pipe(skip(1), debounceTime(1000)).subscribe((filter) => {
+    const subscription = this.filter.pipe(skip(1), debounceTime(1000)).subscribe((filter) => {
       this.filterChanged.emit(filter);
     });
+
+    this.subscription.add(subscription);
   }
 
   subcategorySelected(subCategory: Subcategory): void {
@@ -69,5 +71,9 @@ export class CatalogMenu implements OnInit {
 
   priceChanged(value: number, type: string) {
     this.filter.next({ ...this.filter.value, [type]: value });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

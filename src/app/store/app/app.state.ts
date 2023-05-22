@@ -122,7 +122,7 @@ export class AppState {
     ctx.patchState({ products: [] });
   }
 
-  @Action(SetUser)
+  @Action(UpdateUser)
   UpdateUser(
     ctx: StateContext<AppStateModel>,
     { payload: { user } }: UpdateUser

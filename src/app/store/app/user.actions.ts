@@ -10,6 +10,6 @@ export class ClearUser {
 }
 
 export class UpdateUser {
-  static readonly type = '[User] Set User';
+  static readonly type = '[User] Update User';
   constructor(public payload: { user: User }) {}
 }

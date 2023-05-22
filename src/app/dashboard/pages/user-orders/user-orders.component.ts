@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import { DashboardService } from '@dashboard/services/dashboard.service';
-import { Observable, tap } from 'rxjs';
+import {Observable, Subscription, tap} from 'rxjs';
 import { UserOrder } from '@shared/models/user-order';
 import { OrderStatus } from '@shared/models/enums/order-status';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
@@ -12,7 +12,8 @@ import { User } from '@shared/models/user/user';
   templateUrl: './user-orders.component.html',
   styleUrls: ['./user-orders.component.scss'],
 })
-export class UserOrdersComponent implements OnInit {
+export class UserOrdersComponent implements OnInit, OnDestroy {
+  subscription = new Subscription();
   constructor(
     private dashboardService: DashboardService,
     private changeDetector: ChangeDetectorRef
@@ -36,7 +37,7 @@ export class UserOrdersComponent implements OnInit {
   ngOnInit(): void {
     this.orderHistory$ = this.dashboardService.getOrderHistoryByDeliveryPoint();
 
-    this.dashboardService
+    const subscription = this.dashboardService
       .getOrderHistoryByDeliveryPoint()
       .pipe(
         tap((userOrders) => {
@@ -63,6 +64,8 @@ export class UserOrdersComponent implements OnInit {
         })
       )
       .subscribe();
+
+    this.subscription.add(subscription);
   }
 
   private setStatus(status: string | OrderStatus): {
@@ -84,10 +87,16 @@ export class UserOrdersComponent implements OnInit {
   statusChanged(newStatus: Dictionary<number>, userOrder: UserOrder) {
     console.log(newStatus, userOrder);
 
-    this.dashboardService.setOrderStatus(userOrder, newStatus).subscribe(() => {
+    const subscription = this.dashboardService.setOrderStatus(userOrder, newStatus).subscribe(() => {
       this.formGroup.controls['userOrders'].controls
         .find((el) => el.controls['id'].value === userOrder.id)
         ?.patchValue({ status: newStatus });
     });
+
+    this.subscription.add(subscription);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
