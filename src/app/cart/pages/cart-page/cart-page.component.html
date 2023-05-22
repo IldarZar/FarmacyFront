@@ -7,7 +7,7 @@
         <div class="section__wrapper__content">
           <div class="products__wrapper">
             <div class="product-item" *ngFor="let cartProduct of cardProducts; let i = index">
-              <img class="product-item__image" src="{{ cartProduct.product.imageUrl }}" alt="">
+              <div class="product-item__image" style="background-image: url({{ cartProduct.product.imageUrl }})"></div>
               <div class="product-item__info">
                 <span class="product-item__info_name">
                   {{ cartProduct.product.name }}
@@ -15,7 +15,7 @@
                 <div class="product-item__info_controls">
                   <span class="product-item__info_controls-price">{{ cartProduct.product.price * cartProduct.countProduct }} ₽</span>
                   <div class="product-item__info_controls-count">
-                    <app-count-select [value]="cartProduct.countProduct"></app-count-select>
+                    <app-count-select [value]="cartProduct.countProduct" (valueChanges)="changeProductCount(cartProduct, $event)"></app-count-select>
                   </div>
                   <div class="product-item__info_controls_delete-button" (click)="deleteProductFromCart(cartProduct)">
                     <svg width="24" height="24"><use xlink:href="assets/icons/sprite.svg#icon-close"></use></svg>

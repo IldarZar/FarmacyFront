@@ -51,6 +51,10 @@ export class CartPageComponent implements OnDestroy {
     );
   }
 
+  changeProductCount(cartProduct: ProductOrder, count: number): void {
+    cartProduct.countProduct = count;
+  }
+
   deleteProductFromCart(cartProduct: ProductOrder): void {
     this.store.dispatch(new DeleteCartProduct(cartProduct));
   }

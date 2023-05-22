@@ -1,5 +1,11 @@
 <div class="count-select">
-  <svg width="24" height="24" onclick="this.nextElementSibling.stepDown(); valueChanges.emit(value)"><use xlink:href="assets/icons/sprite.svg#icon-minus"></use></svg>
-  <input class="main-field" type="number" name="count" min="1" max="100" value="{{ value }}"/>
-  <svg width="24" height="24" onclick="this.previousElementSibling.stepUp(); valueChanges.emit(value)"><use xlink:href="assets/icons/sprite.svg#icon-plus"></use></svg>
+  <svg width="24" height="24" (click)="stepDown()"><use xlink:href="assets/icons/sprite.svg#icon-minus"></use></svg>
+  <input
+    class="main-field"
+    type="number"
+    [min]="1"
+    [max]="100"
+    [value]="value"
+  />
+  <svg width="24" height="24" (click)="stepUp()"><use xlink:href="assets/icons/sprite.svg#icon-plus"></use></svg>
 </div>

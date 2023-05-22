@@ -41,8 +41,6 @@ export class ComboboxComponent<T extends { [key: string]: any } > implements  Af
   toggle(e: Event) {
     const dropdown = this.dropdown;
 
-    console.log(e.target);
-
     if(!e.composedPath().includes(this.dropdownSelect) || this.disabled) return;
 
     if(!dropdown.classList.contains('active')) {

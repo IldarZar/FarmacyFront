@@ -68,10 +68,10 @@
     position: absolute;
     top: calc(100% - 10px);
     padding-top: 10px;
-    left: -1px;
+    left: -0.5px;
     border: 1px solid var(--theme-dark-blue);
     background-color: var(--theme-main);
-    width: calc(100% + 2px);
+    width: calc(100% + 1.5px);
     overflow: hidden;
     height: 0;
     max-height: 245px;

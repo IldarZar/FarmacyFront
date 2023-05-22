@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-count-select',
@@ -7,12 +7,27 @@ import {Component, Input, OnInit, Output} from '@angular/core';
 })
 export class CountSelectComponent implements OnInit {
   @Input()
-  @Output()
-  value: number = 1;
+  value: number;
 
-  constructor() { }
+  @Output()
+  valueChanges = new EventEmitter<number>;
+
+  input: HTMLInputElement;
+
+  constructor(private elementRef: ElementRef) { }
 
   ngOnInit(): void {
+    this.input = this.elementRef.nativeElement.querySelector('input');
+  }
+  stepUp(): void {
+    this.input.stepUp();
+    this.value = this.input.valueAsNumber;
+    this.valueChanges.emit(this.value);
   }
 
+  stepDown(): void {
+    this.input.stepDown();
+    this.value = this.input.valueAsNumber;
+    this.valueChanges.emit(this.value);
+  }
 }
