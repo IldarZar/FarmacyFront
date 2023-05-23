@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '@shared/models/user/user';
-import { Observable, switchMap, tap } from 'rxjs';
+import {map, Observable, switchMap, tap} from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { SetUser } from '@app/store/app/user.actions';
 import { AppState } from '@app/store/app/app.state';
@@ -32,13 +32,14 @@ export class DashboardService {
   /**
    * [Access: Pharmacist]
    */
-  getOrderHistoryByDeliveryPoint(): Observable<UserOrder[]> {
+  getOrderHistoryByDeliveryPoint(sortFunction?: ((a: UserOrder, b: UserOrder) => number)): Observable<UserOrder[]> {
     return this.user$.pipe(
       switchMap((user) =>
         this.http.get<UserOrder[]>(
           `/user-order/delivery-point/${user.deliveryPoint.id}`
         )
-      )
+      ),
+      map((userOrders: UserOrder[]) => userOrders.sort(sortFunction))
     );
   }
 

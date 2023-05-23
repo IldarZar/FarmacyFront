@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import { DashboardService } from '@dashboard/services/dashboard.service';
-import {Observable, Subscription, tap} from 'rxjs';
+import {map, Observable, Subscription, tap} from 'rxjs';
 import { UserOrder } from '@shared/models/user-order';
 import { OrderStatus } from '@shared/models/enums/order-status';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
@@ -33,39 +33,13 @@ export class UserOrdersComponent implements OnInit, OnDestroy {
     { id: OrderStatus.EXPIRED, name: 'Закончился срок хранения' },
   ];
 
-  orderHistory$: Observable<UserOrder[]>;
+  selectedStatusFilter = {
+    id: OrderStatus.IN_PROGRESS,
+    name: 'В процессе',
+  }
+
   ngOnInit(): void {
-    this.orderHistory$ = this.dashboardService.getOrderHistoryByDeliveryPoint();
-
-    const subscription = this.dashboardService
-      .getOrderHistoryByDeliveryPoint()
-      .pipe(
-        tap((userOrders) => {
-          userOrders
-            .sort(function(a: UserOrder, b: UserOrder){
-              // @ts-ignore
-              return new Date(b.orderDateTime) - new Date(a.orderDateTime);
-            })
-            .forEach((userOrder: UserOrder) => {
-            this.formGroup.controls['userOrders'].push(
-              new FormGroup({
-                id: new FormControl(userOrder.id),
-                orderDateTime: new FormControl(userOrder.orderDateTime),
-                expectedDate: new FormControl(userOrder.expectedDate),
-                lastStorageDay: new FormControl(userOrder.lastStorageDay),
-                productOrder: new FormControl(userOrder.productOrder),
-                sum: new FormControl(userOrder.sum),
-                deliveryPoint: new FormControl(userOrder.deliveryPoint),
-                status: new FormControl(this.setStatus(userOrder.status)),
-                user: new FormControl<User>(userOrder.user),
-              })
-            );
-          });
-        })
-      )
-      .subscribe();
-
-    this.subscription.add(subscription);
+    this.statusFilterChanged(this.selectedStatusFilter);
   }
 
   private setStatus(status: string | OrderStatus): {
@@ -84,14 +58,50 @@ export class UserOrdersComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Устанавливает новый статус для одного заказа
+   */
   statusChanged(newStatus: Dictionary<number>, userOrder: UserOrder) {
-    console.log(newStatus, userOrder);
-
     const subscription = this.dashboardService.setOrderStatus(userOrder, newStatus).subscribe(() => {
       this.formGroup.controls['userOrders'].controls
         .find((el) => el.controls['id'].value === userOrder.id)
         ?.patchValue({ status: newStatus });
     });
+
+    this.subscription.add(subscription);
+  }
+
+  createFormGroup(userOrder: UserOrder) {
+    return new FormGroup({
+      id: new FormControl(userOrder.id),
+      orderDateTime: new FormControl(userOrder.orderDateTime),
+      expectedDate: new FormControl(userOrder.expectedDate),
+      lastStorageDay: new FormControl(userOrder.lastStorageDay),
+      productOrder: new FormControl(userOrder.productOrder),
+      sum: new FormControl(userOrder.sum),
+      deliveryPoint: new FormControl(userOrder.deliveryPoint),
+      status: new FormControl(this.setStatus(userOrder.status)),
+      user: new FormControl<User>(userOrder.user),
+    })
+  }
+
+  /**
+   * Отвечает за фильтрацию всех заказов
+   */
+  statusFilterChanged(newStatus: Dictionary<number>) {
+    const subscription = this.dashboardService
+      // @ts-ignore
+      .getOrderHistoryByDeliveryPoint((a, b) => (new Date(b.orderDateTime) - new Date(a.orderDateTime)))
+      .pipe(
+        map((userOrders: UserOrder[]) =>
+          userOrders.filter(({ status }) => this.setStatus(status).id === newStatus.id)
+        )
+      )
+      .subscribe((userOrders: UserOrder[]) =>
+        this.formGroup.controls.userOrders = new FormArray<FormGroup>(
+          userOrders.map((userOrder: UserOrder) => this.createFormGroup(userOrder))
+        )
+      )
 
     this.subscription.add(subscription);
   }
