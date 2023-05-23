@@ -85,36 +85,12 @@ export class AppState {
     ctx: StateContext<AppStateModel>,
     { payload }: DeleteCartProduct
   ) {
-    if (payload.countProduct === 1) {
-      ctx.patchState({
-        products: [
-          ...ctx
-            .getState()
-            .products.filter(
-              ({ product }) => product.id !== payload.product.id
-            ),
-        ],
-      });
-    } else {
-      ctx.patchState({
-        products: [
-          ...ctx
-            .getState()
-            .products.filter(
-              ({ product }) => product.id !== payload.product.id
-            ),
-          {
-            product: payload.product,
-            countProduct:
-              ctx
-                ?.getState()
-                ?.products.find(
-                  ({ product }) => product.id === payload.product.id
-                )!.countProduct - 1,
-          },
-        ],
-      });
-    }
+    const deleteProductId = payload.product.id;
+    const products = ctx.getState().products;
+
+    ctx.patchState({
+      products: products.filter(x => x.product.id !== deleteProductId),
+    });
   }
 
   @Action(DeleteAllCartProducts)

@@ -1,9 +1,24 @@
 :host {
   color: var(--theme-dark-blue);
+
+  .section__wrapper {
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      app-combobox {
+        max-width: 400px;
+      }
+    }
+
+    > label {
+      margin-bottom: 24px;
+    }
+  }
 }
 
 .user-order__wrapper {
-  margin-top: 24px;
   display: flex;
   flex-direction: column;
   row-gap: 32px;
@@ -30,16 +45,6 @@
 
   h3 {
     font-weight: 500;
-  }
-
-  label {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-
-    app-combobox {
-      max-width: 400px;
-    }
   }
 
   &__products {
