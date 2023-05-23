@@ -45,6 +45,7 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
     controlled: null,
     categoryId: null,
     subCategoryId: null,
+    isAvailable: true,
   };
 
   ngOnInit(): void {
@@ -73,6 +74,7 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
       controlled: null,
       categoryId: category.id,
       subCategoryId: null,
+      isAvailable: true,
     }
 
     this.activeCategory = category;
