@@ -36,7 +36,8 @@
               >
               </app-combobox>
             </label>
-            <input type="submit" class="blue-btn" (click)="createNewOrder(cardProducts)" value="Купить за {{ totalPrice | async }} ₽"/>
+            <input type="submit" class="blue-btn" (click)="createNewOrder($event, cardProducts)" value="Купить за {{ totalPrice | async }} ₽"/>
+            <input type="submit" class="blue-btn" (click)="createNewOrderUsingBonusPoints($event, cardProducts)" value="Купить за {{ totalDiscountPrice | async }} ₽ (потратить бонусы)"/>
           </form>
         </div>
       </ng-container>

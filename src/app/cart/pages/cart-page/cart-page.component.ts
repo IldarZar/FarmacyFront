@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { map, Observable, Subscription, tap } from 'rxjs';
+import { map, Observable, Subscription, switchMap, tap } from 'rxjs';
 import { ProductOrder } from '@shared/models/product-order';
 import { CartService } from '@core/services/cart.service';
 import { AppState } from '@app/store/app/app.state';
@@ -51,6 +51,25 @@ export class CartPageComponent implements OnDestroy {
     );
   }
 
+  get totalDiscountPrice(): Observable<number> {
+    return this.cartProducts$.pipe(
+      map((cartProducts) =>
+        cartProducts.reduce(
+          (acc, { product, countProduct }) =>
+            acc + product.price * countProduct,
+          0
+        )
+      ),
+      switchMap((totalPrice) =>
+        this.user$.pipe(
+          map(({ userRoom: { bonusPoints } }) =>
+            bonusPoints < totalPrice ? totalPrice - bonusPoints : 0
+          )
+        )
+      )
+    );
+  }
+
   changeProductCount(cartProduct: ProductOrder, count: number): void {
     cartProduct.countProduct = count;
   }
@@ -59,10 +78,23 @@ export class CartPageComponent implements OnDestroy {
     this.store.dispatch(new DeleteCartProduct(cartProduct));
   }
 
-  createNewOrder(cartProducts: ProductOrder[]): void {
+  createNewOrder(e: Event, cartProducts: ProductOrder[]): void {
+    e.preventDefault();
     const subscription = this.cartService
       .createNewOrder(cartProducts, this.selectedDeliveryPoint)
-      .pipe(tap((res) => this.store.dispatch(new DeleteAllCartProducts())))
+      .pipe(tap(() => this.store.dispatch(new DeleteAllCartProducts())))
+      .subscribe();
+
+    this.subscription.add(subscription);
+  }
+
+  createNewOrderUsingBonusPoints(e: Event, cartProducts: ProductOrder[]): void {
+    e.preventDefault();
+
+    const subscription = this.cartService
+      .createNewOrderUsingBonusPoints(cartProducts, this.selectedDeliveryPoint)
+      .pipe(tap(() => this.store.dispatch(new DeleteAllCartProducts())))
+
       .subscribe();
 
     this.subscription.add(subscription);

@@ -60,7 +60,7 @@ export class UserService {
 
   isUserAdmin(): Observable<boolean> {
     return this.user$.pipe(
-      map((user) => user.roles.map((role) => role.id).includes(2))
+      map((user) => user?.roles?.map((role) => role?.id).includes(2))
     );
   }
 }

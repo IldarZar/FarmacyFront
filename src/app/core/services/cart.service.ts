@@ -30,11 +30,44 @@ export class CartService {
       // TODO: для прерывания бесконечного цикла можно попробовать везде влепить take по юзеру
       take(1),
       switchMap((user) =>
-        this.http.post<UserOrder>('/user-order/' + user.id, {
+        this.http.post<UserOrder>(`/user-order/${user.id}`, {
           productOrder: productOrders,
           deliveryPoint: deliveryPoint ? deliveryPoint : user.deliveryPoint,
         })
       )
+    );
+  }
+
+  // TODO: писал ночью, надо рефакторить
+  createNewOrderUsingBonusPoints(
+    productOrders: ProductOrder[],
+    deliveryPoint: Nullable<DeliveryPoint> = null
+  ) {
+    return this.user$.pipe(
+      take(1),
+      switchMap((user) => {
+        const sum = productOrders.reduce(
+          (curr, { countProduct, product }) =>
+            curr + countProduct * product.price,
+          0
+        );
+
+        return this.http.post<UserOrder>(
+          `/user-order/${user.id}?remainingBonusPoints=${
+            sum > user.userRoom.bonusPoints
+              ? 0
+              : user.userRoom.bonusPoints - sum
+          }`,
+          {
+            productOrder: productOrders,
+            deliveryPoint: deliveryPoint ? deliveryPoint : user.deliveryPoint,
+            sum:
+              sum > user.userRoom.bonusPoints
+                ? sum - user.userRoom.bonusPoints
+                : 0,
+          }
+        );
+      })
     );
   }
 
