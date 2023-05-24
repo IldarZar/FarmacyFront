@@ -44,7 +44,7 @@ export class UserDataComponent implements OnDestroy {
       switchMap((user: User) => {
         this.formGroup.patchValue({
           id: user.id,
-          name: user.middleName,
+          name: user.name,
           lastName: user.lastName,
           middleName: user.middleName,
           deliveryPoint: user.deliveryPoint,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '@shared/models/product/product';
 import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
 import { AppState } from '@app/store/app/app.state';
@@ -35,6 +35,7 @@ export class ProductDetailsPageComponent implements OnInit {
   });
 
   constructor(
+    private router: Router,
     protected route: ActivatedRoute,
     private catalogService: CatalogService,
     private store: Store,

@@ -23,11 +23,9 @@
         <h1>Каталог</h1>
 
         <div class="main__wrapper__catalog__header__buttons">
-          <ng-container *ngIf="user$ | async as user">
-            <span class="light-blue-btn" (click)="create()" *ngIf="userService.isUserAdmin() | async">
-              Создать
-            </span>
-          </ng-container>
+          <span class="light-blue-btn" (click)="create()" *ngIf="userService.isUserAdmin() | async">
+            Создать
+          </span>
 <!--          <span class="light-blue-btn">-->
 <!--            <svg width="20" height="20" fill="#253B6E"><use xlink:href="assets/icons/sprite.svg#icon-sort"></use></svg>-->
 <!--            Сначала дешевле-->
@@ -45,8 +43,10 @@
             [product]="product"
             [isFavourite]="user.favorites.includes(product.id)"
             [showFavouriteButton]="!!user"
+            [showDeleteButton]="userService.isUserAdmin() | async"
             (productSelected)="addProductToCart($event)"
             (addedToFavourites)="updateFavourites($event, user)"
+            (visibilityChanged)="setProductVisibility($event)"
             (click)="openProductDetails(product.id)"
           >
           </app-product-card>

@@ -82,6 +82,13 @@ form {
   background-color: var(--theme-accent-blue);
 }
 
+.error-btn {
+  @extend .main-btn;
+
+  color: var(--theme-main);
+  background-color: var(--theme-light-red);
+}
+
 .light-blue-btn {
   @extend .main-btn;
 

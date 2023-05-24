@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {debounceTime, Observable, Subscription, tap} from 'rxjs';
+import { Observable, Subscription, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { UserService } from '@core/services/user.service';
@@ -50,12 +50,14 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.categories$ = this.catalogService.getCategories().pipe(
-      tap(categories => {
+      tap((categories) => {
         this.activeCategory = categories[0] ?? null;
         this.productFilter.categoryId = this.activeCategory.id;
       })
     );
-    this.subcategories$ = this.catalogService.getSubcategories(this.activeCategory);
+    this.subcategories$ = this.catalogService.getSubcategories(
+      this.activeCategory
+    );
     this.products$ = this.catalogService.getCatalog(this.productFilter);
 
     this.subscription.add(
@@ -75,10 +77,12 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
       categoryId: category.id,
       subCategoryId: null,
       isAvailable: true,
-    }
+    };
 
     this.activeCategory = category;
-    this.subcategories$ = this.catalogService.getSubcategories(this.activeCategory);
+    this.subcategories$ = this.catalogService.getSubcategories(
+      this.activeCategory
+    );
     this.products$ = this.catalogService.getCatalog(this.productFilter);
   }
 
@@ -106,6 +110,14 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
       .updateFavourites(product, user)
       .subscribe();
     this.subscription.add(subscription);
+  }
+
+  setProductVisibility(product: Product) {
+    this.products$ = this.catalogService
+      .updateProduct({ ...product, isAvailable: !product.isAvailable })
+      .pipe(
+        switchMap(() => this.catalogService.getCatalog(this.productFilter))
+      );
   }
 
   create() {

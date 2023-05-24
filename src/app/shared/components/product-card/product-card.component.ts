@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '@shared/models/product/product';
+import { Nullable } from '@core/models/nullable';
 
 @Component({
   selector: 'app-product-card',
@@ -14,6 +15,9 @@ export class ProductCardComponent {
   isFavourite: boolean;
 
   @Input()
+  showDeleteButton: Nullable<boolean>;
+
+  @Input()
   showFavouriteButton: boolean;
 
   @Input()
@@ -25,6 +29,9 @@ export class ProductCardComponent {
   @Output()
   addedToFavourites = new EventEmitter();
 
+  @Output()
+  visibilityChanged = new EventEmitter();
+
   constructor() {}
 
   addProductToCart(e: Event) {
@@ -35,5 +42,10 @@ export class ProductCardComponent {
   addProductToFavourites(e: Event) {
     e.stopPropagation();
     this.addedToFavourites.emit(this.product);
+  }
+
+  setProductVisibility(e: Event) {
+    e.stopPropagation();
+    this.visibilityChanged.emit(this.product);
   }
 }

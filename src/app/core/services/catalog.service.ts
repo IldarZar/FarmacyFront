@@ -16,8 +16,8 @@ export class CatalogService {
   constructor(private http: HttpClient) {}
 
   private getContent(body: any) {
-    return body.content.sort(function(a: any, b: any) {
-      return a.id - b.id  ||  a.name.localeCompare(b.name);
+    return body.content.sort(function (a: any, b: any) {
+      return a.id - b.id || a.name.localeCompare(b.name);
     });
   }
 
@@ -60,8 +60,8 @@ export class CatalogService {
   getSubcategories(category?: Nullable<Category>): Observable<Subcategory[]> {
     return category
       ? this.http
-      .get<Subcategory[]>('/subcategories/parentCategory/' + category.id)
-      .pipe(map(this.getContent))
+          .get<Subcategory[]>('/subcategories/parentCategory/' + category.id)
+          .pipe(map(this.getContent))
       : this.getAllSubcategories();
   }
 

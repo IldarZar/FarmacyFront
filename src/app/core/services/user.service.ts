@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {forkJoin, map, Observable, of, switchMap, tap} from 'rxjs';
+import { forkJoin, map, Observable, of, switchMap, tap } from 'rxjs';
 import { User } from '@shared/models/user/user';
 import { Select, Store } from '@ngxs/store';
 import { AppState } from '@app/store/app/app.state';
@@ -41,9 +41,13 @@ export class UserService {
       : [...user?.favorites, product.id];
 
     user.favorites = requestBody;
-    return this.store.dispatch(new SetUser( { user })).pipe(
-      switchMap(() => this.http.patch(`/auth/favorites/${user.id}`, requestBody))
-    );
+    return this.store
+      .dispatch(new SetUser({ user }))
+      .pipe(
+        switchMap(() =>
+          this.http.patch(`/auth/favorites/${user.id}`, requestBody)
+        )
+      );
   }
 
   getFavouriteProducts(favouriteProductIds: number[]): Observable<Product[]> {
