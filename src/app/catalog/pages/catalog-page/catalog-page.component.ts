@@ -49,16 +49,18 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit(): void {
+
     this.categories$ = this.catalogService.getCategories().pipe(
       tap((categories) => {
         this.activeCategory = categories[0] ?? null;
         this.productFilter.categoryId = this.activeCategory.id;
+
+        this.subcategories$ = this.catalogService.getSubcategories(
+          this.activeCategory
+        );
+        this.products$ = this.catalogService.getCatalog(this.productFilter);
       })
     );
-    this.subcategories$ = this.catalogService.getSubcategories(
-      this.activeCategory
-    );
-    this.products$ = this.catalogService.getCatalog(this.productFilter);
 
     this.subscription.add(
       this.catalogService.searchText.subscribe((searchText: string) => {
@@ -70,13 +72,9 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
 
   categorySelected(category: Category): void {
     this.productFilter = {
-      name: '',
-      minPrice: 0,
-      maxPrice: 20000,
-      controlled: null,
-      categoryId: category.id,
+      ...this.productFilter,
       subCategoryId: null,
-      isAvailable: true,
+      categoryId: category.id,
     };
 
     this.activeCategory = category;

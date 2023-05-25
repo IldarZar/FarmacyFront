@@ -8,6 +8,7 @@ import { AppState } from '@app/store/app/app.state';
 import { DeliveryPoint } from '@shared/models/delivery-point';
 import { Nullable } from '@core/models/nullable';
 import { UserOrder } from '@shared/models/user-order';
+import { UserService } from '@core/services/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,11 @@ export class CartService {
   @Select(AppState.getUser)
   user$: Observable<User>;
 
-  constructor(private http: HttpClient, private store: Store) {}
+  constructor(
+    private http: HttpClient,
+    private userService: UserService,
+    private store: Store
+  ) {}
 
   private getContent(body: any) {
     return body.content;
@@ -30,10 +35,18 @@ export class CartService {
       // TODO: для прерывания бесконечного цикла можно попробовать везде влепить take по юзеру
       take(1),
       switchMap((user) =>
-        this.http.post<UserOrder>(`/user-order/${user.id}`, {
-          productOrder: productOrders,
-          deliveryPoint: deliveryPoint ? deliveryPoint : user.deliveryPoint,
-        })
+        this.http.post<UserOrder>(
+          `/user-order/${user.id}?remainingBonusPoints=${user.userRoom.bonusPoints}`,
+          {
+            productOrder: productOrders,
+            deliveryPoint: deliveryPoint ? deliveryPoint : user.deliveryPoint,
+            sum: productOrders.reduce(
+              (acc, { product, countProduct }) =>
+                acc + product.price * countProduct,
+              0
+            ),
+          }
+        )
       )
     );
   }
@@ -52,21 +65,25 @@ export class CartService {
           0
         );
 
-        return this.http.post<UserOrder>(
-          `/user-order/${user.id}?remainingBonusPoints=${
-            sum > user.userRoom.bonusPoints
-              ? 0
-              : user.userRoom.bonusPoints - sum
-          }`,
-          {
-            productOrder: productOrders,
-            deliveryPoint: deliveryPoint ? deliveryPoint : user.deliveryPoint,
-            sum:
+        return this.http
+          .post<UserOrder>(
+            `/user-order/${user.id}?remainingBonusPoints=${
               sum > user.userRoom.bonusPoints
-                ? sum - user.userRoom.bonusPoints
-                : 0,
-          }
-        );
+                ? 0
+                : user.userRoom.bonusPoints - sum
+            }`,
+            {
+              productOrder: productOrders,
+              deliveryPoint: deliveryPoint ? deliveryPoint : user.deliveryPoint,
+              sum:
+                sum > user.userRoom.bonusPoints
+                  ? sum - user.userRoom.bonusPoints
+                  : 0,
+            }
+          )
+          .pipe(
+            switchMap(() => this.userService.login(user.login, user.password))
+          );
       })
     );
   }

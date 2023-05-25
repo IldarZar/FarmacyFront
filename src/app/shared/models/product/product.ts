@@ -5,6 +5,7 @@ export interface Product extends Identifiable<number> {
   name: string;
   price: number;
   controlled: boolean;
+  description: string;
   subCategory: Subcategory;
   imageUrl: string;
   isAvailable: boolean;

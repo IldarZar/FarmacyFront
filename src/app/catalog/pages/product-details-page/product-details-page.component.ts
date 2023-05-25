@@ -30,7 +30,9 @@ export class ProductDetailsPageComponent implements OnInit {
     id: new FormControl(),
     name: new FormControl(),
     price: new FormControl(),
+    description: new FormControl(),
     imageUrl: new FormControl(),
+    isAvailable: new FormControl(true),
     subCategory: new FormControl(),
   });
 
@@ -50,6 +52,7 @@ export class ProductDetailsPageComponent implements OnInit {
             id: product.id,
             name: product.name,
             price: product.price,
+            description: product.description,
             imageUrl: product.imageUrl,
             subCategory: product.subCategory,
           });

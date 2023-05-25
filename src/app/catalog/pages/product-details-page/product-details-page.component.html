@@ -21,6 +21,12 @@
               <span>Адрес картинки</span>
               <input class="main-field" name="imageUrl" formControlName="imageUrl" />
             </label>
+
+            <label>
+              <span>Описание</span>
+              <input class="main-field" name="description" formControlName="description" />
+            </label>
+
             <label>
               <span>Категория</span>
               <app-combobox [data]="subcategories$ | async" [value]="formGroup.get('subCategory')?.value" (valueChanges)="subcategoryChanges($event)"></app-combobox>
