@@ -103,3 +103,64 @@ form {
     margin-right: 6px;
   }
 }
+
+.radio-label {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  cursor: pointer;
+
+  /* input */
+  input {
+    opacity: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+  }
+
+  /* .design */
+  .design {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background-color: var(--theme-main);
+    border-radius: 100%;
+    margin-right: 12px;
+    transition: all .3s ease-in-out;
+
+    &:before, &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: inherit;
+      height: inherit;
+      border-radius: inherit;
+      transform: scale(0);
+      transform-origin: center center;
+    }
+
+    &:before {
+      background: var(--theme-dark-blue);
+      opacity: 0;
+      transition: .3s;
+    }
+
+    &:after {
+      background: var(--theme-dark-blue);
+      opacity: .4;
+      transition: .6s;
+    }
+  }
+
+  /* checked state */
+  input:checked+.design::before {
+    opacity: 1;
+    transform: scale(.6);
+  }
+}

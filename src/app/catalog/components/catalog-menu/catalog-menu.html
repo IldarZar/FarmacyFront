@@ -17,4 +17,48 @@
     (highValueChange)="priceChanged($event, 'maxPrice')"
   >
   </ngx-slider>
+  <h3>Отпуск из аптеки</h3>
+  <div class="product-controlled">
+    <label class="radio-label">
+      <input
+        type="radio"
+        name="product-controlled"
+        checked
+        (change)="controlledChanged(false)"
+      >
+      <span class="design"></span>
+      <span>Без рецепта</span>
+    </label>
+    <label class="radio-label">
+      <input
+        type="radio"
+        name="product-controlled"
+        (change)="controlledChanged(true)"
+      />
+      <span class="design"></span>
+      <span>По рецепту</span>
+    </label>
+  </div>
+
+<!--  <input-->
+<!--    #individual-->
+<!--    kendoRadioButton-->
+<!--    type="radio"-->
+<!--    [value]="2"-->
+<!--    [(ngModel)]="applicant"-->
+<!--    [ngModelOptions]="{ standalone: true }"-->
+<!--    (change)="onChangeApplicantType()"-->
+<!--  />-->
+<!--  <kendo-label [for]="individual" text="Физическое лицо"> </kendo-label>-->
+<!--</div>-->
+<!--<div>-->
+<!--  <input-->
+<!--    #legal-->
+<!--    kendoRadioButton-->
+<!--    type="radio"-->
+<!--    [value]="1"-->
+<!--    [(ngModel)]="applicant"-->
+<!--    [ngModelOptions]="{ standalone: true }"-->
+<!--    (change)="onChangeApplicantType()"-->
+<!--  />-->
 </div>

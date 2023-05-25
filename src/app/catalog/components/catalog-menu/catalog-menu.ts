@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {BehaviorSubject, debounceTime, skip, Subscription} from 'rxjs';
-import { Subcategory } from '@shared/models/product/subcategory';
-import { Nullable } from '@core/models/nullable';
-import { LabelType, Options } from '@angular-slider/ngx-slider';
-import { CatalogService } from '@core/services/catalog.service';
+import {Subcategory} from '@shared/models/product/subcategory';
+import {Nullable} from '@core/models/nullable';
+import {LabelType, Options} from '@angular-slider/ngx-slider';
+import {CatalogService} from '@core/services/catalog.service';
 
 @Component({
   selector: 'app-catalog-menu',
@@ -43,6 +43,7 @@ export class CatalogMenu implements OnInit, OnDestroy {
     minPrice: 1,
     maxPrice: this.maxPrice,
     subCategoryId: null,
+    controlled: false,
   });
   subscription = new Subscription();
   constructor(private catalogService: CatalogService) {}
@@ -71,6 +72,10 @@ export class CatalogMenu implements OnInit, OnDestroy {
 
   priceChanged(value: number, type: string) {
     this.filter.next({ ...this.filter.value, [type]: value });
+  }
+
+  controlledChanged(value: boolean) {
+    this.filter.next({ ...this.filter.value, controlled: value });
   }
 
   ngOnDestroy(): void {
