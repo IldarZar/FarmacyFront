@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Product } from '@shared/models/product/product';
-import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
-import { AppState } from '@app/store/app/app.state';
-import { User } from '@shared/models/user/user';
-import { Select, Store } from '@ngxs/store';
-import { Subcategory } from '@shared/models/product/subcategory';
-import { FormControl, FormGroup } from '@angular/forms';
-import { CatalogService } from '@core/services/catalog.service';
-import { AddCartProduct } from '@app/store/app/cart.actions';
-import { UserService } from '@core/services/user.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Product} from '@shared/models/product/product';
+import {BehaviorSubject, map, Observable, Subscription} from 'rxjs';
+import {AppState} from '@app/store/app/app.state';
+import {User} from '@shared/models/user/user';
+import {Select, Store} from '@ngxs/store';
+import {Subcategory} from '@shared/models/product/subcategory';
+import {FormControl, FormGroup} from '@angular/forms';
+import {CatalogService} from '@core/services/catalog.service';
+import {AddCartProduct} from '@app/store/app/cart.actions';
+import {UserService} from '@core/services/user.service';
 
 @Component({
   selector: 'app-product-details-page',
@@ -41,7 +41,7 @@ export class ProductDetailsPageComponent implements OnInit {
     protected route: ActivatedRoute,
     private catalogService: CatalogService,
     private store: Store,
-    private userService: UserService
+    protected userService: UserService,
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +53,7 @@ export class ProductDetailsPageComponent implements OnInit {
             name: product.name,
             price: product.price,
             description: product.description,
+            isAvailable: product.isAvailable,
             imageUrl: product.imageUrl,
             subCategory: product.subCategory,
           });
@@ -67,10 +68,15 @@ export class ProductDetailsPageComponent implements OnInit {
     this.subscription.add(subscription);
   }
 
-  isUserAdmin(): Observable<boolean> {
-    return this.user$.pipe(
-      map((user) => user.roles.map((role) => role.id).includes(2))
-    );
+  setProductVisibility(e: Event) {
+    e.stopPropagation();
+    this.formGroup.patchValue({ isAvailable: !this.formGroup.value.isAvailable });
+    const subscription = this.catalogService
+      .updateProduct({ ...this.formGroup.value, isAvailable: this.formGroup.value.isAvailable })
+      .subscribe((product: Product) => {
+        this.product$.next(product);
+      });
+    this.subscription.add(subscription);
   }
 
   updateProduct() {

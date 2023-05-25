@@ -43,10 +43,8 @@
             [product]="product"
             [isFavourite]="user.favorites.includes(product.id)"
             [showFavouriteButton]="!!user"
-            [showDeleteButton]="userService.isUserAdmin() | async"
             (productSelected)="addProductToCart($event)"
             (addedToFavourites)="updateFavourites($event, user)"
-            (visibilityChanged)="setProductVisibility($event)"
             (click)="openProductDetails(product.id)"
           >
           </app-product-card>

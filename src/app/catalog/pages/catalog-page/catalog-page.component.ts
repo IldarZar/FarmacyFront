@@ -1,17 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription, switchMap, tap } from 'rxjs';
-import { Router } from '@angular/router';
-import { Select, Store } from '@ngxs/store';
-import { UserService } from '@core/services/user.service';
-import { Product } from '@shared/models/product/product';
-import { Subcategory } from '@shared/models/product/subcategory';
-import { Category } from '@shared/models/product/category';
-import { CatalogService } from '@core/services/catalog.service';
-import { User } from '@shared/models/user/user';
-import { Nullable } from '@core/models/nullable';
-import { AddCartProduct } from '@app/store/app/cart.actions';
-import { AppState } from '@app/store/app/app.state';
-import { SearchFilter } from '@shared/models/search-filter';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Observable, Subscription, tap} from 'rxjs';
+import {Router} from '@angular/router';
+import {Select, Store} from '@ngxs/store';
+import {UserService} from '@core/services/user.service';
+import {Product} from '@shared/models/product/product';
+import {Subcategory} from '@shared/models/product/subcategory';
+import {Category} from '@shared/models/product/category';
+import {CatalogService} from '@core/services/catalog.service';
+import {User} from '@shared/models/user/user';
+import {Nullable} from '@core/models/nullable';
+import {AddCartProduct} from '@app/store/app/cart.actions';
+import {AppState} from '@app/store/app/app.state';
+import {SearchFilter} from '@shared/models/search-filter';
 
 @Component({
   selector: 'app-catalog-page',
@@ -42,7 +42,7 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
     name: '',
     minPrice: 0,
     maxPrice: 20000,
-    controlled: null,
+    controlled: false,
     categoryId: null,
     subCategoryId: null,
     isAvailable: true,
@@ -92,12 +92,13 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
     this.router.navigate(['catalog', productId]);
   }
 
-  applyFilters({ minPrice, maxPrice, subCategoryId }: SearchFilter): void {
+  applyFilters({ minPrice, maxPrice, controlled, subCategoryId }: SearchFilter): void {
     this.productFilter = {
       ...this.productFilter,
       minPrice,
       maxPrice,
       subCategoryId,
+      controlled,
     };
 
     this.products$ = this.catalogService.getCatalog(this.productFilter);
@@ -108,14 +109,6 @@ export class CatalogPageComponent implements OnInit, OnDestroy {
       .updateFavourites(product, user)
       .subscribe();
     this.subscription.add(subscription);
-  }
-
-  setProductVisibility(product: Product) {
-    this.products$ = this.catalogService
-      .updateProduct({ ...product, isAvailable: !product.isAvailable })
-      .pipe(
-        switchMap(() => this.catalogService.getCatalog(this.productFilter))
-      );
   }
 
   create() {

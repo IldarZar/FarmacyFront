@@ -18,6 +18,7 @@ section {
     width: 33%;
     background-color: white;
     border-radius: 20px;
+    height: max-content;
 
     img {
       display: block;
@@ -41,7 +42,7 @@ section {
       align-items: center;
       gap: 12px;
 
-      .favourite-btn {
+      .control-btn {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -51,6 +52,13 @@ section {
         width: 43px;
         cursor: pointer;
         transition: all .3s ease-in-out;
+
+        &.white-fill {
+          svg {
+            stroke: none;
+            fill: var(--theme-light-blue);
+          }
+        }
 
         svg {
           stroke: var(--theme-light-blue);

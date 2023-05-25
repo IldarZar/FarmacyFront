@@ -6,7 +6,7 @@
         <img class="product-image" src="{{ formGroup.get('imageUrl')?.value }}" alt="">
       </div>
       <div class="product__wrapper__description">
-        <ng-container *ngIf="isUserAdmin() | async; else userIsNotAdmin">
+        <ng-container *ngIf="userService.isUserAdmin() | async; else userIsNotAdmin">
           <form class="form" [formGroup]="formGroup" >
             <label>
               <span>Имя</span>
@@ -33,20 +33,31 @@
             </label>
 
             <div class="product__wrapper__description__controls">
-              <!--   TODO: сделать нормальную проверку   -->
               <ng-container *ngIf="route?.url | async as url">
                 <input *ngIf="url[0].path === 'create'; else updateProductTemplate" (click)="createProduct()" class="blue-btn" type="submit" value="Создать"/>
                 <ng-template #updateProductTemplate>
                   <input (click)="updateProduct()" class="blue-btn" type="submit" value="Обновить"/>
                   <input class="blue-btn" type="submit" value="В корзину" (click)="addProductToCart(formGroup.value)"/>
                   <ng-container *ngIf="user$ | async as user">
-                    <span class="favourite-btn"
+                    <span class="control-btn"
                           [class.active]="user.favorites.includes(formGroup.get('id')?.value)"
                           (click)="addProductToFavourites(formGroup.value, user)"
                     >
                       <svg width="20" height="21"><use xlink:href="assets/icons/sprite.svg#icon-favourite"></use></svg>
                     </span>
                   </ng-container>
+                  <span class="control-btn white-fill"
+                        (click)="setProductVisibility($event)"
+                  >
+                    <svg width="20" height="21">
+                      <ng-container *ngIf="formGroup.get('isAvailable')?.value; else notAvailable">
+                        <use xlink:href="assets/icons/sprite.svg#icon-trash"></use>
+                      </ng-container>
+                      <ng-template #notAvailable>
+                        <use xlink:href="assets/icons/sprite.svg#icon-plus"></use>
+                      </ng-template>
+                    </svg>
+                  </span>
                 </ng-template>
               </ng-container>
             </div>
