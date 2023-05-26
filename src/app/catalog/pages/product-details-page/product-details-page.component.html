@@ -69,12 +69,12 @@
           <div class="product__wrapper__description__controls">
             <input class="blue-btn" type="submit" value="В корзину" (click)="addProductToCart(formGroup.value)"/>
             <ng-container *ngIf="user$ | async as user">
-              <div class="favourite-btn"
+              <span class="favourite-btn"
                    [class.active]="user.favorites.includes(formGroup.get('id')?.value)"
                    (click)="addProductToFavourites(formGroup.value, user)"
               >
                 <svg width="20" height="21"><use xlink:href="assets/icons/sprite.svg#icon-favourite"></use></svg>
-              </div>
+              </span>
             </ng-container>
           </div>
         </ng-template>

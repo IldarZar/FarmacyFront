@@ -36,9 +36,13 @@
               >
               </app-combobox>
             </label>
-            <input type="submit" class="blue-btn" (click)="createNewOrder($event, cardProducts)" value="Купить за {{ totalPrice | async }} ₽"/>
-            <input *ngIf="(user$ | async)?.userRoom?.bonusPoints !== 0" type="submit" class="blue-btn" (click)="createNewOrderUsingBonusPoints($event, cardProducts)" value="Купить за {{ totalDiscountPrice | async }} ₽ (потратить бонусы)"/>
-          </form>
+            <ng-container
+              *ngIf="(user$ | async)?.id"
+            >
+              <input type="submit" class="blue-btn" (click)="createNewOrder($event, cardProducts)" value="Купить за {{ totalPrice | async }} ₽"/>
+              <input *ngIf="(user$ | async)?.userRoom?.bonusPoints !== 0" type="submit" class="blue-btn" (click)="createNewOrderUsingBonusPoints($event, cardProducts)" value="Купить за {{ totalDiscountPrice | async }} ₽ (потратить бонусы)"/>
+            </ng-container>
+           </form>
         </div>
       </ng-container>
       <ng-template #productsNone>
