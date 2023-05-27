@@ -15,7 +15,8 @@
         {{ errorMessage }}
       </div>
 
-      <input class="blue-btn" type="submit" value="Войти"/>
+      <input class="blue-btn" type="submit" value="Войти"/> <br>
+      <input class="blue-btn" type="button" value="Регистрация" (click)="router.navigate(['auth', 'registration'])"/>
     </form>
   </div>
 </div>

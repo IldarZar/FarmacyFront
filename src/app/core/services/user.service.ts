@@ -26,6 +26,12 @@ export class UserService {
       );
   }
 
+  registration(user: User): Observable<boolean> {
+    return this.http
+      .post<boolean>('/auth/registration', { ...user, bonusPoints: 0 })
+      .pipe(tap((res) => console.log(res)));
+  }
+
   logout() {
     return this.http.get('/auth/logout').pipe(
       tap(() => {

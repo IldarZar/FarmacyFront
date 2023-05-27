@@ -23,7 +23,7 @@ export class AuthPageComponent implements OnDestroy {
   errorMessage: string = '';
 
   constructor(
-    private router: Router,
+    protected router: Router,
     private activatedRoute: ActivatedRoute,
     private authService: UserService
   ) {}

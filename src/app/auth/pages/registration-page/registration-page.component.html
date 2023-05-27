@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="section__wrapper">
+    <h2 class="text-accent">Регистрация</h2>
+    <form [formGroup]="formGroup" (ngSubmit)="registration()">
+      <label>
+        <span>Логин</span>
+        <input class="main-field" placeholder="Логин" name="login" formControlName="login"/>
+      </label>
+      <label>
+        <span>Пароль</span>
+        <input class="main-field" type="password" placeholder="Пароль" name="password" formControlName="password"/>
+      </label>
+      <label>
+        <span>Имя</span>
+        <input class="main-field" placeholder="Имя" name="name" formControlName="name"/>
+      </label>
+      <label>
+        <span>Отчество</span>
+        <input class="main-field" placeholder="Отчество" name="middleName" formControlName="middleName"/>
+      </label>
+      <label>
+        <span>Фамилия</span>
+        <input class="main-field" placeholder="Фамилия" name="lastName" formControlName="lastName"/>
+      </label>
+      <label>
+        <span>Телефон</span>
+        <input class="main-field" placeholder="Телефон" name="phoneNumber" formControlName="phoneNumber"/>
+      </label>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <input class="blue-btn" type="submit" value="Зарегестрироваться"/>
+    </form>
+  </div>
+</div>

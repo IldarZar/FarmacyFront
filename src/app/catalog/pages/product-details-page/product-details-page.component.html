@@ -66,6 +66,7 @@
         <ng-template #userIsNotAdmin>
           <h3>Цена: {{ formGroup.get('price')?.value }} ₽</h3>
           <h3>Категория: {{ formGroup.get('subCategory')?.value?.name }}</h3>
+          <h3>Описание: {{ formGroup.get('description')?.value }}</h3>
           <div class="product__wrapper__description__controls">
             <input class="blue-btn" type="submit" value="В корзину" (click)="addProductToCart(formGroup.value)"/>
             <ng-container *ngIf="user$ | async as user">
