@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { forkJoin, map, Observable, of, switchMap, tap } from 'rxjs';
-import { User } from '@shared/models/user/user';
-import { Select, Store } from '@ngxs/store';
-import { AppState } from '@app/store/app/app.state';
-import { ClearUser, SetUser } from '@app/store/app/user.actions';
-import { Product } from '@shared/models/product/product';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {forkJoin, map, Observable, of, switchMap, tap} from 'rxjs';
+import {User} from '@shared/models/user/user';
+import {Select, Store} from '@ngxs/store';
+import {AppState} from '@app/store/app/app.state';
+import {ClearUser, SetUser} from '@app/store/app/user.actions';
+import {Product} from '@shared/models/product/product';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +28,7 @@ export class UserService {
 
   registration(user: User): Observable<boolean> {
     return this.http
-      .post<boolean>('/auth/registration', { ...user, bonusPoints: 0 })
+      .post<boolean>('/auth/registration', { ...user })
       .pipe(tap((res) => console.log(res)));
   }
 

@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map, Observable } from 'rxjs';
-import { Product } from '@shared/models/product/product';
-import { Category } from '@shared/models/product/category';
-import { Subcategory } from '@shared/models/product/subcategory';
-import { Nullable } from '@core/models/nullable';
-import { SearchFilter } from '@shared/models/search-filter';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject, map, Observable} from 'rxjs';
+import {Product} from '@shared/models/product/product';
+import {Category} from '@shared/models/product/category';
+import {Subcategory} from '@shared/models/product/subcategory';
+import {Nullable} from '@core/models/nullable';
+import {SearchFilter} from '@shared/models/search-filter';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +28,18 @@ export class CatalogService {
           '?'
         )
       : '';
+
+    // return params
+    //   ? Object.entries(params).reduce(
+    //     (acc, [key, value]) => {
+    //       if(!value) {
+    //         return acc;
+    //       }
+    //       return acc + `&${key}=${value ? value : ''}`;
+    //     },
+    //     '?'
+    //   )
+    //   : '';
   }
 
   getCatalog(filter: Nullable<SearchFilter> = null): Observable<Product[]> {

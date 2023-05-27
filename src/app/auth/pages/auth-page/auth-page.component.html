@@ -15,8 +15,10 @@
         {{ errorMessage }}
       </div>
 
-      <input class="blue-btn" type="submit" value="Войти"/> <br>
-      <input class="blue-btn" type="button" value="Регистрация" (click)="router.navigate(['auth', 'registration'])"/>
+      <div class="controls">
+        <input class="blue-btn" type="submit" value="Войти"/> <br>
+        <input class="blue-btn" type="button" value="Регистрация" (click)="router.navigate(['auth', 'registration'])"/>
+      </div>
     </form>
   </div>
 </div>

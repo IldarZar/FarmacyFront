@@ -6,3 +6,9 @@
 .error-message {
   color: var(--theme-light-red);
 }
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
